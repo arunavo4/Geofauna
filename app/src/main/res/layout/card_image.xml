@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_image_preview"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:foreground="?android:attr/selectableItemBackground"
+    android:padding="@dimen/card_padding"
+    android:layout_marginTop="@dimen/spacer_2dp"
+    android:layout_marginBottom="@dimen/spacer_2dp"
+    android:layout_gravity="center_horizontal"
+    app:cardCornerRadius="0dp"
+    app:cardUseCompatPadding="false"
+    app:cardElevation="0dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/card_padding"
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/image_holder"
+            android:layout_width="@dimen/preview_w_h"
+            android:layout_height="@dimen/preview_w_h"
+            android:layout_weight="0"
+            android:layout_marginStart="@dimen/spacer_12dp"
+            android:layout_marginEnd="@dimen/spacer_12dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_placeholder"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:padding="@dimen/spacer_12dp"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/card_title_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/spacer_12dp"
+                android:paddingBottom="@dimen/spacer_12dp"
+                style="@style/HeadTextView2"
+                android:textColor="@color/greyMedium"
+                android:layout_gravity="center"
+                android:text="@string/ImageAnimal"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/take_photo_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/spacer_12dp"
+                android:layout_gravity="center"
+                style="@style/Widget.MaterialComponents.Button.UnelevatedButton.Icon"
+                android:backgroundTint="@color/disco_bell"
+                android:textAppearance="@style/HeadTextView"
+                android:text="@string/take_photo"
+                app:icon="@drawable/ic_add_a_photo_black_24dp"
+                app:iconPadding="8dp"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

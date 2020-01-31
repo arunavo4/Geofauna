@@ -1,0 +1,2 @@
+include ':app', ':stupidlocation'
+rootProject.name='Geofauna'

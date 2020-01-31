@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--Habitat Array-->
+    <string-array name="Habitat_items">
+        <item>Aquatic_Marine</item>
+        <item>Aquatic_Freshwater</item>
+        <item>Aquatic_Estuarine</item>
+        <item>Terrestrial_Forest_PA</item>
+        <item>Terrestrial_Forest_Outside_PA</item>
+        <item>Terrestrial_Grassland</item>
+        <item>Terrestrial_Shurb</item>
+        <item>Terrestrial_Agriculture</item>
+        <item>Terrestrial_Horticulture</item>
+        <item>Terrestrial_Human_Habitation</item>
+    </string-array>
+
+
+    <!--States-->
+    <string-array name="indian_states">
+        <item>Andaman and Nicobar Islands</item>
+        <item>Andhra Pradesh</item>
+        <item>Arunachal Pradesh</item>
+        <item>Assam</item>
+        <item>Bihar</item>
+        <item>Chandigarh</item>
+        <item>Chhattisgarh</item>
+        <item>Dadra and Nagar Haveli</item>
+        <item>Daman and Diu</item>
+        <item>Delhi</item>
+        <item>Goa</item>
+        <item>Gujarat</item>
+        <item>Haryana</item>
+        <item>Himachal Pradesh</item>
+        <item>Jammu and Kashmir</item>
+        <item>Jharkhand</item>
+        <item>Karnataka</item>
+        <item>Kerala</item>
+        <item>Lakshadweep</item>
+        <item>Madhya Pradesh</item>
+        <item>Maharashtra</item>
+        <item>Manipur</item>
+        <item>Meghalaya</item>
+        <item>Mizoram</item>
+        <item>Nagaland</item>
+        <item>Orissa</item>
+        <item>Pondicherry</item>
+        <item>Punjab</item>
+        <item>Rajasthan</item>
+        <item>Sikkim</item>
+        <item>Tamil Nadu</item>
+        <item>Telangana</item>
+        <item>Tripura</item>
+        <item>Uttaranchal</item>
+        <item>Uttar Pradesh</item>
+        <item>West Bengal</item>
+    </string-array>
+
+
+    <!--NoOfExamples-->
+    <string-array name="Examples_items">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>>5</item>
+        <item>>10</item>
+        <item>>50</item>
+        <item>>100</item>
+    </string-array>
+
+
+</resources>

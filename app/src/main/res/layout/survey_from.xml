@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBlack10alpha"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <include layout="@layout/card_geo_tag" />
+
+    <include layout="@layout/card_accuracy" />
+    <!--Form Fields-->
+
+    <include layout="@layout/card_details" />
+
+    <!--Images-->
+    <include android:id="@+id/image_animal" layout="@layout/card_image"/>
+
+    <include android:id="@+id/image_habitat" layout="@layout/card_image"/>
+
+    <include android:id="@+id/image_host" layout="@layout/card_image"/>
+
+</LinearLayout>

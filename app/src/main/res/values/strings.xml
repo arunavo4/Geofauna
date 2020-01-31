@@ -1,0 +1,43 @@
+<resources>
+    <string name="app_name">Geofauna</string>
+    <string name="action_settings">Settings</string>
+
+    <!--Survey Fields-->
+    <string name="Survey_Form">Survey Form</string>
+    <string name="Unique_Survey_Id">Unique Survey ID</string>
+    <string name="Serial_no">Serial No</string>
+    <string name="Locality">Locality</string>
+    <string name="State">State</string>
+    <string name="Collector">Collector</string>
+    <string name="Habitat">Habitat</string>
+    <string name="Entomofauna">Entomofauna</string>
+    <string name="Other_Invertebrate">Other Invertebrate</string>
+    <string name="Vertebrate">Vertebrate</string>
+    <string name="NoOfExamples">No Of Examples</string>
+    <string name="Temperature">Temperature</string>
+    <string name="Humidity">Humidity</string>
+    <string name="ImageAnimal">Image Animal</string>
+    <string name="ImageHabitat">Image Habitat</string>
+    <string name="ImageHost">Image Host</string>
+
+    <!--Geo-Tagging-->
+    <string name="Geo_tagging">Geo-Tag</string>
+    <string name="Date">Date</string>
+    <string name="date_holder">18/01/2020</string>
+    <string name="Time">Time</string>
+    <string name="time_holder">11 : 44</string>
+    <string name="Latitude">Latitude</string>
+    <string name="lat_holder">22° 34\' 21.5220\'\' N</string>
+    <string name="Longitude">Longitude</string>
+    <string name="lang_holder">88° 21\' 50.0112\'\' E</string>
+
+    <string name="accuracy">Accurate up to 2 meters</string>
+
+    <!--Image Card-->
+    <string name="Title_holder">Title</string>
+    <string name="take_photo">Take Photo</string>
+
+    <!--Save Btn-->
+    <string name="save_btn">Save</string>
+
+</resources>

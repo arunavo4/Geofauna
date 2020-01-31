@@ -1,0 +1,32 @@
+<resources>
+    <dimen name="fab_margin">16dp</dimen>
+
+
+    <!--Image Dims-->
+    <dimen name="preview_w_h">150dp</dimen>
+
+
+    <!--Card Padding-->
+    <dimen name="card_padding">10dp</dimen>
+
+    <dimen name="text_view_padding">8dp</dimen>
+
+
+    <!--Spacers-->
+    <dimen name="spacer_40dp">40dp</dimen>
+    <dimen name="spacer_36dp">36dp</dimen>
+    <dimen name="spacer_32dp">32dp</dimen>
+    <dimen name="spacer_20dp">20dp</dimen>
+    <dimen name="spacer_16dp">16dp</dimen>
+    <dimen name="spacer_12dp">12dp</dimen>
+    <dimen name="spacer_10dp">10dp</dimen>
+    <dimen name="spacer_8dp">8dp</dimen>
+    <dimen name="spacer_6dp">6dp</dimen>
+    <dimen name="spacer_4dp">4dp</dimen>
+    <dimen name="spacer_2dp">2dp</dimen>
+    <dimen name="spacer_1dp">1dp</dimen>
+    <dimen name="spacer_0dp">0dp</dimen>
+
+
+
+</resources>

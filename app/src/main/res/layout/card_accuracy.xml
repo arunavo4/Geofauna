@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_accuracy"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:foreground="?android:attr/selectableItemBackground"
+    android:padding="@dimen/card_padding"
+    android:layout_marginTop="@dimen/spacer_2dp"
+    android:layout_marginBottom="@dimen/spacer_2dp"
+    android:layout_gravity="center_horizontal"
+    app:cardCornerRadius="0dp"
+    app:cardUseCompatPadding="false"
+    app:cardElevation="0dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingStart="@dimen/spacer_12dp"
+        android:paddingEnd="@dimen/spacer_12dp"
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:padding="@dimen/spacer_6dp"
+            app:srcCompat="@drawable/ic_info"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/accuracy_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:paddingStart="@dimen/spacer_12dp"
+            android:paddingEnd="@dimen/spacer_12dp"
+            android:textAppearance="@style/HeadTextViewMedium"
+            android:text="@string/accuracy"/>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_geo_tag"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:foreground="?android:attr/selectableItemBackground"
+    android:padding="@dimen/card_padding"
+    android:layout_marginTop="@dimen/spacer_4dp"
+    android:layout_marginBottom="@dimen/spacer_2dp"
+    android:layout_gravity="center_horizontal"
+    app:cardCornerRadius="0dp"
+    app:cardUseCompatPadding="false"
+    app:cardElevation="0dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/spacer_20dp"
+        android:orientation="horizontal">
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:padding="@dimen/spacer_4dp"
+                android:textAppearance="@style/HeadTextViewRegular"
+                android:text="@string/Date"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/date_holder_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:padding="@dimen/spacer_4dp"
+                android:textAppearance="@style/HeadTextViewMedium"
+                android:text="@string/date_holder"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:padding="@dimen/spacer_4dp"
+                android:textAppearance="@style/HeadTextViewRegular"
+                android:text="@string/Latitude"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/latitude_holder_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:padding="@dimen/spacer_4dp"
+                android:textAppearance="@style/HeadTextViewMedium"
+                android:text="@string/lat_holder"/>
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:padding="@dimen/spacer_4dp"
+                android:textAppearance="@style/HeadTextViewRegular"
+                android:text="@string/Time"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/time_holder_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:padding="@dimen/spacer_4dp"
+                android:textAppearance="@style/HeadTextViewMedium"
+                android:text="@string/time_holder"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:padding="@dimen/spacer_4dp"
+                android:textAppearance="@style/HeadTextViewRegular"
+                android:text="@string/Longitude"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/longitude_holder_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:padding="@dimen/spacer_4dp"
+                android:textAppearance="@style/HeadTextViewMedium"
+                android:text="@string/lang_holder"/>
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
