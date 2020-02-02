@@ -3,13 +3,21 @@ package com.isro.geofauna;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatImageView;
+import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
+import androidx.core.graphics.drawable.DrawableCompat;
+import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -19,6 +27,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.isro.stupidlocation.StupidLocation;
 
 import org.angmarch.views.NiceSpinner;
@@ -53,6 +63,23 @@ public class SurveyForm extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_survey_form);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        Drawable bg = VectorDrawableCompat.create(getResources(), R.drawable.ic_arrow_back_white_24dp, null);
+        assert bg != null;
+        bg = DrawableCompat.wrap(bg);
+        DrawableCompat.setTint(bg, ContextCompat.getColor(this, R.color.colorWhite));
+
+        toolbar.setNavigationIcon(bg);
+        toolbar.setTitle(getResources().getString(R.string.Survey_Form));
+        setSupportActionBar(toolbar);
+
+        toolbar.setNavigationOnClickListener(v -> onBackPressed());
+
+        // Save Fab
+        FloatingActionButton fab = findViewById(R.id.fab);
+
+        fab.setOnClickListener(view -> Snackbar.make((CoordinatorLayout) findViewById(R.id.survey_layout), "Saved Successfully!", Snackbar.LENGTH_SHORT).show());
 
         /* Image Cards */
         CardView animalCard = (CardView) findViewById(R.id.image_animal);
@@ -73,31 +100,22 @@ public class SurveyForm extends AppCompatActivity {
         Button habitatImageBtn = (Button) habitatCard.findViewById(R.id.take_photo_btn);
         Button hostImageBtn = (Button) hostCard.findViewById(R.id.take_photo_btn);
 
-        animalImageBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Call Camera --> Set ImageView as Animal
-                flag = 0;
-                capturePhoto();
-            }
+        animalImageBtn.setOnClickListener(v -> {
+            //Call Camera --> Set ImageView as Animal
+            flag = 0;
+            capturePhoto();
         });
 
-        habitatImageBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Call Camera --> Set ImageView as habitat
-                flag = 1;
-                capturePhoto();
-            }
+        habitatImageBtn.setOnClickListener(v -> {
+            //Call Camera --> Set ImageView as habitat
+            flag = 1;
+            capturePhoto();
         });
 
-        hostImageBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Call Camera --> Set ImageView as Host
-                flag = 2;
-                capturePhoto();
-            }
+        hostImageBtn.setOnClickListener(v -> {
+            //Call Camera --> Set ImageView as Host
+            flag = 2;
+            capturePhoto();
         });
 
         TextView date_holder = (TextView) findViewById(R.id.date_holder_tv);

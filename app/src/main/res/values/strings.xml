@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Geofauna</string>
+
+    <!--Activitiy-->
     <string name="action_settings">Settings</string>
 
     <!--Survey Fields-->
