@@ -17,10 +17,47 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <!-- ToolBar -->
+    <style name="ToolBarStyle" parent="AppTheme">
+        <!--Text color of the Title-->
+        <item name="android:textColorPrimary">@color/colorWhite</item>
+        <!--The menu icon color-->
+        <item name="android:textColorSecondary">@color/colorWhite</item>
+        <item name="actionMenuTextColor">@color/colorWhite</item>
+        <!--color of the other icons in toolbar-->
+        <item name="android:tint">@color/colorWhite</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+
+    <style name="ToolBarStyle.one" parent="AppTheme">
+        <!--Text color of the Title-->
+        <item name="android:textColorPrimary">@color/colorWhite</item>
+        <!--The menu icon color-->
+        <item name="android:textColorSecondary">@color/colorPrimary</item>
+        <item name="actionMenuTextColor">@color/colorWhite</item>
+        <!--color of the other icons in toolbar-->
+        <!--<item name="android:tint">@color/colorWhite</item>-->
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+
+    <!--Spinner-->
+    <style name="Spinner" parent="Widget.AppCompat.Spinner.Underlined">
+        <!--<item name="android:theme">@style/ThemeSpinner</item>-->
+        <item name="android:textAlignment">textStart</item>
+        <item name="android:textAppearance">@style/TextView</item>
+    </style>
+
+    <style name="ThemeSpinner">
+        <!-- Color when pressed -->
+        <item name="colorAccent">#ffa000</item>
+        <!-- Default color for the dropdown arrow and line -->
+        <item name="colorControlNormal">#ffc107</item>
+    </style>
+
     <!--Form-Details-Card-->
     <style name="FormTextViewBold">
-        <item name="android:fontFamily">sans-serif</item>
-        <item name="android:textColor">@color/colorMaterialBlack_no_alpha</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textColor">@color/colorPrimary</item>
         <item name="android:textSize">16sp</item>
     </style>
 
@@ -36,9 +73,13 @@
         <item name="android:textSize">16sp</item>
     </style>
 
+    <style name="HeadTextView.Light" parent="HeadTextView">
+        <item name="android:textColor">@color/greyMedium</item>
+    </style>
+
     <style name="TextView">
         <item name="android:fontFamily">sans-serif</item>
-        <item name="android:textColor">@color/greyMedium</item>
+        <item name="android:textColor">@color/colorMaterialBlack_no_alpha</item>
         <item name="android:textSize">16sp</item>
     </style>
 

@@ -68,5 +68,9 @@
         <item>>100</item>
     </string-array>
 
+    <string-array name="binary">
+        <item>No</item>
+        <item>Yes</item>
+    </string-array>
 
 </resources>

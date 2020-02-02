@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#55E6C1</color>
-    <color name="colorPrimaryDark">#58B19F</color>
+    <color name="colorPrimary">#7CB342</color>
+    <color name="colorPrimaryLight">#C5E1A5</color>
+    <color name="colorPrimaryDark">#33691E</color>
     <color name="colorAccent">#25CCF7</color>
+    <color name="colorPrimaryShadow">#66212121</color>
+    <color name="colorPrimary54alpha">#8A212121</color>
 
+    <color name="default_bg_color">#F7F7FA</color>
 
     <!--Black-->
     <color name="colorBlack">#000000</color>
@@ -20,7 +24,7 @@
     <color name="colorMaterialBlack">#54212121</color>
     <color name="colorMaterialBlack_no_alpha">#212121</color>
 
-    <color name="White">#FFFFFF</color>
+    <color name="colorWhite">#FFFFFF</color>
 
 
     <!--Transparent-->

@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:foreground="?android:attr/selectableItemBackground"
+    android:padding="@dimen/card_padding"
+    android:layout_margin="@dimen/spacer_8dp"
+    android:layout_gravity="center_horizontal"
+    app:cardCornerRadius="5dp"
+    app:cardUseCompatPadding="false"
+    app:cardElevation="6dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_margin="@dimen/spacer_6dp">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/spacer_10dp"
+            style="@style/FormTextViewBold"
+            android:text="@string/optional_details"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/spacer_1dp"
+            android:layout_marginStart="@dimen/spacer_12dp"
+            android:layout_marginEnd="@dimen/spacer_12dp"
+            android:background="@color/colorBlack34alpha"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacer_4dp"
+            android:paddingStart="@dimen/spacer_16dp"
+            android:paddingEnd="@dimen/spacer_16dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="@dimen/spacer_16dp"
+                    app:srcCompat="@drawable/ic_number"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_gravity="center_vertical|start">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="@dimen/spacer_4dp"
+                        android:paddingEnd="@dimen/spacer_4dp"
+                        style="@style/HintTextView"
+                        android:text="@string/NoOfExamples"/>
+
+                    <androidx.appcompat.widget.AppCompatSpinner
+                        android:id="@+id/examples_spinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="@style/Spinner"
+                        android:entries="@array/Examples_items"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="@dimen/spacer_16dp"
+                    app:srcCompat="@drawable/ic_celsius"/>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    app:hintTextAppearance="@style/HintTextView">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/temperature"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="@style/TextView"
+                        android:maxLines="1"
+                        android:hint="@string/Temperature" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="@dimen/spacer_16dp"
+                    app:srcCompat="@drawable/ic_humidity_per"/>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:hintTextAppearance="@style/HintTextView">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/humidity"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="@style/TextView"
+                        android:maxLines="1"
+                        android:hint="@string/Humidity" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

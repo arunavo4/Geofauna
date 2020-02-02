@@ -54,23 +54,6 @@ public class SurveyForm extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_survey_form);
 
-
-        /* Get all Spinners */
-        NiceSpinner stateSpinner = (NiceSpinner) findViewById(R.id.state_spinner);
-        NiceSpinner habitatSpinner = (NiceSpinner) findViewById(R.id.habitat_spinner);
-        NiceSpinner entomofaunaSpinner = (NiceSpinner) findViewById(R.id.entomofauna_spinner);
-        NiceSpinner otherInSpinner = (NiceSpinner) findViewById(R.id.otherInvertebrate_spinner);
-        NiceSpinner vertebrateSpinner = (NiceSpinner) findViewById(R.id.vertebrate_spinner);
-        NiceSpinner examplesSpinner = (NiceSpinner) findViewById(R.id.examples_spinner);
-
-        /* Attach DataSource to Spinners */
-        stateSpinner.attachDataSource(getStateList());
-        habitatSpinner.attachDataSource(getHabitatList());
-        entomofaunaSpinner.attachDataSource(getBinaryList());
-        otherInSpinner.attachDataSource(getBinaryList());
-        vertebrateSpinner.attachDataSource(getBinaryList());
-        examplesSpinner.attachDataSource(getNoOfExamplesList());
-
         /* Image Cards */
         CardView animalCard = (CardView) findViewById(R.id.image_animal);
         CardView habitatCard = (CardView) findViewById(R.id.image_habitat);
@@ -125,7 +108,7 @@ public class SurveyForm extends AppCompatActivity {
         final TextView accuracy_holder = (TextView) findViewById(R.id.accuracy_tv);
 
         Date today = new Date();
-        SimpleDateFormat dateformat = new SimpleDateFormat("DD/MM/YYYY", Locale.ENGLISH);
+        SimpleDateFormat dateformat = new SimpleDateFormat("dd/MM/YYYY", Locale.ENGLISH);
         SimpleDateFormat timeformat = new SimpleDateFormat("HH:mm", Locale.ENGLISH);
         String date = dateformat.format(today);
         String time = timeformat.format(today);

@@ -4,15 +4,16 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBlack10alpha"
+    android:background="@color/default_bg_color"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <include layout="@layout/card_geo_tag" />
+    <include layout="@layout/card_geo_tag_v2" />
 
-    <include layout="@layout/card_accuracy" />
     <!--Form Fields-->
 
-    <include layout="@layout/card_details" />
+    <include layout="@layout/card_record_details_v2" />
+
+    <include layout="@layout/card_optional_details_v2" />
 
     <!--Images-->
     <include android:id="@+id/image_animal" layout="@layout/card_image"/>

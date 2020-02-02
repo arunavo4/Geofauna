@@ -3,6 +3,7 @@
     <string name="action_settings">Settings</string>
 
     <!--Survey Fields-->
+    <string name="record_details">Record Details</string>
     <string name="Survey_Form">Survey Form</string>
     <string name="Unique_Survey_Id">Unique Survey ID</string>
     <string name="Serial_no">Serial No</string>
@@ -13,6 +14,8 @@
     <string name="Entomofauna">Entomofauna</string>
     <string name="Other_Invertebrate">Other Invertebrate</string>
     <string name="Vertebrate">Vertebrate</string>
+
+    <string name="optional_details">Optional Details</string>
     <string name="NoOfExamples">No Of Examples</string>
     <string name="Temperature">Temperature</string>
     <string name="Humidity">Humidity</string>
@@ -21,7 +24,7 @@
     <string name="ImageHost">Image Host</string>
 
     <!--Geo-Tagging-->
-    <string name="Geo_tagging">Geo-Tag</string>
+    <string name="Geo_tagging">GeoTag Details</string>
     <string name="Date">Date</string>
     <string name="date_holder">18/01/2020</string>
     <string name="Time">Time</string>
