@@ -136,6 +136,212 @@
 
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/spacer_12dp"
+                android:paddingBottom="@dimen/spacer_12dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <FrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"/>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <FrameLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/animal_holder"
+                                android:layout_width="@dimen/preview_w_h"
+                                android:layout_height="@dimen/preview_w_h"
+                                android:scaleType="centerCrop"
+                                android:layout_margin="@dimen/spacer_6dp"
+                                app:srcCompat="@drawable/placeholder_image"/>
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/animal_cancel"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:scaleType="fitCenter"
+                                app:srcCompat="@drawable/ic_cancel"
+                                android:layout_gravity="top|end"
+                                android:visibility="invisible"/>
+
+                        </FrameLayout>
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:padding="@dimen/spacer_4dp"
+                            android:textAppearance="@style/HintTextView.Large"
+                            android:text="@string/ImageAnimal"/>
+
+                    </LinearLayout>
+
+                    <FrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"/>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <FrameLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/habitat_holder"
+                                android:layout_width="@dimen/preview_w_h"
+                                android:layout_height="@dimen/preview_w_h"
+                                android:scaleType="centerCrop"
+                                android:layout_margin="@dimen/spacer_6dp"
+                                app:srcCompat="@drawable/placeholder_image"/>
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/habitat_cancel"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:scaleType="fitCenter"
+                                app:srcCompat="@drawable/ic_cancel"
+                                android:layout_gravity="top|end"
+                                android:visibility="invisible"/>
+
+                        </FrameLayout>
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:padding="@dimen/spacer_4dp"
+                            android:textAppearance="@style/HintTextView.Large"
+                            android:text="@string/ImageHabitat"/>
+
+                    </LinearLayout>
+
+                    <FrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/spacer_12dp"
+                    android:orientation="horizontal">
+
+                    <FrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"/>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <FrameLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/host_holder"
+                                android:layout_width="@dimen/preview_w_h"
+                                android:layout_height="@dimen/preview_w_h"
+                                android:scaleType="centerCrop"
+                                android:layout_margin="@dimen/spacer_6dp"
+                                app:srcCompat="@drawable/placeholder_image"/>
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/host_cancel"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:scaleType="fitCenter"
+                                app:srcCompat="@drawable/ic_cancel"
+                                android:layout_gravity="top|end"
+                                android:visibility="invisible"/>
+
+                        </FrameLayout>
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:padding="@dimen/spacer_4dp"
+                            android:textAppearance="@style/HintTextView.Large"
+                            android:text="@string/ImageHost"/>
+
+                    </LinearLayout>
+
+                    <FrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"/>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="invisible">
+
+                        <FrameLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/blank_holder"
+                                android:layout_width="@dimen/preview_w_h"
+                                android:layout_height="@dimen/preview_w_h"
+                                android:scaleType="centerCrop"
+                                android:layout_margin="@dimen/spacer_6dp"
+                                app:srcCompat="@drawable/placeholder_image"/>
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:scaleType="fitCenter"
+                                app:srcCompat="@drawable/ic_cancel"
+                                android:layout_gravity="top|end"/>
+
+                        </FrameLayout>
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:padding="@dimen/spacer_4dp"
+                            android:textAppearance="@style/HintTextView.Large"
+                            android:text="@string/ImageHabitat"/>
+
+                    </LinearLayout>
+
+                    <FrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"/>
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
 
         </LinearLayout>
 

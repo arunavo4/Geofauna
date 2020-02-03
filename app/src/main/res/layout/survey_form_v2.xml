@@ -15,11 +15,4 @@
 
     <include layout="@layout/card_optional_details_v2" />
 
-    <!--Images-->
-    <include android:id="@+id/image_animal" layout="@layout/card_image"/>
-
-    <include android:id="@+id/image_habitat" layout="@layout/card_image"/>
-
-    <include android:id="@+id/image_host" layout="@layout/card_image"/>
-
 </LinearLayout>

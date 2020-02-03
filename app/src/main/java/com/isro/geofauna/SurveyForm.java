@@ -1,37 +1,28 @@
 package com.isro.geofauna;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatButton;
-import androidx.appcompat.widget.AppCompatImageView;
-import androidx.appcompat.widget.Toolbar;
-import androidx.cardview.widget.CardView;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
-import androidx.core.content.ContextCompat;
-import androidx.core.content.FileProvider;
-import androidx.core.graphics.drawable.DrawableCompat;
-import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
-
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatImageView;
+import androidx.appcompat.widget.Toolbar;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.core.content.ContextCompat;
+import androidx.core.graphics.drawable.DrawableCompat;
+import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.isro.stupidlocation.StupidLocation;
-
-import org.angmarch.views.NiceSpinner;
 
 import java.io.File;
 import java.io.IOException;
@@ -41,12 +32,20 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
+
+import static in.co.erudition.paper.misc.CompareDrawables.compareDrawableBytes;
+
 
 public class SurveyForm extends AppCompatActivity {
 
     private AppCompatImageView imageViewAnimal;
     private AppCompatImageView imageViewHabitat;
     private AppCompatImageView imageViewHost;
+
+    private AppCompatImageView animal_cancel_btn;
+    private AppCompatImageView habitat_cancel_btn;
+    private AppCompatImageView host_cancel_btn;
 
     private int flag = -1;
 
@@ -81,43 +80,49 @@ public class SurveyForm extends AppCompatActivity {
 
         fab.setOnClickListener(view -> Snackbar.make((CoordinatorLayout) findViewById(R.id.survey_layout), "Saved Successfully!", Snackbar.LENGTH_SHORT).show());
 
-        /* Image Cards */
-        CardView animalCard = (CardView) findViewById(R.id.image_animal);
-        CardView habitatCard = (CardView) findViewById(R.id.image_habitat);
-        CardView hostCard = (CardView) findViewById(R.id.image_host);
-
-        /* Set Title */
-        setCardViewTitle(animalCard, getResources().getString(R.string.ImageAnimal));
-        setCardViewTitle(habitatCard, getResources().getString(R.string.ImageHabitat));
-        setCardViewTitle(hostCard, getResources().getString(R.string.ImageHost));
-
         /* Link Camera */
-        imageViewAnimal = (AppCompatImageView) animalCard.findViewById(R.id.image_holder);
-        imageViewHabitat = (AppCompatImageView) habitatCard.findViewById(R.id.image_holder);
-        imageViewHost = (AppCompatImageView) hostCard.findViewById(R.id.image_holder);
+        imageViewAnimal = (AppCompatImageView) findViewById(R.id.animal_holder);
+        imageViewHabitat = (AppCompatImageView) findViewById(R.id.habitat_holder);
+        imageViewHost = (AppCompatImageView) findViewById(R.id.host_holder);
 
-        Button animalImageBtn = (Button) animalCard.findViewById(R.id.take_photo_btn);
-        Button habitatImageBtn = (Button) habitatCard.findViewById(R.id.take_photo_btn);
-        Button hostImageBtn = (Button) hostCard.findViewById(R.id.take_photo_btn);
+        /* Image Cancel */
+        animal_cancel_btn = (AppCompatImageView) findViewById(R.id.animal_cancel);
+        habitat_cancel_btn = (AppCompatImageView) findViewById(R.id.habitat_cancel);
+        host_cancel_btn = (AppCompatImageView) findViewById(R.id.host_cancel);
 
-        animalImageBtn.setOnClickListener(v -> {
+        animal_cancel_btn.setOnClickListener(v -> {
+            imageViewAnimal.setImageDrawable(getResources().getDrawable(R.drawable.placeholder_image));
+            animal_cancel_btn.setVisibility(View.INVISIBLE);
+        });
+        habitat_cancel_btn.setOnClickListener(v -> {
+            imageViewHabitat.setImageDrawable(getResources().getDrawable(R.drawable.placeholder_image));
+            habitat_cancel_btn.setVisibility(View.INVISIBLE);
+        });
+        host_cancel_btn.setOnClickListener(v -> {
+            imageViewHost.setImageDrawable(getResources().getDrawable(R.drawable.placeholder_image));
+            host_cancel_btn.setVisibility(View.INVISIBLE);
+        });
+
+        imageViewAnimal.setOnClickListener(v -> {
             //Call Camera --> Set ImageView as Animal
             flag = 0;
             capturePhoto();
         });
 
-        habitatImageBtn.setOnClickListener(v -> {
+        imageViewHabitat.setOnClickListener(v -> {
             //Call Camera --> Set ImageView as habitat
             flag = 1;
             capturePhoto();
         });
 
-        hostImageBtn.setOnClickListener(v -> {
+        imageViewHost.setOnClickListener(v -> {
             //Call Camera --> Set ImageView as Host
             flag = 2;
             capturePhoto();
         });
 
+
+        /* Geo-Tag Date Time */
         TextView date_holder = (TextView) findViewById(R.id.date_holder_tv);
         TextView time_holder = (TextView) findViewById(R.id.time_holder_tv);
         final TextView lat_holder = (TextView) findViewById(R.id.latitude_holder_tv);
@@ -163,6 +168,15 @@ public class SurveyForm extends AppCompatActivity {
             case 1: return imageViewHabitat;
             case 2: return imageViewHost;
             default: return imageViewAnimal;
+        }
+    }
+
+    private AppCompatImageView getCancelBtn(){
+        switch (flag){
+            case 0: return animal_cancel_btn;
+            case 1: return habitat_cancel_btn;
+            case 2: return host_cancel_btn;
+            default: return animal_cancel_btn;
         }
     }
 
@@ -218,16 +232,13 @@ public class SurveyForm extends AppCompatActivity {
             if (thumbnail != null) {
                 AppCompatImageView imageView = getImageView();
                 imageView.setImageBitmap(thumbnail);
+                AppCompatImageView imageBtn = getCancelBtn();
+                imageBtn.setVisibility(View.VISIBLE);
             }
             // Do other work with full size photo saved in locationForPhotos
         }
     }
 
-
-    private void setCardViewTitle(CardView view, String title){
-        TextView textView= (TextView) view.findViewById(R.id.card_title_tv);
-        textView.setText(title);
-    }
 
     /* Array Getters */
 

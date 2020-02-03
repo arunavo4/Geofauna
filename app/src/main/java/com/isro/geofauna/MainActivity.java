@@ -24,12 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
         FloatingActionButton fab = findViewById(R.id.fab);
 
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(view.getContext(), SurveyForm.class));
-            }
-        });
+        fab.setOnClickListener(view -> startActivity(new Intent(view.getContext(), SurveyForm.class)));
     }
 
     @Override
