@@ -54,9 +54,13 @@
 
     <!--Spinner-->
     <style name="Spinner" parent="Widget.AppCompat.Spinner.Underlined">
-        <!--<item name="android:theme">@style/ThemeSpinner</item>-->
+        <item name="android:theme">@style/mySpinnerItemStyle</item>
         <item name="android:textAlignment">textStart</item>
         <item name="android:textAppearance">@style/TextView</item>
+    </style>
+
+    <style name="mySpinnerItemStyle" parent="@android:style/Widget.Holo.DropDownItem.Spinner">
+        <item name="android:textSize">18sp</item>
     </style>
 
     <style name="ThemeSpinner">
@@ -70,52 +74,66 @@
     <style name="FormTextViewBold">
         <item name="android:fontFamily">sans-serif-medium</item>
         <item name="android:textColor">@color/colorPrimary</item>
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="TextView.Hint" parent="Widget.Design.TextInputLayout">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textColorHint">@color/colorMaterialBlack_no_alpha</item>
+        <item name="android:textSize">14sp</item>
+        <item name="hintTextAppearance">@style/HintTextView</item>
     </style>
 
     <style name="HintTextView" parent="TextAppearance.Design.Hint">
         <item name="android:fontFamily">sans-serif</item>
-        <item name="android:textColor">@color/colorMaterialBlack</item>
+        <item name="android:textColor">@color/greyDark_alpha80</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="HintTextView.Small" parent="HintTextView">
         <item name="android:textSize">12sp</item>
     </style>
 
+    <style name="HintTextView.Light" parent="HintTextView">
+        <item name="android:textColor">@color/colorMaterialBlack</item>
+        <item name="android:textColorHint">@color/colorMaterialBlack</item>
+    </style>
+
     <style name="HintTextView.Large" parent="HintTextView">
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">18sp</item>
     </style>
 
     <style name="HeadTextView">
         <item name="android:fontFamily">sans-serif</item>
         <item name="android:textColor">@color/colorMaterialBlack_no_alpha</item>
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">18sp</item>
     </style>
 
     <style name="HeadTextView.Light" parent="HeadTextView">
-        <item name="android:textColor">@color/greyMedium</item>
+        <item name="android:textColor">@color/greyDark_alpha80</item>
     </style>
 
-    <style name="TextView">
+    <style name="TextView" parent="TextAppearance.AppCompat">
         <item name="android:fontFamily">sans-serif</item>
         <item name="android:textColor">@color/colorMaterialBlack_no_alpha</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="TextView.Small" parent="TextView">
         <item name="android:textSize">16sp</item>
     </style>
 
     <style name="TextViewMedium">
         <item name="android:fontFamily">sans-serif-medium</item>
         <item name="android:textColor">@color/colorMaterialBlack_no_alpha</item>
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">18sp</item>
     </style>
 
-    <!--Image-Card-->
-    <style name="HeadTextView2">
-        <item name="android:fontFamily">sans-serif</item>
-        <item name="android:textColor">@color/colorMaterialBlack</item>
-        <item name="android:textSize">24sp</item>
-    </style>
 
     <!--Geo-Tag Styles-->
     <style name="HeadTextViewRegular">
         <item name="android:fontFamily">sans-serif</item>
-        <item name="android:textColor">@color/colorMaterialBlack</item>
+        <item name="android:textColor">@color/greyDark_alpha80</item>
         <item name="android:textSize">18sp</item>
     </style>
 

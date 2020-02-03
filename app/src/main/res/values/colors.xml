@@ -31,7 +31,6 @@
     <color name="colorTransparent">#00000000</color>
 
     <!--Shades of Grey -->
-    <color name="greyDark">#212121</color>
     <color name="greyDark_alpha80">#CC212121</color>
     <color name="greyMedium">#757575</color>
     <color name="greyLight">#919191</color>
