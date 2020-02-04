@@ -5,15 +5,32 @@ import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.isro.geofauna.adapter.RecordAdapter;
+import com.isro.geofauna.data.DatabaseColumns;
+import com.isro.geofauna.data.Geofauna;
+import com.isro.geofauna.data.GeofaunaViewModel;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.util.List;
+import java.util.Objects;
+
 public class MainActivity extends AppCompatActivity {
+
+    public static final int ACTIVITY_REQUEST_CODE = 1;
+
+    private GeofaunaViewModel mGeofaunaViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,9 +39,56 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        RecyclerView recyclerView = findViewById(R.id.recyclerview);
+        final RecordAdapter adapter = new RecordAdapter(this);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        mGeofaunaViewModel = new ViewModelProvider(this).get(GeofaunaViewModel.class);
+
+        mGeofaunaViewModel.getAllByDate().observe(this, new Observer<List<Geofauna>>() {
+            @Override
+            public void onChanged(List<Geofauna> geofaunas) {
+                adapter.setmGeofauna(geofaunas);
+            }
+        });
+
+
         FloatingActionButton fab = findViewById(R.id.fab);
 
-        fab.setOnClickListener(view -> startActivity(new Intent(view.getContext(), SurveyForm.class)));
+        fab.setOnClickListener(v -> startActivityForResult(new Intent(v.getContext(), SurveyForm.class), ACTIVITY_REQUEST_CODE));
+
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
+            Geofauna geofauna = new Geofauna();
+
+            geofauna.setDate(data.getStringExtra(DatabaseColumns.date));
+            geofauna.setTime(data.getStringExtra(DatabaseColumns.time));
+            geofauna.setLongitude(data.getStringExtra(DatabaseColumns.longitude));
+            geofauna.setLatitude(data.getStringExtra(DatabaseColumns.latitude));
+
+            geofauna.setUniqueSurveyId(Objects.requireNonNull(data.getStringExtra(DatabaseColumns.uniqueSurveyId)));
+            geofauna.setSerialNo(Objects.requireNonNull(data.getStringExtra(DatabaseColumns.serialNo)));
+            geofauna.setLocality(Objects.requireNonNull(data.getStringExtra(DatabaseColumns.locality)));
+            geofauna.setState(Objects.requireNonNull(data.getStringExtra(DatabaseColumns.serialNo)));
+            geofauna.setCollector(Objects.requireNonNull(data.getStringExtra(DatabaseColumns.collector)));
+            geofauna.setHabitat(Objects.requireNonNull(data.getStringExtra(DatabaseColumns.habitat)));
+            geofauna.setEntomofauna(Objects.requireNonNull(data.getStringExtra(DatabaseColumns.entomofauna)));
+            geofauna.setOtherInvertebrate(Objects.requireNonNull(data.getStringExtra(DatabaseColumns.otherInvertebrate)));
+            geofauna.setVertebrate(Objects.requireNonNull(data.getStringExtra(DatabaseColumns.vertebrate)));
+            geofauna.setNoOfExamples(Objects.requireNonNull(data.getStringExtra(DatabaseColumns.noOfExamples)));
+            geofauna.setTemperature(Objects.requireNonNull(data.getStringExtra(DatabaseColumns.temperature)));
+            geofauna.setHumidity(Objects.requireNonNull(data.getStringExtra(DatabaseColumns.humidity)));
+
+            mGeofaunaViewModel.insertAll(geofauna);
+
+        } else {
+            Snackbar.make((CoordinatorLayout) findViewById(R.id.main_layout), "Saved Successfully!", Snackbar.LENGTH_SHORT).show();
+        }
     }
 
     @Override

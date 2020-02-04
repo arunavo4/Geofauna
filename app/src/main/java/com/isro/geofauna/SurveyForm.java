@@ -6,22 +6,34 @@ import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageView;
+import androidx.appcompat.widget.AppCompatSpinner;
 import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
+import androidx.room.DatabaseConfiguration;
+import androidx.room.InvalidationTracker;
+import androidx.sqlite.db.SupportSQLiteOpenHelper;
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.TextInputEditText;
+import com.isro.geofauna.data.DatabaseColumns;
+import com.isro.geofauna.data.Geofauna;
+import com.isro.geofauna.data.GeofaunaDao;
+import com.isro.geofauna.data.GeofaunaRoomDatabase;
 import com.isro.stupidlocation.StupidLocation;
 
 import java.io.File;
@@ -78,7 +90,15 @@ public class SurveyForm extends AppCompatActivity {
         // Save Fab
         FloatingActionButton fab = findViewById(R.id.fab);
 
-        fab.setOnClickListener(view -> Snackbar.make((CoordinatorLayout) findViewById(R.id.survey_layout), "Saved Successfully!", Snackbar.LENGTH_SHORT).show());
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent replyIntent = new Intent();
+                setResult(RESULT_OK, saveDataOnRoom(replyIntent));
+                finish();
+//                Snackbar.make((CoordinatorLayout) findViewById(R.id.survey_layout), "Saved Successfully!", Snackbar.LENGTH_SHORT).show()
+            }
+        });
 
         /* Link Camera */
         imageViewAnimal = (AppCompatImageView) findViewById(R.id.animal_holder);
@@ -160,6 +180,53 @@ public class SurveyForm extends AppCompatActivity {
             }
         });
 
+    }
+
+    private Intent saveDataOnRoom(Intent intent) {
+
+        /* Geo-Tag */
+        final TextView date_tv = (TextView) findViewById(R.id.date_holder_tv);
+        final TextView time_tv = (TextView) findViewById(R.id.time_holder_tv);
+        final TextView latitude_tv = (TextView) findViewById(R.id.latitude_holder_tv);
+        final TextView longitude_tv = (TextView) findViewById(R.id.longitude_holder_tv);
+
+        /* Mandatory fields*/
+        final TextInputEditText uniqueId = (TextInputEditText) findViewById(R.id.unique_id);
+        final TextInputEditText serialNo = (TextInputEditText) findViewById(R.id.serial_no);
+        final TextInputEditText locality = (TextInputEditText) findViewById(R.id.locality_tv);
+        final AppCompatSpinner stateSpinner = (AppCompatSpinner) findViewById(R.id.state_spinner);
+        final TextInputEditText collector = (TextInputEditText) findViewById(R.id.collector);
+        final AppCompatSpinner habitatSpinner = (AppCompatSpinner) findViewById(R.id.habitat_spinner);
+        final AppCompatSpinner entomofoSpinner = (AppCompatSpinner) findViewById(R.id.entomofauna_spinner);
+        final AppCompatSpinner otherVerSpinner = (AppCompatSpinner) findViewById(R.id.otherInvertebrate_spinner);
+        final AppCompatSpinner vertebrateSpinner = (AppCompatSpinner) findViewById(R.id.vertebrate_spinner);
+
+        /* Optional */
+        final AppCompatSpinner examplesSpinner = (AppCompatSpinner) findViewById(R.id.examples_spinner);
+        final TextInputEditText temperature = (TextInputEditText) findViewById(R.id.temperature);
+        final TextInputEditText humidity = (TextInputEditText) findViewById(R.id.humidity);
+
+        //TODO: Write a data Validator
+
+        intent.putExtra(DatabaseColumns.date, date_tv.getText().toString());
+        intent.putExtra(DatabaseColumns.time, time_tv.getText().toString());
+        intent.putExtra(DatabaseColumns.latitude, latitude_tv.getText().toString());
+        intent.putExtra(DatabaseColumns.longitude, longitude_tv.getText().toString());
+
+        intent.putExtra(DatabaseColumns.uniqueSurveyId, Objects.requireNonNull(uniqueId.getText()).toString());
+        intent.putExtra(DatabaseColumns.serialNo, Objects.requireNonNull(serialNo.getText()).toString());
+        intent.putExtra(DatabaseColumns.locality, Objects.requireNonNull(locality.getText()).toString());
+        intent.putExtra(DatabaseColumns.state, Objects.requireNonNull(stateSpinner.getSelectedItem().toString()));
+        intent.putExtra(DatabaseColumns.collector, Objects.requireNonNull(collector.getText()).toString());
+        intent.putExtra(DatabaseColumns.habitat, Objects.requireNonNull(habitatSpinner.getSelectedItem().toString()));
+        intent.putExtra(DatabaseColumns.entomofauna, Objects.requireNonNull(entomofoSpinner.getSelectedItem().toString()));
+        intent.putExtra(DatabaseColumns.otherInvertebrate, Objects.requireNonNull(otherVerSpinner.getSelectedItem().toString()));
+        intent.putExtra(DatabaseColumns.vertebrate, Objects.requireNonNull(vertebrateSpinner.getSelectedItem().toString()));
+        intent.putExtra(DatabaseColumns.noOfExamples, Objects.requireNonNull(examplesSpinner.getSelectedItem().toString()));
+        intent.putExtra(DatabaseColumns.temperature, Objects.requireNonNull(temperature.getText()).toString());
+        intent.putExtra(DatabaseColumns.humidity, Objects.requireNonNull(humidity.getText()).toString());
+
+        return intent;
     }
 
     private AppCompatImageView getImageView(){
