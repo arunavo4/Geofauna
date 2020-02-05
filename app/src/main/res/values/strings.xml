@@ -6,6 +6,9 @@
     <!--Activitiy-->
     <string name="action_settings">Settings</string>
 
+    <!--Welcome Activity-->
+    <string name="Next">Next</string>
+
     <!--Survey Fields-->
     <string name="record_details">Record Details</string>
     <string name="Survey_Form">Survey Form</string>
@@ -14,6 +17,7 @@
     <string name="Locality">Locality</string>
     <string name="State">State</string>
     <string name="Collector">Collector</string>
+    <string name="phone">Phone</string>
     <string name="Habitat">Habitat</string>
     <string name="Entomofauna">Entomofauna</string>
     <string name="Other_Invertebrate">Other Invertebrate</string>
@@ -48,5 +52,9 @@
 
     <!--Save Btn-->
     <string name="save_btn">Save</string>
+
+    <string name="title_activity_welcome">WelcomeActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 
 </resources>

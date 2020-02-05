@@ -12,6 +12,8 @@ public class DatabaseColumns {
 
     public static final String collector = "Collector";
 
+    public static final String phone = "Phone";
+
     public static final String habitat = "Habitat";
 
     public static final String entomofauna = "Entomofauna";

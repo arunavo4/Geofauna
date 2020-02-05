@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".WelcomeActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/spacer_40dp"
+        android:paddingEnd="@dimen/spacer_40dp"
+        android:layout_gravity="center_vertical"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:scaleType="fitCenter"
+            android:layout_margin="@dimen/spacer_6dp"
+            app:srcCompat="@drawable/ic_geofauna_splash"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/spacer_4dp"
+            android:paddingBottom="@dimen/spacer_4dp"
+            android:paddingStart="@dimen/spacer_12dp"
+            android:paddingEnd="@dimen/spacer_12dp"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginEnd="@dimen/spacer_16dp"
+                app:srcCompat="@drawable/ic_user_icon"/>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/collector_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/TextView.Hint">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/collector"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextView"
+                    android:hint="@string/Collector" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/spacer_4dp"
+            android:paddingBottom="@dimen/spacer_4dp"
+            android:paddingStart="@dimen/spacer_12dp"
+            android:paddingEnd="@dimen/spacer_12dp"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginEnd="@dimen/spacer_16dp"
+                app:srcCompat="@drawable/ic_phone_black_24dp"/>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/phone_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/TextView.Hint">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="phone"
+                    android:textAppearance="@style/TextView"
+                    android:hint="@string/phone" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        android:backgroundTint="@color/accentBlue"
+        app:srcCompat="@drawable/ic_next" />
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -56,4 +56,6 @@
     <color name="sweet_garden">#55E6C1</color>
     <color name="disco_bell">#25CCF7</color>
 
+    <color name="black_overlay">#66000000</color>
+
 </resources>

@@ -36,7 +36,10 @@ import com.isro.geofauna.data.DatabaseColumns;
 import com.isro.geofauna.data.Geofauna;
 import com.isro.geofauna.data.GeofaunaDao;
 import com.isro.geofauna.data.GeofaunaRoomDatabase;
+import com.isro.geofauna.utils.PreferenceUtils;
 import com.isro.stupidlocation.StupidLocation;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.IOException;
@@ -101,6 +104,13 @@ public class SurveyForm extends AppCompatActivity {
             }
         });
 
+        /* Set Collector from Prefs */
+        String collector = PreferenceUtils.getCollector(this.getApplicationContext());
+        if(!collector.isEmpty()){
+            final TextInputEditText collector_tv = (TextInputEditText) findViewById(R.id.collector);
+            collector_tv.setText(collector);
+        }
+
         /* Link Camera */
         imageViewAnimal = (AppCompatImageView) findViewById(R.id.animal_holder);
         imageViewHabitat = (AppCompatImageView) findViewById(R.id.habitat_holder);
@@ -164,7 +174,7 @@ public class SurveyForm extends AppCompatActivity {
 
         new StupidLocation(this, new StupidLocation.StupidLocationCallBack() {
             @Override
-            public void getLocation(Location location) {
+            public void getLocation(@NotNull Location location) {
                 lat_holder.setText(String.format(Locale.ENGLISH,"   %f   ",location.getLatitude()));
                 lag_holder.setText(String.format(Locale.ENGLISH,"   %f   ",location.getLongitude()));
                 accuracy_holder.setText(String.format(Locale.ENGLISH,"Accurate up to %.2f meters",location.getAccuracy()));
@@ -342,25 +352,6 @@ public class SurveyForm extends AppCompatActivity {
             }
             // Do other work with full size photo saved in locationForPhotos
         }
-    }
-
-
-    /* Array Getters */
-
-    private List<String> getHabitatList(){
-        return new LinkedList<>(Arrays.asList(getResources().getStringArray(R.array.Habitat_items)));
-    }
-
-    private List<String> getNoOfExamplesList(){
-        return new LinkedList<>(Arrays.asList(getResources().getStringArray(R.array.Examples_items)));
-    }
-
-    private List<String> getStateList(){
-        return new LinkedList<>(Arrays.asList(getResources().getStringArray(R.array.indian_states)));
-    }
-
-    private List<String> getBinaryList(){
-        return new LinkedList<>(Arrays.asList( "No", "Yes"));
     }
 
 
