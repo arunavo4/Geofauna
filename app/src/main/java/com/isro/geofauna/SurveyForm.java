@@ -1,9 +1,14 @@
 package com.isro.geofauna;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Parcelable;
@@ -21,13 +26,16 @@ import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatSpinner;
 import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.room.DatabaseConfiguration;
 import androidx.room.InvalidationTracker;
 import androidx.sqlite.db.SupportSQLiteOpenHelper;
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
@@ -68,13 +76,9 @@ public class SurveyForm extends AppCompatActivity {
     private boolean error = false;
 
     static final int REQUEST_IMAGE_CAPTURE = 1;
+    public static final int MY_PERMISSIONS_REQUEST_READ_STORAGE = 1;
 
-    private void capturePhoto() {
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-        }
-    }
+    private Uri photoUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -137,19 +141,25 @@ public class SurveyForm extends AppCompatActivity {
         imageViewAnimal.setOnClickListener(v -> {
             //Call Camera --> Set ImageView as Animal
             flag = 0;
-            capturePhoto();
+            if (checkPermisssions()){
+                capturePhoto();
+            }
         });
 
         imageViewHabitat.setOnClickListener(v -> {
             //Call Camera --> Set ImageView as habitat
             flag = 1;
-            capturePhoto();
+            if (checkPermisssions()){
+                capturePhoto();
+            }
         });
 
         imageViewHost.setOnClickListener(v -> {
             //Call Camera --> Set ImageView as Host
             flag = 2;
-            capturePhoto();
+            if (checkPermisssions()){
+                capturePhoto();
+            }
         });
 
 
@@ -297,6 +307,27 @@ public class SurveyForm extends AppCompatActivity {
 
     String currentPhotoPath;
 
+    private boolean checkPermisssions(){
+        if ((ContextCompat.checkSelfPermission(this,
+                Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) &&
+                (ContextCompat.checkSelfPermission(this,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                        != PackageManager.PERMISSION_GRANTED)){
+
+            // Permission is not granted
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                            Manifest.permission.READ_EXTERNAL_STORAGE},
+                    MY_PERMISSIONS_REQUEST_READ_STORAGE);
+        } else {
+            // Permission has already been granted
+            return true;
+        }
+
+        return false;
+    }
+
     private File createImageFile() throws IOException {
         // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.ENGLISH).format(new Date());
@@ -314,39 +345,43 @@ public class SurveyForm extends AppCompatActivity {
     }
 
 
-//    private void capturePhoto() {
-////        INTENT_ACTION_STILL_IMAGE_CAMERA
-//        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//        // Ensure that there's a camera activity to handle the intent
-//        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-//            // Create the File where the photo should go
-//            File photoFile = null;
-//            try {
-//                photoFile = createImageFile();
-//            } catch (IOException ex) {
-//                // Error occurred while creating the File
-//            }
-//            // Continue only if the File was successfully created
-//            if (photoFile != null) {
-//                Uri photoURI = FileProvider.getUriForFile(this,
-//                        "com.isro.geofauna.fileprovider",
-//                        photoFile);
-//                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-//                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-//            }
-//        }
-//    }
+    private void capturePhoto() {
+//        INTENT_ACTION_STILL_IMAGE_CAMERA
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
+        photoUri = Uri.EMPTY;
+        // Ensure that there's a camera activity to handle the intent
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            // Create the File where the photo should go
+            File photoFile = null;
+            try {
+                photoFile = createImageFile();
+            } catch (IOException ex) {
+                // Error occurred while creating the File
+                Log.i("IOExceptionPhoto", Objects.requireNonNull(ex.getMessage()));
+            }
+            // Continue only if the File was successfully created
+            if (photoFile != null) {
+                Uri photoURI = FileProvider.getUriForFile(this,
+                        "com.isro.geofauna.fileprovider",
+                        photoFile);
+                photoUri = photoURI;
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+            }
+        }
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            Bitmap thumbnail = data.getParcelableExtra("data");
+            File storageDir = new File(Environment.getExternalStorageDirectory(), "/geofauna/");
 
-            if (thumbnail != null) {
+            if (photoUri.getPath() != null) {
                 AppCompatImageView imageView = getImageView();
-                imageView.setImageBitmap(thumbnail);
+                imageView.setImageBitmap(BitmapFactory.decodeFile(currentPhotoPath));
+                Log.i("Path", currentPhotoPath);
                 AppCompatImageView imageBtn = getCancelBtn();
                 imageBtn.setVisibility(View.VISIBLE);
             }

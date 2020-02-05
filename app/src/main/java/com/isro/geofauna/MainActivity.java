@@ -43,7 +43,7 @@ import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static final int ACTIVITY_REQUEST_CODE = 1;
+    public static final int REQUEST_NEW_RECORD = 10;
     public static final int MY_PERMISSIONS_REQUEST_READ_STORAGE = 1;
 
     private GeofaunaViewModel mGeofaunaViewModel;
@@ -72,14 +72,14 @@ public class MainActivity extends AppCompatActivity {
 
         FloatingActionButton fab = findViewById(R.id.fab);
 
-        fab.setOnClickListener(v -> startActivityForResult(new Intent(v.getContext(), SurveyForm.class), ACTIVITY_REQUEST_CODE));
+        fab.setOnClickListener(v -> startActivityForResult(new Intent(v.getContext(), SurveyForm.class), REQUEST_NEW_RECORD));
 
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
+        if (requestCode == REQUEST_NEW_RECORD && resultCode == RESULT_OK) {
             Geofauna geofauna = new Geofauna();
 
             geofauna.setDate(data.getStringExtra(DatabaseColumns.date));
@@ -103,7 +103,6 @@ public class MainActivity extends AppCompatActivity {
             mGeofaunaViewModel.insertAll(geofauna);
 
             Snackbar.make((CoordinatorLayout) findViewById(R.id.main_layout), getResources().getString(R.string.saved_successfully), Snackbar.LENGTH_SHORT).show();
-
         }
     }
 
@@ -147,13 +146,12 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public static class ExportDatabaseCSVTask extends AsyncTask<String, Void, Boolean> {
+    public class ExportDatabaseCSVTask extends AsyncTask<String, Void, Boolean> {
         private final ProgressDialog dialog ;
         private GeofaunaRoomDatabase userDatabase;
         Context context;
 
-        public ExportDatabaseCSVTask(Context context) {
-            this.userDatabase = userDatabase;
+        ExportDatabaseCSVTask(Context context) {
             this.dialog = new ProgressDialog(context);
             this.context = context;
         }
@@ -166,17 +164,11 @@ public class MainActivity extends AppCompatActivity {
         }
 
         protected Boolean doInBackground(final String... args) {
-
-            File exportDir = new File(Environment.getExternalStorageDirectory(), "/geofauna/");
-            Log.i("Environment.getExternal",Environment.getExternalStorageDirectory().toString());
-            Log.i("exportDir",exportDir.toString());
-            if (!exportDir.exists()) { boolean flag = exportDir.mkdir();
-            Log.i("falg","" + flag);
-            }
+            File exportDir = getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS);
+            if (!exportDir.exists()) { boolean flag = exportDir.mkdir();}
 
             File file = new File(exportDir, "Records.csv");
             try {
-                file.createNewFile();
                 CSVWriter csvWrite = new CSVWriter(new FileWriter(file));
                 String[] databaseColumns = DatabaseColumns.getDatabaseColumns();
                 csvWrite.writeNext(databaseColumns);
