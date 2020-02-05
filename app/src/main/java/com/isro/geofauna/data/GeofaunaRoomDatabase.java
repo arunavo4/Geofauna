@@ -21,7 +21,7 @@ public abstract class GeofaunaRoomDatabase extends RoomDatabase {
     static final ExecutorService databaseWriteExecutor =
             Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
-    static GeofaunaRoomDatabase getDatabase(final Context context) {
+    public static GeofaunaRoomDatabase getDatabase(final Context context) {
         if (INSTANCE == null) {
             synchronized (GeofaunaRoomDatabase.class) {
                 if (INSTANCE == null) {

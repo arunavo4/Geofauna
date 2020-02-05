@@ -17,6 +17,9 @@ public interface GeofaunaDao {
     @Query("SELECT * FROM geofauna ORDER BY Date ASC")
     LiveData<List<Geofauna>> getAllByDate();
 
+    @Query("SELECT * FROM geofauna ORDER BY Date ASC")
+    List<Geofauna> getAllByDateList();
+
     @Insert
     void insertAll(Geofauna... geofaunas);
 

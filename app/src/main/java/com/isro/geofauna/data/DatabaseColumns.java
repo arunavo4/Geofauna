@@ -42,4 +42,29 @@ public class DatabaseColumns {
     public static final String latitude = "Latitude";
 
     public static final String longitude = "Longitude";
+
+    public static String[] getDatabaseColumns(){
+
+        return new String[]{
+                uniqueSurveyId,
+                serialNo,
+                locality,
+                state,
+                collector,
+                habitat,
+                entomofauna,
+                otherInvertebrate,
+                vertebrate,
+                noOfExamples,
+                temperature,
+                humidity,
+                imageAnimal,
+                imageHabitat,
+                imageHost,
+                date,
+                time,
+                latitude,
+                longitude
+        };
+    }
 }
