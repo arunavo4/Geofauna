@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Geofauna</string>
-    <string name="empty"></string>
+    <string name="empty"> </string>
+    <string name="saved_successfully">Saved Successfully!</string>
 
     <!--Activitiy-->
     <string name="action_settings">Settings</string>
@@ -25,6 +26,8 @@
     <string name="ImageAnimal">Image Animal</string>
     <string name="ImageHabitat">Image Habitat</string>
     <string name="ImageHost">Image Host</string>
+
+    <string name="error_empty">This field cannot be Empty</string>
 
     <!--Geo-Tagging-->
     <string name="Geo_tagging">GeoTag Details</string>

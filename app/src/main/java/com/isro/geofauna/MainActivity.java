@@ -10,7 +10,6 @@ import com.isro.geofauna.data.DatabaseColumns;
 import com.isro.geofauna.data.Geofauna;
 import com.isro.geofauna.data.GeofaunaViewModel;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
@@ -86,8 +85,10 @@ public class MainActivity extends AppCompatActivity {
 
             mGeofaunaViewModel.insertAll(geofauna);
 
+            Snackbar.make((CoordinatorLayout) findViewById(R.id.main_layout), getResources().getString(R.string.saved_successfully), Snackbar.LENGTH_SHORT).show();
+
         } else {
-            Snackbar.make((CoordinatorLayout) findViewById(R.id.main_layout), "Saved Successfully!", Snackbar.LENGTH_SHORT).show();
+//            Snackbar.make((CoordinatorLayout) findViewById(R.id.main_layout), "Saved Successfully!", Snackbar.LENGTH_SHORT).show();
         }
     }
 

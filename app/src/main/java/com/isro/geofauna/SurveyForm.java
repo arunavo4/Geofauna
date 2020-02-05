@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Parcelable;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -30,6 +31,7 @@ import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.isro.geofauna.data.DatabaseColumns;
 import com.isro.geofauna.data.Geofauna;
 import com.isro.geofauna.data.GeofaunaDao;
@@ -60,6 +62,7 @@ public class SurveyForm extends AppCompatActivity {
     private AppCompatImageView host_cancel_btn;
 
     private int flag = -1;
+    private boolean error = false;
 
     static final int REQUEST_IMAGE_CAPTURE = 1;
 
@@ -90,13 +93,11 @@ public class SurveyForm extends AppCompatActivity {
         // Save Fab
         FloatingActionButton fab = findViewById(R.id.fab);
 
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent replyIntent = new Intent();
-                setResult(RESULT_OK, saveDataOnRoom(replyIntent));
+        fab.setOnClickListener(v -> {
+            Intent replyIntent = saveDataOnRoom(new Intent());
+            if(!error){
+                setResult(RESULT_OK, replyIntent);
                 finish();
-//                Snackbar.make((CoordinatorLayout) findViewById(R.id.survey_layout), "Saved Successfully!", Snackbar.LENGTH_SHORT).show()
             }
         });
 
@@ -183,6 +184,7 @@ public class SurveyForm extends AppCompatActivity {
     }
 
     private Intent saveDataOnRoom(Intent intent) {
+        error = false;  // Reset flag
 
         /* Geo-Tag */
         final TextView date_tv = (TextView) findViewById(R.id.date_holder_tv);
@@ -192,10 +194,18 @@ public class SurveyForm extends AppCompatActivity {
 
         /* Mandatory fields*/
         final TextInputEditText uniqueId = (TextInputEditText) findViewById(R.id.unique_id);
+        final TextInputLayout uniqueIdLayout = (TextInputLayout) findViewById(R.id.unique_id_layout);
+
         final TextInputEditText serialNo = (TextInputEditText) findViewById(R.id.serial_no);
+        final TextInputLayout serialNoLayout = (TextInputLayout) findViewById(R.id.serial_no_layout);
+
         final TextInputEditText locality = (TextInputEditText) findViewById(R.id.locality_tv);
+        final TextInputLayout localityLayout = (TextInputLayout) findViewById(R.id.locality_tv_layout);
+
         final AppCompatSpinner stateSpinner = (AppCompatSpinner) findViewById(R.id.state_spinner);
         final TextInputEditText collector = (TextInputEditText) findViewById(R.id.collector);
+        final TextInputLayout collectorLayout = (TextInputLayout) findViewById(R.id.collector_layout);
+
         final AppCompatSpinner habitatSpinner = (AppCompatSpinner) findViewById(R.id.habitat_spinner);
         final AppCompatSpinner entomofoSpinner = (AppCompatSpinner) findViewById(R.id.entomofauna_spinner);
         final AppCompatSpinner otherVerSpinner = (AppCompatSpinner) findViewById(R.id.otherInvertebrate_spinner);
@@ -206,22 +216,50 @@ public class SurveyForm extends AppCompatActivity {
         final TextInputEditText temperature = (TextInputEditText) findViewById(R.id.temperature);
         final TextInputEditText humidity = (TextInputEditText) findViewById(R.id.humidity);
 
-        //TODO: Write a data Validator
-
         intent.putExtra(DatabaseColumns.date, date_tv.getText().toString());
         intent.putExtra(DatabaseColumns.time, time_tv.getText().toString());
         intent.putExtra(DatabaseColumns.latitude, latitude_tv.getText().toString());
         intent.putExtra(DatabaseColumns.longitude, longitude_tv.getText().toString());
 
-        intent.putExtra(DatabaseColumns.uniqueSurveyId, Objects.requireNonNull(uniqueId.getText()).toString());
-        intent.putExtra(DatabaseColumns.serialNo, Objects.requireNonNull(serialNo.getText()).toString());
-        intent.putExtra(DatabaseColumns.locality, Objects.requireNonNull(locality.getText()).toString());
+        uniqueIdLayout.setError(null);
+        serialNoLayout.setError(null);
+        localityLayout.setError(null);
+        collectorLayout.setError(null);
+
+        if(TextUtils.isEmpty(uniqueId.getText())){
+            uniqueIdLayout.setError(getResources().getString(R.string.error_empty));
+            error = true;
+        }else{
+            intent.putExtra(DatabaseColumns.uniqueSurveyId, Objects.requireNonNull(uniqueId.getText()).toString());
+        }
+
+        if(TextUtils.isEmpty(serialNo.getText())){
+            serialNoLayout.setError(getResources().getString(R.string.error_empty));
+            error = true;
+        }else{
+            intent.putExtra(DatabaseColumns.serialNo, Objects.requireNonNull(serialNo.getText()).toString());
+        }
+
+        if(TextUtils.isEmpty(locality.getText())){
+            localityLayout.setError(getResources().getString(R.string.error_empty));
+            error = true;
+        }else{
+            intent.putExtra(DatabaseColumns.locality, Objects.requireNonNull(locality.getText()).toString());
+        }
+
+        if(TextUtils.isEmpty(collector.getText())){
+            collectorLayout.setError(getResources().getString(R.string.error_empty));
+            error = true;
+        }else{
+            intent.putExtra(DatabaseColumns.collector, Objects.requireNonNull(collector.getText()).toString());
+        }
+
         intent.putExtra(DatabaseColumns.state, Objects.requireNonNull(stateSpinner.getSelectedItem().toString()));
-        intent.putExtra(DatabaseColumns.collector, Objects.requireNonNull(collector.getText()).toString());
         intent.putExtra(DatabaseColumns.habitat, Objects.requireNonNull(habitatSpinner.getSelectedItem().toString()));
         intent.putExtra(DatabaseColumns.entomofauna, Objects.requireNonNull(entomofoSpinner.getSelectedItem().toString()));
         intent.putExtra(DatabaseColumns.otherInvertebrate, Objects.requireNonNull(otherVerSpinner.getSelectedItem().toString()));
         intent.putExtra(DatabaseColumns.vertebrate, Objects.requireNonNull(vertebrateSpinner.getSelectedItem().toString()));
+
         intent.putExtra(DatabaseColumns.noOfExamples, Objects.requireNonNull(examplesSpinner.getSelectedItem().toString()));
         intent.putExtra(DatabaseColumns.temperature, Objects.requireNonNull(temperature.getText()).toString());
         intent.putExtra(DatabaseColumns.humidity, Objects.requireNonNull(humidity.getText()).toString());

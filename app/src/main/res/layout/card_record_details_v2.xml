@@ -53,6 +53,7 @@
                     app:srcCompat="@drawable/ic_id_icon"/>
 
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/unique_id_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     style="@style/TextView.Hint">
@@ -83,6 +84,7 @@
                     app:srcCompat="@drawable/ic_hash"/>
 
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/serial_no_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     style="@style/TextView.Hint">
@@ -112,6 +114,7 @@
                     app:srcCompat="@drawable/ic_location"/>
 
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/locality_tv_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     style="@style/TextView.Hint">
@@ -177,6 +180,7 @@
                     app:srcCompat="@drawable/ic_user_icon"/>
 
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/collector_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     style="@style/TextView.Hint">
