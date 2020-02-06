@@ -10,7 +10,7 @@
 
     <dimen name="icon_24dp">24dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
-
+    <dimen name="bottom_tv_width_max">240dp</dimen>
 
     <!--Image Dims-->
     <dimen name="preview_w_h">150dp</dimen>

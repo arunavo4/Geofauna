@@ -20,8 +20,10 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
 
     private final LayoutInflater mInflater;
     private List<Geofauna> mGeofauna; // Cached copy of words
+    private Context context;
 
     public RecordAdapter(Context context) {
+        this.context = context;
         mInflater = LayoutInflater.from(context);
     }
 
@@ -51,6 +53,7 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
     @Override
     public int getItemCount() {
         if (mGeofauna != null)
+
             return mGeofauna.size();
         else return 0;
     }

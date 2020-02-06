@@ -152,4 +152,19 @@
         <item name="android:textSize">18sp</item>
     </style>
 
+    <!--No Records-->
+    <style name="TopTextView">
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:textSize">26sp</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+
+    <style name="BottomTextView">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textColor">@color/greyDark_alpha80</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
 </resources>

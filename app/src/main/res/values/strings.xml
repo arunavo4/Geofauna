@@ -7,6 +7,9 @@
 
     <string name="export_filename_default">Records</string>
 
+    <string name="no_records_top">No Records</string>
+    <string name="no_records_bottom">No Records found, add records using the + icon to view them here.</string>
+
     <!--Activitiy-->
     <string name="action_export">Export to csv</string>
 

@@ -1,6 +1,7 @@
 package com.isro.geofauna;
 
 import android.Manifest;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -35,6 +36,8 @@ import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import java.io.File;
@@ -63,15 +66,29 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        FrameLayout no_record = (FrameLayout) findViewById(R.id.img_no_record);
+
         mGeofaunaViewModel = new ViewModelProvider(this).get(GeofaunaViewModel.class);
 
-        mGeofaunaViewModel.getAllByDate().observe(this, adapter::setmGeofauna);
+        mGeofaunaViewModel.getAllByDate().observe(this, geofaunas -> {
+            adapter.setmGeofauna(geofaunas);
+            if(adapter.getItemCount() > 0){
+                recyclerView.setVisibility(View.VISIBLE);
+                no_record.setVisibility(View.INVISIBLE);
+            }else {
+                if (recyclerView.getVisibility() == View.VISIBLE && no_record.getVisibility() == View.INVISIBLE){
+                    recyclerView.setVisibility(View.INVISIBLE);
+                    no_record.setVisibility(View.VISIBLE);
+                }
+            }
+        });
 
         FloatingActionButton fab = findViewById(R.id.fab);
 
         fab.setOnClickListener(v -> startActivityForResult(new Intent(v.getContext(), SurveyForm.class), REQUEST_NEW_RECORD));
 
     }
+
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

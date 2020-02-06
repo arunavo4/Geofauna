@@ -48,42 +48,25 @@ public abstract class GeofaunaRoomDatabase extends RoomDatabase {
 
             // If you want to keep data through app restarts,
             // comment out the following block
-            databaseWriteExecutor.execute(() -> {
-                // Populate the database in the background.
-                // If you want to start with more words, just add them.
-                GeofaunaDao dao = INSTANCE.geofaunaDao();
-                dao.deleteAll();
-
-                Geofauna geofauna = new Geofauna();
-                geofauna.setUniqueSurveyId("GT67839");
-                geofauna.setDate("18/99/9999");
-                geofauna.setSerialNo("HJKOIDB");
-                geofauna.setLocality("Baroipur");
-                dao.insertAll(geofauna);
-
-            });
+//            databaseWriteExecutor.execute(() -> {
+//                // Populate the database in the background.
+//                // If you want to start with more words, just add them.
+//                GeofaunaDao dao = INSTANCE.geofaunaDao();
+//                dao.deleteAll();
+//
+//                Geofauna geofauna = new Geofauna();
+//                geofauna.setUniqueSurveyId("GT67839");
+//                geofauna.setDate("18/99/9999");
+//                geofauna.setSerialNo("HJKOIDB");
+//                geofauna.setLocality("Baroipur");
+//                dao.insertAll(geofauna);
+//
+//            });
         }
 
         @Override
         public void onOpen(@NonNull SupportSQLiteDatabase db) {
             super.onOpen(db);
-
-            // If you want to keep data through app restarts,
-            // comment out the following block
-            databaseWriteExecutor.execute(() -> {
-                // Populate the database in the background.
-                // If you want to start with more words, just add them.
-                GeofaunaDao dao = INSTANCE.geofaunaDao();
-                dao.deleteAll();
-
-                Geofauna geofauna = new Geofauna();
-                geofauna.setUniqueSurveyId("GT67839");
-                geofauna.setDate("18/01/2020");
-                geofauna.setSerialNo("HJKOIDB");
-                geofauna.setLocality("New Town, Kolkata");
-                dao.insertAll(geofauna);
-
-            });
 
         }
     };
