@@ -43,6 +43,8 @@ public class DatabaseColumns {
 
     public static final String longitude = "Longitude";
 
+    public static final String accuracy = "Accuracy";
+
     public static String[] getDatabaseColumns(){
 
         return new String[]{
@@ -51,6 +53,7 @@ public class DatabaseColumns {
                 locality,
                 state,
                 collector,
+                phone,
                 habitat,
                 entomofauna,
                 otherInvertebrate,
@@ -64,7 +67,8 @@ public class DatabaseColumns {
                 date,
                 time,
                 latitude,
-                longitude
+                longitude,
+                accuracy
         };
     }
 }

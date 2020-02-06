@@ -3,47 +3,32 @@ package com.isro.geofauna;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatSpinner;
 import androidx.appcompat.widget.Toolbar;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 import androidx.core.graphics.drawable.DrawableCompat;
-import androidx.room.DatabaseConfiguration;
-import androidx.room.InvalidationTracker;
-import androidx.sqlite.db.SupportSQLiteOpenHelper;
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
 
-import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.isro.geofauna.data.DatabaseColumns;
-import com.isro.geofauna.data.Geofauna;
-import com.isro.geofauna.data.GeofaunaDao;
-import com.isro.geofauna.data.GeofaunaRoomDatabase;
 import com.isro.geofauna.utils.PreferenceUtils;
 import com.isro.stupidlocation.StupidLocation;
 
@@ -52,14 +37,9 @@ import org.jetbrains.annotations.NotNull;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
-
-import static in.co.erudition.paper.misc.CompareDrawables.compareDrawableBytes;
 
 
 public class SurveyForm extends AppCompatActivity {
@@ -102,7 +82,7 @@ public class SurveyForm extends AppCompatActivity {
 
         fab.setOnClickListener(v -> {
             Intent replyIntent = saveDataOnRoom(new Intent());
-            if(!error){
+            if (!error) {
                 setResult(RESULT_OK, replyIntent);
                 finish();
             }
@@ -110,7 +90,7 @@ public class SurveyForm extends AppCompatActivity {
 
         /* Set Collector from Prefs */
         String collector = PreferenceUtils.getCollector(this.getApplicationContext());
-        if(!collector.isEmpty()){
+        if (!collector.isEmpty()) {
             final TextInputEditText collector_tv = (TextInputEditText) findViewById(R.id.collector);
             collector_tv.setText(collector);
         }
@@ -141,7 +121,7 @@ public class SurveyForm extends AppCompatActivity {
         imageViewAnimal.setOnClickListener(v -> {
             //Call Camera --> Set ImageView as Animal
             flag = 0;
-            if (checkPermisssions()){
+            if (checkPermisssions()) {
                 capturePhoto();
             }
         });
@@ -149,7 +129,7 @@ public class SurveyForm extends AppCompatActivity {
         imageViewHabitat.setOnClickListener(v -> {
             //Call Camera --> Set ImageView as habitat
             flag = 1;
-            if (checkPermisssions()){
+            if (checkPermisssions()) {
                 capturePhoto();
             }
         });
@@ -157,7 +137,7 @@ public class SurveyForm extends AppCompatActivity {
         imageViewHost.setOnClickListener(v -> {
             //Call Camera --> Set ImageView as Host
             flag = 2;
-            if (checkPermisssions()){
+            if (checkPermisssions()) {
                 capturePhoto();
             }
         });
@@ -185,9 +165,9 @@ public class SurveyForm extends AppCompatActivity {
         new StupidLocation(this, new StupidLocation.StupidLocationCallBack() {
             @Override
             public void getLocation(@NotNull Location location) {
-                lat_holder.setText(String.format(Locale.ENGLISH,"   %f   ",location.getLatitude()));
-                lag_holder.setText(String.format(Locale.ENGLISH,"   %f   ",location.getLongitude()));
-                accuracy_holder.setText(String.format(Locale.ENGLISH,"Accurate up to %.2f meters",location.getAccuracy()));
+                lat_holder.setText(String.format(Locale.ENGLISH, "   %f   ", location.getLatitude()));
+                lag_holder.setText(String.format(Locale.ENGLISH, "   %f   ", location.getLongitude()));
+                accuracy_holder.setText(String.format(Locale.ENGLISH, "Accurate up to %.2f meters", location.getAccuracy()));
             }
 
             @Override
@@ -211,6 +191,7 @@ public class SurveyForm extends AppCompatActivity {
         final TextView time_tv = (TextView) findViewById(R.id.time_holder_tv);
         final TextView latitude_tv = (TextView) findViewById(R.id.latitude_holder_tv);
         final TextView longitude_tv = (TextView) findViewById(R.id.longitude_holder_tv);
+        final TextView accuracy_tv = (TextView) findViewById(R.id.accuracy_tv);
 
         /* Mandatory fields*/
         final TextInputEditText uniqueId = (TextInputEditText) findViewById(R.id.unique_id);
@@ -240,37 +221,38 @@ public class SurveyForm extends AppCompatActivity {
         intent.putExtra(DatabaseColumns.time, time_tv.getText().toString());
         intent.putExtra(DatabaseColumns.latitude, latitude_tv.getText().toString());
         intent.putExtra(DatabaseColumns.longitude, longitude_tv.getText().toString());
+        intent.putExtra(DatabaseColumns.accuracy, accuracy_tv.getText().toString().substring(getResources().getInteger(R.integer.accuracy_string_trim_start)));
 
         uniqueIdLayout.setError(null);
         serialNoLayout.setError(null);
         localityLayout.setError(null);
         collectorLayout.setError(null);
 
-        if(TextUtils.isEmpty(uniqueId.getText())){
+        if (TextUtils.isEmpty(uniqueId.getText())) {
             uniqueIdLayout.setError(getResources().getString(R.string.error_empty));
             error = true;
-        }else{
+        } else {
             intent.putExtra(DatabaseColumns.uniqueSurveyId, Objects.requireNonNull(uniqueId.getText()).toString());
         }
 
-        if(TextUtils.isEmpty(serialNo.getText())){
+        if (TextUtils.isEmpty(serialNo.getText())) {
             serialNoLayout.setError(getResources().getString(R.string.error_empty));
             error = true;
-        }else{
+        } else {
             intent.putExtra(DatabaseColumns.serialNo, Objects.requireNonNull(serialNo.getText()).toString());
         }
 
-        if(TextUtils.isEmpty(locality.getText())){
+        if (TextUtils.isEmpty(locality.getText())) {
             localityLayout.setError(getResources().getString(R.string.error_empty));
             error = true;
-        }else{
+        } else {
             intent.putExtra(DatabaseColumns.locality, Objects.requireNonNull(locality.getText()).toString());
         }
 
-        if(TextUtils.isEmpty(collector.getText())){
+        if (TextUtils.isEmpty(collector.getText())) {
             collectorLayout.setError(getResources().getString(R.string.error_empty));
             error = true;
-        }else{
+        } else {
             intent.putExtra(DatabaseColumns.collector, Objects.requireNonNull(collector.getText()).toString());
         }
 
@@ -287,33 +269,41 @@ public class SurveyForm extends AppCompatActivity {
         return intent;
     }
 
-    private AppCompatImageView getImageView(){
-        switch (flag){
-            case 0: return imageViewAnimal;
-            case 1: return imageViewHabitat;
-            case 2: return imageViewHost;
-            default: return imageViewAnimal;
+    private AppCompatImageView getImageView() {
+        switch (flag) {
+            case 0:
+                return imageViewAnimal;
+            case 1:
+                return imageViewHabitat;
+            case 2:
+                return imageViewHost;
+            default:
+                return imageViewAnimal;
         }
     }
 
-    private AppCompatImageView getCancelBtn(){
-        switch (flag){
-            case 0: return animal_cancel_btn;
-            case 1: return habitat_cancel_btn;
-            case 2: return host_cancel_btn;
-            default: return animal_cancel_btn;
+    private AppCompatImageView getCancelBtn() {
+        switch (flag) {
+            case 0:
+                return animal_cancel_btn;
+            case 1:
+                return habitat_cancel_btn;
+            case 2:
+                return host_cancel_btn;
+            default:
+                return animal_cancel_btn;
         }
     }
 
     String currentPhotoPath;
 
-    private boolean checkPermisssions(){
+    private boolean checkPermisssions() {
         if ((ContextCompat.checkSelfPermission(this,
                 Manifest.permission.READ_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) &&
                 (ContextCompat.checkSelfPermission(this,
                         Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                        != PackageManager.PERMISSION_GRANTED)){
+                        != PackageManager.PERMISSION_GRANTED)) {
 
             // Permission is not granted
             ActivityCompat.requestPermissions(this,

@@ -4,6 +4,8 @@
     <string name="saved_successfully">Saved Successfully!</string>
     <string name="export_successful">Export Successful!</string>
 
+    <string name="export_filename_default">Records</string>
+
     <!--Activitiy-->
     <string name="action_export">Export to csv</string>
 

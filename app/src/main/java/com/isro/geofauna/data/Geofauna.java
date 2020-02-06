@@ -10,63 +10,69 @@ public class Geofauna {
 
     @PrimaryKey
     @NonNull
-    @ColumnInfo(name = "UniqueSurveyID")
+    @ColumnInfo(name = DatabaseColumns.uniqueSurveyId)
     private String uniqueSurveyId;
 
-    @ColumnInfo(name = "Serial_no")
+    @ColumnInfo(name = DatabaseColumns.serialNo)
     private String serialNo;
 
-    @ColumnInfo(name = "Locality")
+    @ColumnInfo(name = DatabaseColumns.locality)
     private String locality;
 
-    @ColumnInfo(name = "State")
+    @ColumnInfo(name = DatabaseColumns.state)
     private String state;
 
-    @ColumnInfo(name = "Collector")
+    @ColumnInfo(name = DatabaseColumns.collector)
     private String collector;
 
-    @ColumnInfo(name = "Habitat")
+    @ColumnInfo(name = DatabaseColumns.phone)
+    private String phone;
+
+    @ColumnInfo(name = DatabaseColumns.habitat)
     private String habitat;
 
-    @ColumnInfo(name = "Entomofauna")
+    @ColumnInfo(name = DatabaseColumns.entomofauna)
     private String entomofauna;
 
-    @ColumnInfo(name = "OtherInvertebrate")
+    @ColumnInfo(name = DatabaseColumns.otherInvertebrate)
     private String otherInvertebrate;
 
-    @ColumnInfo(name = "Vertebrate")
+    @ColumnInfo(name = DatabaseColumns.vertebrate)
     private String vertebrate;
 
-    @ColumnInfo(name = "NoOfExamples")
+    @ColumnInfo(name = DatabaseColumns.noOfExamples)
     private String noOfExamples;
 
-    @ColumnInfo(name = "Temperature")
+    @ColumnInfo(name = DatabaseColumns.temperature)
     private String temperature;
 
-    @ColumnInfo(name = "Humidity")
+    @ColumnInfo(name = DatabaseColumns.humidity)
     private String humidity;
 
-    @ColumnInfo(name = "ImageAnimal")
+    @ColumnInfo(name = DatabaseColumns.imageAnimal)
     private String imageAnimal;
 
-    @ColumnInfo(name = "ImageHabitat")
+    @ColumnInfo(name = DatabaseColumns.imageHabitat)
     private String imageHabitat;
 
-    @ColumnInfo(name = "ImageHost")
+    @ColumnInfo(name = DatabaseColumns.imageHost)
     private String imageHost;
 
     // Geo-Tag
-    @ColumnInfo(name = "Date")
+    @ColumnInfo(name = DatabaseColumns.date)
     private String date;
 
-    @ColumnInfo(name = "Time")
+    @ColumnInfo(name = DatabaseColumns.time)
     private String time;
 
-    @ColumnInfo(name = "Latitude")
+    @ColumnInfo(name = DatabaseColumns.latitude)
     private String latitude;
 
-    @ColumnInfo(name = "Longitude")
+    @ColumnInfo(name = DatabaseColumns.longitude)
     private String longitude;
+
+    @ColumnInfo(name = DatabaseColumns.accuracy)
+    private String accuracy;
 
 
     @NonNull
@@ -109,6 +115,10 @@ public class Geofauna {
     public void setCollector(String collector) {
         this.collector = collector;
     }
+
+    public String getPhone() { return phone; }
+
+    public void setPhone(String phone) { this.phone = phone; }
 
     public String getHabitat() {
         return habitat;
@@ -220,6 +230,14 @@ public class Geofauna {
 
     public void setLongitude(String longitude) {
         this.longitude = longitude;
+    }
+
+    public String getAccuracy() {
+        return accuracy;
+    }
+
+    public void setAccuracy(String accuracy) {
+        this.accuracy = accuracy;
     }
 
 }

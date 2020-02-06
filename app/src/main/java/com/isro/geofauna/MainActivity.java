@@ -17,6 +17,7 @@ import com.isro.geofauna.data.Geofauna;
 import com.isro.geofauna.data.GeofaunaRoomDatabase;
 import com.isro.geofauna.data.GeofaunaViewModel;
 import com.isro.geofauna.utils.CSVWriter;
+import com.isro.geofauna.utils.PreferenceUtils;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -38,6 +39,7 @@ import android.widget.Toast;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.ref.PhantomReference;
 import java.util.List;
 import java.util.Objects;
 
@@ -82,16 +84,18 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == REQUEST_NEW_RECORD && resultCode == RESULT_OK) {
             Geofauna geofauna = new Geofauna();
 
-            geofauna.setDate(data.getStringExtra(DatabaseColumns.date));
-            geofauna.setTime(data.getStringExtra(DatabaseColumns.time));
-            geofauna.setLongitude(data.getStringExtra(DatabaseColumns.longitude));
-            geofauna.setLatitude(data.getStringExtra(DatabaseColumns.latitude));
+            geofauna.setDate(Objects.requireNonNull(data.getStringExtra(DatabaseColumns.date)));
+            geofauna.setTime(Objects.requireNonNull(data.getStringExtra(DatabaseColumns.time)));
+            geofauna.setLongitude(Objects.requireNonNull(data.getStringExtra(DatabaseColumns.longitude)));
+            geofauna.setLatitude(Objects.requireNonNull(data.getStringExtra(DatabaseColumns.latitude)));
+            geofauna.setAccuracy(Objects.requireNonNull(data.getStringExtra(DatabaseColumns.accuracy)));
 
             geofauna.setUniqueSurveyId(Objects.requireNonNull(data.getStringExtra(DatabaseColumns.uniqueSurveyId)));
             geofauna.setSerialNo(Objects.requireNonNull(data.getStringExtra(DatabaseColumns.serialNo)));
             geofauna.setLocality(Objects.requireNonNull(data.getStringExtra(DatabaseColumns.locality)));
-            geofauna.setState(Objects.requireNonNull(data.getStringExtra(DatabaseColumns.serialNo)));
+            geofauna.setState(Objects.requireNonNull(data.getStringExtra(DatabaseColumns.state)));
             geofauna.setCollector(Objects.requireNonNull(data.getStringExtra(DatabaseColumns.collector)));
+            geofauna.setPhone(Objects.requireNonNull(PreferenceUtils.getPhone(MainActivity.this)));
             geofauna.setHabitat(Objects.requireNonNull(data.getStringExtra(DatabaseColumns.habitat)));
             geofauna.setEntomofauna(Objects.requireNonNull(data.getStringExtra(DatabaseColumns.entomofauna)));
             geofauna.setOtherInvertebrate(Objects.requireNonNull(data.getStringExtra(DatabaseColumns.otherInvertebrate)));
@@ -167,19 +171,20 @@ public class MainActivity extends AppCompatActivity {
             File exportDir = getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS);
             if (!exportDir.exists()) { boolean flag = exportDir.mkdir();}
 
-            File file = new File(exportDir, "Records.csv");
+            File file = new File(exportDir, getResources().getString(R.string.export_filename_default)+ ".csv");
             try {
                 CSVWriter csvWrite = new CSVWriter(new FileWriter(file));
                 String[] databaseColumns = DatabaseColumns.getDatabaseColumns();
                 csvWrite.writeNext(databaseColumns);
                 List<Geofauna> record = userDatabase.geofaunaDao().getAllByDateList();
                 for(int i=0; i<record.size(); i++){
-                    String[] StringArray ={String.valueOf(
-                            record.get(i).getUniqueSurveyId()),
+                    String[] StringArray ={
+                            record.get(i).getUniqueSurveyId(),
                             record.get(i).getSerialNo(),
                             record.get(i).getLocality(),
                             record.get(i).getState(),
                             record.get(i).getCollector(),
+                            record.get(i).getPhone(),
                             record.get(i).getHabitat(),
                             record.get(i).getEntomofauna(),
                             record.get(i).getOtherInvertebrate(),
@@ -189,7 +194,12 @@ public class MainActivity extends AppCompatActivity {
                             record.get(i).getHumidity(),
                             record.get(i).getImageAnimal(),
                             record.get(i).getImageHabitat(),
-                            record.get(i).getImageHost()
+                            record.get(i).getImageHost(),
+                            record.get(i).getDate(),
+                            record.get(i).getTime(),
+                            record.get(i).getLatitude(),
+                            record.get(i).getLongitude(),
+                            record.get(i).getAccuracy()
                     };
                     csvWrite.writeNext(StringArray);
                 }
