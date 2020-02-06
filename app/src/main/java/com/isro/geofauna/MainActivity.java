@@ -64,13 +64,7 @@ public class MainActivity extends AppCompatActivity {
 
         mGeofaunaViewModel = new ViewModelProvider(this).get(GeofaunaViewModel.class);
 
-        mGeofaunaViewModel.getAllByDate().observe(this, new Observer<List<Geofauna>>() {
-            @Override
-            public void onChanged(List<Geofauna> geofaunas) {
-                adapter.setmGeofauna(geofaunas);
-            }
-        });
-
+        mGeofaunaViewModel.getAllByDate().observe(this, adapter::setmGeofauna);
 
         FloatingActionButton fab = findViewById(R.id.fab);
 
@@ -103,6 +97,10 @@ public class MainActivity extends AppCompatActivity {
             geofauna.setNoOfExamples(Objects.requireNonNull(data.getStringExtra(DatabaseColumns.noOfExamples)));
             geofauna.setTemperature(Objects.requireNonNull(data.getStringExtra(DatabaseColumns.temperature)));
             geofauna.setHumidity(Objects.requireNonNull(data.getStringExtra(DatabaseColumns.humidity)));
+
+            geofauna.setImageAnimal(data.getStringExtra(DatabaseColumns.imageAnimal));
+            geofauna.setImageHabitat(data.getStringExtra(DatabaseColumns.imageHabitat));
+            geofauna.setImageHost(data.getStringExtra(DatabaseColumns.imageHost));
 
             mGeofaunaViewModel.insertAll(geofauna);
 

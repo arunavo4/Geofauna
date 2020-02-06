@@ -60,6 +60,8 @@ public class SurveyForm extends AppCompatActivity {
 
     private Uri photoUri;
 
+    private String[] imageFiles = new String[3];
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -266,6 +268,11 @@ public class SurveyForm extends AppCompatActivity {
         intent.putExtra(DatabaseColumns.temperature, Objects.requireNonNull(temperature.getText()).toString());
         intent.putExtra(DatabaseColumns.humidity, Objects.requireNonNull(humidity.getText()).toString());
 
+        /* Images */
+        intent.putExtra(DatabaseColumns.imageAnimal, imageFiles[0]);
+        intent.putExtra(DatabaseColumns.imageHabitat, imageFiles[1]);
+        intent.putExtra(DatabaseColumns.imageHost, imageFiles[2]);
+
         return intent;
     }
 
@@ -280,6 +287,23 @@ public class SurveyForm extends AppCompatActivity {
             default:
                 return imageViewAnimal;
         }
+    }
+
+    private String getImagePrefix(){
+        switch (flag) {
+            case 0:
+                return "ImgAnimal";
+            case 1:
+                return "ImgHabitat";
+            case 2:
+                return "ImgHost";
+            default:
+                return "Img";
+        }
+    }
+
+    private void setImageFileName(String fileName){
+        imageFiles[flag] = fileName;
     }
 
     private AppCompatImageView getCancelBtn() {
@@ -320,8 +344,8 @@ public class SurveyForm extends AppCompatActivity {
 
     private File createImageFile() throws IOException {
         // Create an image file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.ENGLISH).format(new Date());
-        String imageFileName = "JPEG_" + timeStamp + "_";
+        String timeStamp = new SimpleDateFormat("ddMMyyyy_HHmmss", Locale.ENGLISH).format(new Date());
+        String imageFileName = getImagePrefix() + "_" + timeStamp ;
         File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File image = File.createTempFile(
                 imageFileName,  /* prefix */
@@ -331,6 +355,7 @@ public class SurveyForm extends AppCompatActivity {
 
         // Save a file: path for use with ACTION_VIEW intents
         currentPhotoPath = image.getAbsolutePath();
+        setImageFileName(imageFileName + ".jpg");
         return image;
     }
 
