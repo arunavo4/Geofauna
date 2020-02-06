@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -15,6 +16,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatSpinner;
@@ -338,8 +340,20 @@ public class SurveyForm extends AppCompatActivity {
             // Permission has already been granted
             return true;
         }
-
         return false;
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        // After We Got the Required Permissions
+        if (requestCode == MY_PERMISSIONS_REQUEST_READ_STORAGE){
+            if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Permission has been granted
+                capturePhoto();
+            }
+        }
     }
 
     private File createImageFile() throws IOException {

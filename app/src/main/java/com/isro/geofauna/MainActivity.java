@@ -19,6 +19,7 @@ import com.isro.geofauna.data.GeofaunaViewModel;
 import com.isro.geofauna.utils.CSVWriter;
 import com.isro.geofauna.utils.PreferenceUtils;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
@@ -124,6 +125,7 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_export) {
+
             if ((ContextCompat.checkSelfPermission(this,
                     Manifest.permission.READ_EXTERNAL_STORAGE)
                     != PackageManager.PERMISSION_GRANTED) &&
@@ -139,13 +141,24 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 // Permission has already been granted
                 new ExportDatabaseCSVTask(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                Snackbar.make((CoordinatorLayout) findViewById(R.id.main_layout), getResources().getString(R.string.export_successful), Snackbar.LENGTH_SHORT).show();
                 return true;
             }
             return false;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        // After We Got the Required Permissions
+        if (requestCode == MY_PERMISSIONS_REQUEST_READ_STORAGE){
+            if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Permission has been granted
+                new ExportDatabaseCSVTask(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            }
+        }
     }
 
     public class ExportDatabaseCSVTask extends AsyncTask<String, Void, Boolean> {
@@ -212,9 +225,9 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(final Boolean success) {
             if (this.dialog.isShowing()) { this.dialog.dismiss(); }
             if (success) {
-                Toast.makeText(context, "Export successful!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, getResources().getString(R.string.export_successful), Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(context, "Export failed", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, getResources().getString(R.string.export_failed), Toast.LENGTH_SHORT).show();
             }
         }
     }
