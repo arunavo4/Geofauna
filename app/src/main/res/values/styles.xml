@@ -46,7 +46,7 @@
         <!--Text color of the Title-->
         <item name="android:textColorPrimary">@color/colorWhite</item>
         <!--The menu icon color-->
-        <item name="android:textColorSecondary">@color/colorPrimary</item>
+        <item name="android:textColorSecondary">@color/colorWhite</item>
         <item name="actionMenuTextColor">@color/colorWhite</item>
         <!--color of the other icons in toolbar-->
         <!--<item name="android:tint">@color/colorWhite</item>-->
