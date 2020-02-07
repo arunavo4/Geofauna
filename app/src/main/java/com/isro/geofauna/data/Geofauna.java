@@ -83,6 +83,9 @@ public class Geofauna {
     @ColumnInfo(name = DatabaseColumns.accuracy)
     private String accuracy;
 
+    @ColumnInfo(name = DatabaseColumns.timestamp)
+    private Long timestamp;
+
     /* Getters & Setters */
     @NonNull
     public String getUniqueSurveyId() {
@@ -274,4 +277,11 @@ public class Geofauna {
     }
 
 
+    public Long getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(Long timestamp) {
+        this.timestamp = timestamp;
+    }
 }

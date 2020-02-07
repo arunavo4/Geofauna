@@ -46,6 +46,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.ref.PhantomReference;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -133,6 +134,12 @@ public class MainActivity extends AppCompatActivity {
             geofauna.setImageAnimal(data.getStringExtra(DatabaseColumns.imageAnimal));
             geofauna.setImageHabitat(data.getStringExtra(DatabaseColumns.imageHabitat));
             geofauna.setImageHost(data.getStringExtra(DatabaseColumns.imageHost));
+
+            geofauna.setImageAnimalPath(data.getStringExtra(DatabaseColumns.imageAnimalPath));
+            geofauna.setImageHabitatPath(data.getStringExtra(DatabaseColumns.imageHabitatPath));
+            geofauna.setImageHostPath(data.getStringExtra(DatabaseColumns.imageHostPath));
+
+            geofauna.setTimestamp(data.getLongExtra(DatabaseColumns.timestamp, new Date().getTime()));
 
             mGeofaunaViewModel.insertAll(geofauna);
 

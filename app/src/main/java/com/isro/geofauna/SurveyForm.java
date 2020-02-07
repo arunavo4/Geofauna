@@ -280,6 +280,8 @@ public class SurveyForm extends AppCompatActivity {
         intent.putExtra(DatabaseColumns.imageHabitatPath, imageUris[1]);
         intent.putExtra(DatabaseColumns.imageHostPath, imageUris[2]);
 
+        intent.putExtra(DatabaseColumns.timestamp, new Date().getTime());
+
         return intent;
     }
 
