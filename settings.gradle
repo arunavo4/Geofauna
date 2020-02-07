@@ -1,2 +1,2 @@
-include ':app', ':stupidlocation'
+include ':app', ':stupidlocation', ':imageslider'
 rootProject.name='Geofauna'
