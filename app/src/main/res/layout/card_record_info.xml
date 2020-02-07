@@ -161,13 +161,16 @@
                     android:layout_gravity="center"
                     android:orientation="vertical">
 
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/img_holder"
+                    <com.isro.imageslider.ImageSlider
+                        android:id="@+id/img_slider"
                         android:layout_width="@dimen/preview_w_h"
                         android:layout_height="@dimen/preview_w_h"
-                        android:scaleType="centerCrop"
                         android:layout_margin="@dimen/spacer_4dp"
-                        app:srcCompat="@drawable/placeholder_image"/>
+                        app:placeholder="@drawable/placeholder_image"
+                        app:auto_cycle="true"
+                        app:corner_radius="5"
+                        app:period="1000"
+                        app:delay="0"/>
 
                 </LinearLayout>
 

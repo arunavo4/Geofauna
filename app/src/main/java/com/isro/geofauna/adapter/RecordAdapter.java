@@ -8,15 +8,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+import androidx.viewpager.widget.ViewPager;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.isro.geofauna.R;
 import com.isro.geofauna.data.Geofauna;
+import com.isro.imageslider.ImageSlider;
+import com.isro.imageslider.models.SlideModel;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -47,6 +51,19 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
             holder.serialNo.setText(current.getSerialNo());
             holder.locality.setText(current.getLocality());
             holder.date.setText(current.getDate());
+
+            ArrayList<SlideModel> img_list = new ArrayList<SlideModel>();
+
+            if(current.getImageAnimalPath()!=null && !current.getImageAnimalPath().isEmpty())
+                img_list.add(new SlideModel(new File(current.getImageAnimalPath())));
+
+            if(current.getImageHabitatPath()!=null && !current.getImageHabitatPath().isEmpty())
+                img_list.add(new SlideModel(new File(current.getImageHabitatPath())));
+
+            if(current.getImageHostPath()!=null && !current.getImageHostPath().isEmpty())
+                img_list.add(new SlideModel(new File(current.getImageHostPath())));
+
+            holder.imageSlider.setImageList(img_list, true);
 
             DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
                 @Override
@@ -101,6 +118,8 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
         private final TextView locality;
         private final TextView date;
 
+        private final ImageSlider imageSlider;
+
         private final ImageView delete_btn;
 
         public RecordViewHolder(@NonNull View itemView) {
@@ -110,6 +129,8 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
             serialNo = (TextView) itemView.findViewById(R.id.serial_no_holder_tv);
             locality = (TextView) itemView.findViewById(R.id.locality_holder_tv);
             date = (TextView) itemView.findViewById(R.id.date_holder_tv);
+
+            imageSlider = (ImageSlider) itemView.findViewById(R.id.img_slider);
 
             delete_btn = (ImageView) itemView.findViewById(R.id.delete_record);
         }

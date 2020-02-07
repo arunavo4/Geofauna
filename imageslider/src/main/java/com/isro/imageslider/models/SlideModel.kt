@@ -1,9 +1,11 @@
 package com.isro.imageslider.models
 
+import java.io.File
+
 class SlideModel {
 
     var imageUrl: String? = null
-    var imagePath: Int? = 0
+    var imagePath: File? = null
     var title: String? = null
     var centerCrop = false
 
@@ -11,7 +13,7 @@ class SlideModel {
         this.imageUrl = imageUrl
     }
 
-    constructor (imagePath: Int) {
+    constructor (imagePath: File) {
         this.imagePath = imagePath
     }
 
@@ -20,7 +22,7 @@ class SlideModel {
         this.title = title
     }
 
-    constructor (imagePath: Int, title: String?) {
+    constructor (imagePath: File, title: String?) {
         this.imagePath = imagePath
         this.title = title
     }
@@ -30,12 +32,12 @@ class SlideModel {
         this.centerCrop = centerCrop
     }
 
-    constructor (imagePath: Int, centerCrop: Boolean) {
+    constructor (imagePath: File, centerCrop: Boolean) {
         this.imagePath = imagePath
         this.centerCrop = centerCrop
     }
 
-    constructor (imagePath: Int, title: String?, centerCrop: Boolean) {
+    constructor (imagePath: File, title: String?, centerCrop: Boolean) {
         this.imagePath = imagePath
         this.title = title
         this.centerCrop = centerCrop
