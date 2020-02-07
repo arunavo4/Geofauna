@@ -63,6 +63,7 @@ public class SurveyForm extends AppCompatActivity {
     private Uri photoUri;
 
     private String[] imageFiles = new String[3];
+    private String[] imageUris = new String[3];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -275,6 +276,10 @@ public class SurveyForm extends AppCompatActivity {
         intent.putExtra(DatabaseColumns.imageHabitat, imageFiles[1]);
         intent.putExtra(DatabaseColumns.imageHost, imageFiles[2]);
 
+        intent.putExtra(DatabaseColumns.imageAnimalPath, imageUris[0]);
+        intent.putExtra(DatabaseColumns.imageHabitatPath, imageUris[1]);
+        intent.putExtra(DatabaseColumns.imageHostPath, imageUris[2]);
+
         return intent;
     }
 
@@ -306,6 +311,10 @@ public class SurveyForm extends AppCompatActivity {
 
     private void setImageFileName(String fileName){
         imageFiles[flag] = fileName;
+    }
+
+    private void setImageFilePath(String filePath){
+        imageUris[flag] = filePath;
     }
 
     private AppCompatImageView getCancelBtn() {
@@ -370,6 +379,7 @@ public class SurveyForm extends AppCompatActivity {
         // Save a file: path for use with ACTION_VIEW intents
         currentPhotoPath = image.getAbsolutePath();
         setImageFileName(imageFileName + ".jpg");
+        setImageFilePath(currentPhotoPath);
         return image;
     }
 

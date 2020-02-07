@@ -52,11 +52,20 @@ public class Geofauna {
     @ColumnInfo(name = DatabaseColumns.imageAnimal)
     private String imageAnimal;
 
+    @ColumnInfo(name = DatabaseColumns.imageAnimalPath)
+    private String imageAnimalPath;
+
     @ColumnInfo(name = DatabaseColumns.imageHabitat)
     private String imageHabitat;
 
+    @ColumnInfo(name = DatabaseColumns.imageHabitatPath)
+    private String imageHabitatPath;
+
     @ColumnInfo(name = DatabaseColumns.imageHost)
     private String imageHost;
+
+    @ColumnInfo(name = DatabaseColumns.imageHostPath)
+    private String imageHostPath;
 
     // Geo-Tag
     @ColumnInfo(name = DatabaseColumns.date)
@@ -74,7 +83,7 @@ public class Geofauna {
     @ColumnInfo(name = DatabaseColumns.accuracy)
     private String accuracy;
 
-
+    /* Getters & Setters */
     @NonNull
     public String getUniqueSurveyId() {
         return uniqueSurveyId;
@@ -239,5 +248,30 @@ public class Geofauna {
     public void setAccuracy(String accuracy) {
         this.accuracy = accuracy;
     }
+
+    public String getImageAnimalPath() {
+        return imageAnimalPath;
+    }
+
+    public void setImageAnimalPath(String imageAnimalPath) {
+        this.imageAnimalPath = imageAnimalPath;
+    }
+
+    public String getImageHabitatPath() {
+        return imageHabitatPath;
+    }
+
+    public void setImageHabitatPath(String imageHabitatPath) {
+        this.imageHabitatPath = imageHabitatPath;
+    }
+
+    public String getImageHostPath() {
+        return imageHostPath;
+    }
+
+    public void setImageHostPath(String imageHostPath) {
+        this.imageHostPath = imageHostPath;
+    }
+
 
 }

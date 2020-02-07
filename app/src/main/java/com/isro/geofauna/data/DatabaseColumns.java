@@ -1,7 +1,9 @@
 package com.isro.geofauna.data;
 
 public class DatabaseColumns {
-    
+
+    public static final String timestamp = "Timestamp";
+
     public static final String uniqueSurveyId = "UniqueSurveyID";
 
     public static final String serialNo = "Serial_no";
@@ -30,9 +32,15 @@ public class DatabaseColumns {
 
     public static final String imageAnimal = "ImageAnimal";
 
+    public static final String imageAnimalPath = "ImageAnimalPath";
+
     public static final String imageHabitat = "ImageHabitat";
 
+    public static final String imageHabitatPath = "ImageHabitatPath";
+
     public static final String imageHost = "ImageHost";
+
+    public static final String imageHostPath = "ImageHostPath";
 
     // Geo-Tag
     public static final String date = "Date";
