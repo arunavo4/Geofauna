@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:foreground="?android:attr/selectableItemBackground"
+    android:padding="@dimen/spacer_4dp"
+    android:layout_gravity="center_horizontal"
+    app:cardCornerRadius="0dp"
+    app:cardUseCompatPadding="false"
+    app:cardElevation="0dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingStart="@dimen/spacer_12dp"
+        android:paddingEnd="@dimen/spacer_12dp"
+        android:layout_margin="@dimen/spacer_6dp"
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:padding="@dimen/spacer_6dp"
+            app:srcCompat="@drawable/ic_person_black_24dp"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/collector_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:paddingStart="@dimen/spacer_6dp"
+            android:paddingEnd="@dimen/spacer_6dp"
+            android:textAppearance="@style/HintTextView.Large"
+            android:text="Arunavo Ray"/>
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/collector_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:padding="@dimen/spacer_6dp"
+            app:srcCompat="@drawable/ic_edit_black_24dp"/>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

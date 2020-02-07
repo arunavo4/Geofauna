@@ -104,6 +104,10 @@
         <item name="android:textSize">18sp</item>
     </style>
 
+    <style name="HintTextView.Large.Light" parent="HintTextView.Large">
+        <item name="android:textColor">@color/greyDark_alpha80</item>
+    </style>
+
     <style name="HeadTextView">
         <item name="android:fontFamily">sans-serif</item>
         <item name="android:textColor">@color/colorMaterialBlack_no_alpha</item>

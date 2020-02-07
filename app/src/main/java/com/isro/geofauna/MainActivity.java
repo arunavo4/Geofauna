@@ -22,6 +22,7 @@ import com.isro.geofauna.utils.PreferenceUtils;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.app.ActivityCompat;
@@ -32,6 +33,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Environment;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.Menu;
@@ -50,6 +52,7 @@ import java.util.Objects;
 public class MainActivity extends AppCompatActivity {
 
     public static final int REQUEST_NEW_RECORD = 10;
+    public static final int REQUEST_COLLECTOR_DATA = 11;
     public static final int MY_PERMISSIONS_REQUEST_READ_STORAGE = 1;
 
     private GeofaunaViewModel mGeofaunaViewModel;
@@ -60,6 +63,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        //Check if collector name is there
+        if(PreferenceUtils.getCollector(this.getApplicationContext()).isEmpty()){
+            // Go to Welcome Activity
+            startActivityForResult(new Intent(this, WelcomeActivity.class), REQUEST_COLLECTOR_DATA);
+        }
 
         RecyclerView recyclerView = findViewById(R.id.recyclerview);
         final RecordAdapter adapter = new RecordAdapter(this);
@@ -87,6 +96,11 @@ public class MainActivity extends AppCompatActivity {
 
         fab.setOnClickListener(v -> startActivityForResult(new Intent(v.getContext(), SurveyForm.class), REQUEST_NEW_RECORD));
 
+        // Collector Edit Button
+        AppCompatImageView collector_edit = (AppCompatImageView) findViewById(R.id.collector_edit);
+        collector_edit.setOnClickListener(
+                v -> startActivityForResult(new Intent(v.getContext(), WelcomeActivity.class), REQUEST_COLLECTOR_DATA)
+        );
     }
 
 
@@ -123,6 +137,12 @@ public class MainActivity extends AppCompatActivity {
             mGeofaunaViewModel.insertAll(geofauna);
 
             Snackbar.make((CoordinatorLayout) findViewById(R.id.main_layout), getResources().getString(R.string.saved_successfully), Snackbar.LENGTH_SHORT).show();
+        }
+        else if(requestCode == REQUEST_COLLECTOR_DATA && resultCode == RESULT_OK){
+            PreferenceUtils.setCollector(this.getApplicationContext(), Objects.requireNonNull(
+                    data.getStringExtra(DatabaseColumns.collector)));
+            PreferenceUtils.setPhone(this.getApplicationContext(), Objects.requireNonNull(
+                    data.getStringExtra(DatabaseColumns.phone)));
         }
     }
 

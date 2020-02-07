@@ -22,7 +22,10 @@
             android:background="@color/colorPrimary"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
+        <include layout="@layout/card_collector_view" />
+
     </com.google.android.material.appbar.AppBarLayout>
+
 
     <include layout="@layout/content_main" />
 

@@ -23,15 +23,7 @@ public class SplashActivity extends AppCompatActivity {
         int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_FULLSCREEN;
         decorView.setSystemUiVisibility(uiOptions);
 
-        Intent intent;
-        //Check if collector name is there
-        if(PreferenceUtils.getCollector(this.getApplicationContext()).isEmpty()){
-            // Go to Welcome Activity
-            intent = new Intent(this, WelcomeActivity.class);
-        }else {
-            //Go to main activity
-            intent = new Intent(this, MainActivity.class);
-        }
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
     }

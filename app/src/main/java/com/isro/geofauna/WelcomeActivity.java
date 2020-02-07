@@ -26,15 +26,21 @@ public class WelcomeActivity extends AppCompatActivity {
         FloatingActionButton fab = findViewById(R.id.fab);
 
         fab.setOnClickListener(v -> {
-            saveDataOnPrefs();
+            Intent welcomeIntent = saveDataOnPrefs(new Intent());
             if(!error){
-                startActivity(new Intent(this, MainActivity.class));
+                setResult(RESULT_OK, welcomeIntent);
                 finish();
             }
         });
+
+        //Check if collector name is there
+        if(PreferenceUtils.getCollector(this.getApplicationContext()).isEmpty()){
+            final TextInputEditText collector = (TextInputEditText) findViewById(R.id.collector);
+            collector.setText(PreferenceUtils.getCollector(this.getApplicationContext()));
+        }
     }
 
-    private void saveDataOnPrefs() {
+    private Intent saveDataOnPrefs(Intent intent) {
         error = false;  // Reset flag
 
         /* Mandatory fields*/
@@ -49,10 +55,11 @@ public class WelcomeActivity extends AppCompatActivity {
             collectorLayout.setError(getResources().getString(R.string.error_empty));
             error = true;
         }else{
-            PreferenceUtils.setCollector(this.getApplicationContext(), collector.getText().toString());
+            intent.putExtra(DatabaseColumns.collector, collector.getText().toString());
         }
+        intent.putExtra(DatabaseColumns.phone, Objects.requireNonNull(phone.getText()).toString());
 
-        PreferenceUtils.setPhone(this.getApplicationContext(), Objects.requireNonNull(phone.getText()).toString());
+        return intent;
     }
 
 }
