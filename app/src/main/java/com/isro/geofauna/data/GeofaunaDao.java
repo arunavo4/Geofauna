@@ -14,10 +14,10 @@ public interface GeofaunaDao {
     @Query("SELECT * FROM geofauna")
     LiveData<List<Geofauna>> getAll();
 
-    @Query("SELECT * FROM geofauna ORDER BY Date ASC")
+    @Query("SELECT * FROM geofauna ORDER BY Date DESC")
     LiveData<List<Geofauna>> getAllByDate();
 
-    @Query("SELECT * FROM geofauna ORDER BY Date ASC")
+    @Query("SELECT * FROM geofauna ORDER BY Date DESC")
     List<Geofauna> getAllByDateList();
 
     @Insert
