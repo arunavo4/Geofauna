@@ -100,6 +100,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/Temperature"
+                        android:inputType="numberDecimal"
                         android:maxLines="1"
                         android:textAppearance="@style/TextView" />
 
@@ -130,6 +131,7 @@
                         android:layout_height="wrap_content"
                         android:textAppearance="@style/TextView"
                         android:maxLines="1"
+                        android:inputType="number"
                         android:hint="@string/Humidity" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -146,7 +148,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:baselineAligned="false">
 
                     <FrameLayout
                         android:layout_width="wrap_content"
@@ -245,7 +248,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingTop="@dimen/spacer_12dp"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:baselineAligned="false">
 
                     <FrameLayout
                         android:layout_width="wrap_content"

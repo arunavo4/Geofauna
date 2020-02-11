@@ -65,6 +65,7 @@
                         android:textAppearance="@style/TextView"
                         android:textColorHint="@color/colorMaterialBlack_no_alpha"
                         android:maxLines="1"
+                        android:inputType="textCapCharacters"
                         android:hint="@string/Unique_Survey_Id" />
 
                 </com.google.android.material.textfield.TextInputLayout>
