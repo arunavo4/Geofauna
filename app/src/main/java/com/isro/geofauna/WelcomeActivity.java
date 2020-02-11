@@ -34,9 +34,13 @@ public class WelcomeActivity extends AppCompatActivity {
         });
 
         //Check if collector name is there
-        if(PreferenceUtils.getCollector(this.getApplicationContext()).isEmpty()){
+        if(!PreferenceUtils.getCollector(this.getApplicationContext()).isEmpty()){
             final TextInputEditText collector = (TextInputEditText) findViewById(R.id.collector);
             collector.setText(PreferenceUtils.getCollector(this.getApplicationContext()));
+        }
+        if(!PreferenceUtils.getPhone(this.getApplicationContext()).isEmpty()){
+            final TextInputEditText phone = (TextInputEditText) findViewById(R.id.phone);
+            phone.setText(PreferenceUtils.getPhone(this.getApplicationContext()));
         }
     }
 

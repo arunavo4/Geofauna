@@ -12,6 +12,7 @@ import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.TextInputEditText;
 import com.isro.geofauna.adapter.RecordAdapter;
 import com.isro.geofauna.data.DatabaseColumns;
 import com.isro.geofauna.data.Geofauna;
@@ -40,6 +41,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
@@ -97,11 +99,21 @@ public class MainActivity extends AppCompatActivity {
 
         fab.setOnClickListener(v -> startActivityForResult(new Intent(v.getContext(), SurveyForm.class), REQUEST_NEW_RECORD));
 
+        updateCollector();
+
         // Collector Edit Button
         AppCompatImageView collector_edit = (AppCompatImageView) findViewById(R.id.collector_edit);
         collector_edit.setOnClickListener(
                 v -> startActivityForResult(new Intent(v.getContext(), WelcomeActivity.class), REQUEST_COLLECTOR_DATA)
         );
+    }
+
+    private void updateCollector(){
+        //Check if collector name is there
+        if(!PreferenceUtils.getCollector(this.getApplicationContext()).isEmpty()){
+            final TextView collector = (TextView) findViewById(R.id.collector_tv);
+            collector.setText(PreferenceUtils.getCollector(this.getApplicationContext()));
+        }
     }
 
 
@@ -150,6 +162,9 @@ public class MainActivity extends AppCompatActivity {
                     data.getStringExtra(DatabaseColumns.collector)));
             PreferenceUtils.setPhone(this.getApplicationContext(), Objects.requireNonNull(
                     data.getStringExtra(DatabaseColumns.phone)));
+
+            //Update
+            updateCollector();
         }
     }
 

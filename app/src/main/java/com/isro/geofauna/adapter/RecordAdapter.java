@@ -63,7 +63,9 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
             if(current.getImageHostPath()!=null && !current.getImageHostPath().isEmpty())
                 img_list.add(new SlideModel(new File(current.getImageHostPath())));
 
-            holder.imageSlider.setImageList(img_list, true);
+            if (!img_list.isEmpty()){
+                holder.imageSlider.setImageList(img_list, true);
+            }
 
             DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
                 @Override
