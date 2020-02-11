@@ -8,6 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.viewpager.widget.ViewPager;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -15,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.isro.geofauna.R;
 import com.isro.geofauna.data.Geofauna;
+import com.isro.geofauna.data.GeofaunaViewModel;
 import com.isro.imageslider.ImageSlider;
 import com.isro.imageslider.models.SlideModel;
 
@@ -29,10 +33,12 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
     private final LayoutInflater mInflater;
     private List<Geofauna> mGeofauna; // Cached copy of words
     private Context context;
+    private GeofaunaViewModel mGeofaunaViewModel;
 
     public RecordAdapter(Context context) {
         this.context = context;
         mInflater = LayoutInflater.from(context);
+        mGeofaunaViewModel = new ViewModelProvider((ViewModelStoreOwner) context).get(GeofaunaViewModel.class);
     }
 
     @NonNull
@@ -72,6 +78,10 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
                 public void onClick(DialogInterface dialog, int choice) {
                     switch (choice) {
                         case DialogInterface.BUTTON_POSITIVE:
+                            // Delete Record from DB
+                            mGeofaunaViewModel.deleteRecord(current);
+
+                            // Remove the photos
 //                            try {
 //                                String rootDir = FileUtils.getImagesDir(getActivity());
 //                                boolean fileWasDeleted = FileUtils.deleteFile(rootDir + "/" + imageFilename);

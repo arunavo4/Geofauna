@@ -23,4 +23,8 @@ public class GeofaunaViewModel extends AndroidViewModel {
 
     public void insertAll(Geofauna geofauna) { mRepository.insertAll(geofauna); }
 
+    public void deleteAll() {mRepository.deleteAll();}
+
+    public void deleteRecord(Geofauna geofauna) {mRepository.deleteRecord(geofauna);}
+
 }

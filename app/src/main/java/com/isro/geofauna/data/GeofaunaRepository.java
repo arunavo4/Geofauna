@@ -1,6 +1,7 @@
 package com.isro.geofauna.data;
 
 import android.app.Application;
+import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
 
@@ -39,6 +40,43 @@ public class GeofaunaRepository {
         GeofaunaRoomDatabase.databaseWriteExecutor.execute(() -> {
             mGeoDao.insertAll(geofauna);
         });
+    }
+
+    public void deleteAll()  {
+        new deleteAllAsyncTask(mGeoDao).execute();
+    }
+
+    public void deleteRecord(Geofauna word)  {
+        new deleteRecordAsyncTask(mGeoDao).execute(word);
+    }
+
+    private static class deleteRecordAsyncTask extends AsyncTask<Geofauna, Void, Void> {
+        private GeofaunaDao mAsyncTaskDao;
+
+        deleteRecordAsyncTask(GeofaunaDao dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(final Geofauna... params) {
+            mAsyncTaskDao.deleteRecord(params[0]);
+            return null;
+        }
+    }
+
+
+    private static class deleteAllAsyncTask extends AsyncTask<Void, Void, Void> {
+        private GeofaunaDao mAsyncTaskDao;
+
+        deleteAllAsyncTask(GeofaunaDao dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            mAsyncTaskDao.deleteAll();
+            return null;
+        }
     }
 
 }

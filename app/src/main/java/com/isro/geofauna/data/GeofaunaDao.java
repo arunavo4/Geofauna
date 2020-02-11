@@ -2,6 +2,7 @@ package com.isro.geofauna.data;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 
@@ -25,5 +26,8 @@ public interface GeofaunaDao {
 
     @Query("DELETE FROM geofauna")
     void deleteAll();
+
+    @Delete
+    void deleteRecord(Geofauna geofauna);
 
 }
