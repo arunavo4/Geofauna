@@ -1,12 +1,15 @@
 package com.isro.geofauna.data;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "geofauna")
-public class Geofauna {
+public class Geofauna implements Parcelable {
 
     @PrimaryKey
     @NonNull
@@ -85,6 +88,50 @@ public class Geofauna {
 
     @ColumnInfo(name = DatabaseColumns.timestamp)
     private Long timestamp;
+
+    protected Geofauna(Parcel in) {
+        uniqueSurveyId = in.readString();
+        serialNo = in.readString();
+        locality = in.readString();
+        state = in.readString();
+        collector = in.readString();
+        phone = in.readString();
+        habitat = in.readString();
+        entomofauna = in.readString();
+        otherInvertebrate = in.readString();
+        vertebrate = in.readString();
+        noOfExamples = in.readString();
+        temperature = in.readString();
+        humidity = in.readString();
+        imageAnimal = in.readString();
+        imageAnimalPath = in.readString();
+        imageHabitat = in.readString();
+        imageHabitatPath = in.readString();
+        imageHost = in.readString();
+        imageHostPath = in.readString();
+        date = in.readString();
+        time = in.readString();
+        latitude = in.readString();
+        longitude = in.readString();
+        accuracy = in.readString();
+        if (in.readByte() == 0) {
+            timestamp = null;
+        } else {
+            timestamp = in.readLong();
+        }
+    }
+
+    public static final Creator<Geofauna> CREATOR = new Creator<Geofauna>() {
+        @Override
+        public Geofauna createFromParcel(Parcel in) {
+            return new Geofauna(in);
+        }
+
+        @Override
+        public Geofauna[] newArray(int size) {
+            return new Geofauna[size];
+        }
+    };
 
     /* Getters & Setters */
     @NonNull
@@ -283,5 +330,46 @@ public class Geofauna {
 
     public void setTimestamp(Long timestamp) {
         this.timestamp = timestamp;
+    }
+
+    // Parcelable Stuff
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(uniqueSurveyId);
+        dest.writeString(serialNo);
+        dest.writeString(locality);
+        dest.writeString(state);
+        dest.writeString(collector);
+        dest.writeString(phone);
+        dest.writeString(habitat);
+        dest.writeString(entomofauna);
+        dest.writeString(otherInvertebrate);
+        dest.writeString(vertebrate);
+        dest.writeString(noOfExamples);
+        dest.writeString(temperature);
+        dest.writeString(humidity);
+        dest.writeString(imageAnimal);
+        dest.writeString(imageAnimalPath);
+        dest.writeString(imageHabitat);
+        dest.writeString(imageHabitatPath);
+        dest.writeString(imageHost);
+        dest.writeString(imageHostPath);
+        dest.writeString(date);
+        dest.writeString(time);
+        dest.writeString(latitude);
+        dest.writeString(longitude);
+        dest.writeString(accuracy);
+        if (timestamp == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeLong(timestamp);
+        }
     }
 }
