@@ -387,7 +387,6 @@ public class SurveyForm extends AppCompatActivity {
 
 
     private void capturePhoto() {
-//        INTENT_ACTION_STILL_IMAGE_CAMERA
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
         photoUri = Uri.EMPTY;
