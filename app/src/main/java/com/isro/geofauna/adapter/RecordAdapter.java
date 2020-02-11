@@ -2,15 +2,18 @@ package com.isro.geofauna.adapter;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.FileUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelStoreOwner;
+import androidx.room.util.FileUtil;
 import androidx.viewpager.widget.ViewPager;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -78,19 +81,13 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
                 public void onClick(DialogInterface dialog, int choice) {
                     switch (choice) {
                         case DialogInterface.BUTTON_POSITIVE:
+                            // Remove the photos
+                            deleteFile(current.getImageAnimalPath());
+                            deleteFile(current.getImageHabitatPath());
+                            deleteFile(current.getImageHostPath());
+
                             // Delete Record from DB
                             mGeofaunaViewModel.deleteRecord(current);
-
-                            // Remove the photos
-//                            try {
-//                                String rootDir = FileUtils.getImagesDir(getActivity());
-//                                boolean fileWasDeleted = FileUtils.deleteFile(rootDir + "/" + imageFilename);
-//                                if (fileWasDeleted) {
-//                                    Toast.makeText(getActivity(), "The file was deleted", Toast.LENGTH_SHORT).show();
-//                                }
-//                            } catch (IOException ioe) {
-//                                // TODO let the user know the file couldn't be deleted
-//                            }
                             break;
                         case DialogInterface.BUTTON_NEGATIVE:
                             break;
@@ -108,6 +105,18 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
         } else {
             // Covers the case of data not being ready yet.
             Log.i("RecyclerView", "Data Missing");
+        }
+    }
+
+    private void deleteFile(String path){
+        if (!path.isEmpty()){
+            File file  = new File(path);
+            boolean fileWasDeleted = file.delete();
+            if (fileWasDeleted) {
+                Toast.makeText(context, context.getResources().getString(R.string.record_delete_msg), Toast.LENGTH_SHORT).show();
+            }else{
+                Toast.makeText(context, context.getResources().getString(R.string.record_delete_error_msg), Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
