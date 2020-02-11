@@ -2,6 +2,8 @@ package com.isro.geofauna.data;
 
 public class DatabaseColumns {
 
+    public static final String parcelGeofauna = "PARCEL_GEOFAUNA";
+
     public static final String timestamp = "Timestamp";
 
     public static final String uniqueSurveyId = "UniqueSurveyID";

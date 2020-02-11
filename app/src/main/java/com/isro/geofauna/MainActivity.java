@@ -56,7 +56,8 @@ public class MainActivity extends AppCompatActivity {
 
     public static final int REQUEST_NEW_RECORD = 10;
     public static final int REQUEST_RECORD_UPDATE = 11;
-    public static final int REQUEST_COLLECTOR_DATA = 12;
+    public static final int REQUEST_RECORD_VIEW = 12;
+    public static final int REQUEST_COLLECTOR_DATA = 13;
     public static final int MY_PERMISSIONS_REQUEST_READ_STORAGE = 1;
 
     private GeofaunaViewModel mGeofaunaViewModel;
@@ -122,43 +123,21 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == REQUEST_NEW_RECORD && resultCode == RESULT_OK) {
-            Geofauna geofauna = new Geofauna();
 
-            geofauna.setDate(Objects.requireNonNull(data.getStringExtra(DatabaseColumns.date)));
-            geofauna.setTime(Objects.requireNonNull(data.getStringExtra(DatabaseColumns.time)));
-            geofauna.setLongitude(Objects.requireNonNull(data.getStringExtra(DatabaseColumns.longitude)));
-            geofauna.setLatitude(Objects.requireNonNull(data.getStringExtra(DatabaseColumns.latitude)));
-            geofauna.setAccuracy(Objects.requireNonNull(data.getStringExtra(DatabaseColumns.accuracy)));
+            Geofauna geofauna = data.getParcelableExtra(DatabaseColumns.parcelGeofauna);
 
-            geofauna.setUniqueSurveyId(Objects.requireNonNull(data.getStringExtra(DatabaseColumns.uniqueSurveyId)));
-            geofauna.setSerialNo(Objects.requireNonNull(data.getStringExtra(DatabaseColumns.serialNo)));
-            geofauna.setLocality(Objects.requireNonNull(data.getStringExtra(DatabaseColumns.locality)));
-            geofauna.setState(Objects.requireNonNull(data.getStringExtra(DatabaseColumns.state)));
-            geofauna.setCollector(Objects.requireNonNull(data.getStringExtra(DatabaseColumns.collector)));
-            geofauna.setPhone(Objects.requireNonNull(PreferenceUtils.getPhone(MainActivity.this)));
-            geofauna.setHabitat(Objects.requireNonNull(data.getStringExtra(DatabaseColumns.habitat)));
-            geofauna.setEntomofauna(Objects.requireNonNull(data.getStringExtra(DatabaseColumns.entomofauna)));
-            geofauna.setOtherInvertebrate(Objects.requireNonNull(data.getStringExtra(DatabaseColumns.otherInvertebrate)));
-            geofauna.setVertebrate(Objects.requireNonNull(data.getStringExtra(DatabaseColumns.vertebrate)));
-            geofauna.setNoOfExamples(Objects.requireNonNull(data.getStringExtra(DatabaseColumns.noOfExamples)));
-            geofauna.setTemperature(Objects.requireNonNull(data.getStringExtra(DatabaseColumns.temperature)));
-            geofauna.setHumidity(Objects.requireNonNull(data.getStringExtra(DatabaseColumns.humidity)));
-
-            geofauna.setImageAnimal(data.getStringExtra(DatabaseColumns.imageAnimal));
-            geofauna.setImageHabitat(data.getStringExtra(DatabaseColumns.imageHabitat));
-            geofauna.setImageHost(data.getStringExtra(DatabaseColumns.imageHost));
-
-            geofauna.setImageAnimalPath(data.getStringExtra(DatabaseColumns.imageAnimalPath));
-            geofauna.setImageHabitatPath(data.getStringExtra(DatabaseColumns.imageHabitatPath));
-            geofauna.setImageHostPath(data.getStringExtra(DatabaseColumns.imageHostPath));
-
-            geofauna.setTimestamp(data.getLongExtra(DatabaseColumns.timestamp, new Date().getTime()));
-
-            mGeofaunaViewModel.insertAll(geofauna);
+            if (geofauna!=null)
+                mGeofaunaViewModel.insertAll(geofauna);
 
             Snackbar.make((CoordinatorLayout) findViewById(R.id.main_layout), getResources().getString(R.string.saved_successfully), Snackbar.LENGTH_SHORT).show();
         }
         else if(requestCode == REQUEST_RECORD_UPDATE && resultCode == RESULT_OK) {
+            Geofauna geofauna = data.getParcelableExtra(DatabaseColumns.parcelGeofauna);
+
+            if (geofauna!=null)
+                mGeofaunaViewModel.updateRecord(geofauna);
+
+            Snackbar.make((CoordinatorLayout) findViewById(R.id.main_layout), getResources().getString(R.string.updated_successfully), Snackbar.LENGTH_SHORT).show();
 
         }
         else if(requestCode == REQUEST_COLLECTOR_DATA && resultCode == RESULT_OK){

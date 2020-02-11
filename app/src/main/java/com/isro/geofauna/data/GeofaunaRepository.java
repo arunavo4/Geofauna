@@ -42,6 +42,12 @@ public class GeofaunaRepository {
         });
     }
 
+    void updateRecord(Geofauna geofauna) {
+        GeofaunaRoomDatabase.databaseWriteExecutor.execute(() -> {
+            mGeoDao.updateGeofauna(geofauna);
+        });
+    }
+
     public void deleteAll()  {
         new deleteAllAsyncTask(mGeoDao).execute();
     }

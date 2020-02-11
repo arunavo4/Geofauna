@@ -8,6 +8,8 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.util.Objects;
+
 @Entity(tableName = "geofauna")
 public class Geofauna implements Parcelable {
 
@@ -89,8 +91,10 @@ public class Geofauna implements Parcelable {
     @ColumnInfo(name = DatabaseColumns.timestamp)
     private Long timestamp;
 
+    public Geofauna(){}
+
     protected Geofauna(Parcel in) {
-        uniqueSurveyId = in.readString();
+        uniqueSurveyId = Objects.requireNonNull(in.readString());
         serialNo = in.readString();
         locality = in.readString();
         state = in.readString();

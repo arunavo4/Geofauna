@@ -2,6 +2,7 @@
     <string name="app_name">Geofauna</string>
     <string name="empty"> </string>
     <string name="saved_successfully">Saved Successfully!</string>
+    <string name="updated_successfully">Updated Successfully!</string>
     <string name="export_successful">Export Successful!</string>
     <string name="export_failed">Export Failed!</string>
 
@@ -54,7 +55,7 @@
     <string name="Longitude">Longitude</string>
     <string name="lang_holder">88° 21\' 50.0112\'\' E</string>
 
-    <string name="accuracy">Accurate up to 2 meters</string>
+    <string name="accuracy">Accurate up to</string>
 
     <!--Image Card-->
     <string name="Title_holder">Title</string>

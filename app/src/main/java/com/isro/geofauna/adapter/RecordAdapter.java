@@ -1,5 +1,6 @@
 package com.isro.geofauna.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -20,8 +21,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.isro.geofauna.MainActivity;
 import com.isro.geofauna.R;
 import com.isro.geofauna.SurveyForm;
+import com.isro.geofauna.data.DatabaseColumns;
 import com.isro.geofauna.data.Geofauna;
 import com.isro.geofauna.data.GeofaunaViewModel;
 import com.isro.imageslider.ImageSlider;
@@ -162,8 +165,13 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
 
         @Override
         public void onClick(View v) {
-            Intent viewIntent = new Intent(context, SurveyForm.class);
-
+            int position = getAdapterPosition();
+            if (position != RecyclerView.NO_POSITION) {
+                Intent viewIntent = new Intent(context, SurveyForm.class);
+                viewIntent.putExtra("ACTIVITY_CODE", MainActivity.REQUEST_RECORD_VIEW);
+                viewIntent.putExtra(DatabaseColumns.parcelGeofauna, mGeofauna.get(position));
+                ((Activity) context).startActivityForResult(viewIntent, MainActivity.REQUEST_RECORD_UPDATE);
+            }
         }
     }
 }

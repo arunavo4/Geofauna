@@ -11,9 +11,12 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -31,6 +34,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.isro.geofauna.data.DatabaseColumns;
+import com.isro.geofauna.data.Geofauna;
 import com.isro.geofauna.utils.PreferenceUtils;
 import com.isro.stupidlocation.StupidLocation;
 
@@ -39,7 +43,10 @@ import org.jetbrains.annotations.NotNull;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
@@ -93,13 +100,6 @@ public class SurveyForm extends AppCompatActivity {
             }
         });
 
-        /* Set Collector from Prefs */
-        String collector = PreferenceUtils.getCollector(this.getApplicationContext());
-        if (!collector.isEmpty()) {
-            final TextInputEditText collector_tv = (TextInputEditText) findViewById(R.id.collector);
-            collector_tv.setText(collector);
-        }
-
         /* Link Camera */
         imageViewAnimal = (AppCompatImageView) findViewById(R.id.animal_holder);
         imageViewHabitat = (AppCompatImageView) findViewById(R.id.habitat_holder);
@@ -123,69 +123,156 @@ public class SurveyForm extends AppCompatActivity {
             host_cancel_btn.setVisibility(View.INVISIBLE);
         });
 
-        imageViewAnimal.setOnClickListener(v -> {
-            //Call Camera --> Set ImageView as Animal
-            flag = 0;
-            if (checkPermisssions()) {
-                capturePhoto();
-            }
-        });
+        // Check if Intent Request is to view
+        Intent intent = getIntent();
+        intent.getIntExtra("ACTIVITY_CODE", -1);
+        if (intent.getIntExtra("ACTIVITY_CODE", -1)!=-1){
+            populateViews(Objects.requireNonNull(intent.getParcelableExtra(DatabaseColumns.parcelGeofauna)));
+        }
+        else{
 
-        imageViewHabitat.setOnClickListener(v -> {
-            //Call Camera --> Set ImageView as habitat
-            flag = 1;
-            if (checkPermisssions()) {
-                capturePhoto();
-            }
-        });
-
-        imageViewHost.setOnClickListener(v -> {
-            //Call Camera --> Set ImageView as Host
-            flag = 2;
-            if (checkPermisssions()) {
-                capturePhoto();
-            }
-        });
-
-
-        /* Geo-Tag Date Time */
-        TextView date_holder = (TextView) findViewById(R.id.date_holder_tv);
-        TextView time_holder = (TextView) findViewById(R.id.time_holder_tv);
-        final TextView lat_holder = (TextView) findViewById(R.id.latitude_holder_tv);
-        final TextView lag_holder = (TextView) findViewById(R.id.longitude_holder_tv);
-
-        final TextView accuracy_holder = (TextView) findViewById(R.id.accuracy_tv);
-
-        Date today = new Date();
-        SimpleDateFormat dateformat = new SimpleDateFormat("dd/MM/YYYY", Locale.ENGLISH);
-        SimpleDateFormat timeformat = new SimpleDateFormat("HH:mm", Locale.ENGLISH);
-        String date = dateformat.format(today);
-        String time = timeformat.format(today);
-
-        date_holder.setText(date);
-        time_holder.setText(time);
-
-        /* Get Geo-Tagging from Location Provider */
-
-        new StupidLocation(this, new StupidLocation.StupidLocationCallBack() {
-            @Override
-            public void getLocation(@NotNull Location location) {
-                lat_holder.setText(String.format(Locale.ENGLISH, "   %f   ", location.getLatitude()));
-                lag_holder.setText(String.format(Locale.ENGLISH, "   %f   ", location.getLongitude()));
-                accuracy_holder.setText(String.format(Locale.ENGLISH, "Accurate up to %.2f meters", location.getAccuracy()));
+            /* Set Collector from Prefs */
+            String collector = PreferenceUtils.getCollector(this.getApplicationContext());
+            if (!collector.isEmpty()) {
+                final TextInputEditText collector_tv = (TextInputEditText) findViewById(R.id.collector);
+                collector_tv.setText(collector);
             }
 
-            @Override
-            public void locationSettingFailed() {
-                Log.i("Location", "setting failed");
-            }
+            imageViewAnimal.setOnClickListener(v -> {
+                //Call Camera --> Set ImageView as Animal
+                flag = 0;
+                if (checkPermisssions()) {
+                    capturePhoto();
+                }
+            });
 
-            @Override
-            public void permissionDenied() {
-                Log.i("Location", "permission  denied");
-            }
-        });
+            imageViewHabitat.setOnClickListener(v -> {
+                //Call Camera --> Set ImageView as habitat
+                flag = 1;
+                if (checkPermisssions()) {
+                    capturePhoto();
+                }
+            });
 
+            imageViewHost.setOnClickListener(v -> {
+                //Call Camera --> Set ImageView as Host
+                flag = 2;
+                if (checkPermisssions()) {
+                    capturePhoto();
+                }
+            });
+
+
+            /* Geo-Tag Date Time */
+            TextView date_holder = (TextView) findViewById(R.id.date_holder_tv);
+            TextView time_holder = (TextView) findViewById(R.id.time_holder_tv);
+            final TextView lat_holder = (TextView) findViewById(R.id.latitude_holder_tv);
+            final TextView lag_holder = (TextView) findViewById(R.id.longitude_holder_tv);
+
+            final TextView accuracy_holder = (TextView) findViewById(R.id.accuracy_tv);
+
+            Date today = new Date();
+            SimpleDateFormat dateformat = new SimpleDateFormat("dd/MM/YYYY", Locale.ENGLISH);
+            SimpleDateFormat timeformat = new SimpleDateFormat("HH:mm", Locale.ENGLISH);
+            String date = dateformat.format(today);
+            String time = timeformat.format(today);
+
+            date_holder.setText(date);
+            time_holder.setText(time);
+
+            /* Get Geo-Tagging from Location Provider */
+
+            new StupidLocation(this, new StupidLocation.StupidLocationCallBack() {
+                @Override
+                public void getLocation(@NotNull Location location) {
+                    lat_holder.setText(String.format(Locale.ENGLISH, "   %f   ", location.getLatitude()));
+                    lag_holder.setText(String.format(Locale.ENGLISH, "   %f   ", location.getLongitude()));
+                    accuracy_holder.setText(String.format(Locale.ENGLISH, "Accurate up to %.2f meters", location.getAccuracy()));
+                }
+
+                @Override
+                public void locationSettingFailed() {
+                    Log.i("Location", "setting failed");
+                }
+
+                @Override
+                public void permissionDenied() {
+                    Log.i("Location", "permission  denied");
+                }
+            });
+        }
+
+    }
+
+    private void populateViews(Geofauna geofauna) {
+        /* Geo-Tag */
+        final TextView date_tv = (TextView) findViewById(R.id.date_holder_tv);
+        final TextView time_tv = (TextView) findViewById(R.id.time_holder_tv);
+        final TextView latitude_tv = (TextView) findViewById(R.id.latitude_holder_tv);
+        final TextView longitude_tv = (TextView) findViewById(R.id.longitude_holder_tv);
+        final TextView accuracy_tv = (TextView) findViewById(R.id.accuracy_tv);
+
+        /* Mandatory fields*/
+        final TextInputEditText uniqueId = (TextInputEditText) findViewById(R.id.unique_id);
+        final TextInputLayout uniqueIdLayout = (TextInputLayout) findViewById(R.id.unique_id_layout);
+
+        final TextInputEditText serialNo = (TextInputEditText) findViewById(R.id.serial_no);
+        final TextInputLayout serialNoLayout = (TextInputLayout) findViewById(R.id.serial_no_layout);
+
+        final TextInputEditText locality = (TextInputEditText) findViewById(R.id.locality_tv);
+        final TextInputLayout localityLayout = (TextInputLayout) findViewById(R.id.locality_tv_layout);
+
+        final AppCompatSpinner stateSpinner = (AppCompatSpinner) findViewById(R.id.state_spinner);
+        final TextInputEditText collector = (TextInputEditText) findViewById(R.id.collector);
+        final TextInputLayout collectorLayout = (TextInputLayout) findViewById(R.id.collector_layout);
+
+        final AppCompatSpinner habitatSpinner = (AppCompatSpinner) findViewById(R.id.habitat_spinner);
+        final AppCompatSpinner entomofoSpinner = (AppCompatSpinner) findViewById(R.id.entomofauna_spinner);
+        final AppCompatSpinner otherVerSpinner = (AppCompatSpinner) findViewById(R.id.otherInvertebrate_spinner);
+        final AppCompatSpinner vertebrateSpinner = (AppCompatSpinner) findViewById(R.id.vertebrate_spinner);
+
+        /* Optional */
+        final AppCompatSpinner examplesSpinner = (AppCompatSpinner) findViewById(R.id.examples_spinner);
+        final TextInputEditText temperature = (TextInputEditText) findViewById(R.id.temperature);
+        final TextInputEditText humidity = (TextInputEditText) findViewById(R.id.humidity);
+
+        uniqueIdLayout.setError(null);
+        serialNoLayout.setError(null);
+        localityLayout.setError(null);
+        collectorLayout.setError(null);
+
+        date_tv.setText(geofauna.getDate());
+        time_tv.setText(geofauna.getTime());
+        latitude_tv.setText(geofauna.getLatitude());
+        longitude_tv.setText(geofauna.getLongitude());
+        accuracy_tv.setText(String.format(Locale.ENGLISH, "Accurate up to %s", geofauna.getAccuracy()));
+
+        uniqueId.setText(geofauna.getUniqueSurveyId());
+        uniqueId.setInputType(InputType.TYPE_NULL);     // Disable editing unique id
+
+        serialNo.setText(geofauna.getSerialNo());
+        locality.setText(geofauna.getLocality());
+        collector.setText(geofauna.getCollector());
+        stateSpinner.setSelection(getStateList().indexOf(geofauna.getState()));
+        habitatSpinner.setSelection(getHabitatList().indexOf(geofauna.getHabitat()));
+        entomofoSpinner.setSelection(getBinaryList().indexOf(geofauna.getEntomofauna()));
+        otherVerSpinner.setSelection(getBinaryList().indexOf(geofauna.getOtherInvertebrate()));
+        vertebrateSpinner.setSelection(getBinaryList().indexOf(geofauna.getVertebrate()));
+
+        examplesSpinner.setSelection(getNoOfExamplesList().indexOf(geofauna.getNoOfExamples()));
+        temperature.setText(geofauna.getTemperature());
+        humidity.setText(geofauna.getHumidity());
+
+        // Set images if available
+        setImageView(imageViewAnimal, geofauna.getImageAnimalPath());
+        setImageView(imageViewHabitat, geofauna.getImageHabitatPath());
+        setImageView(imageViewHost, geofauna.getImageHostPath());
+    }
+
+    private void setImageView(ImageView imageView, String path){
+        if (path!=null && !path.isEmpty()){
+            imageView.setImageBitmap(BitmapFactory.decodeFile(path));
+        }
     }
 
     private Intent saveDataOnRoom(Intent intent) {
@@ -222,65 +309,70 @@ public class SurveyForm extends AppCompatActivity {
         final TextInputEditText temperature = (TextInputEditText) findViewById(R.id.temperature);
         final TextInputEditText humidity = (TextInputEditText) findViewById(R.id.humidity);
 
-        intent.putExtra(DatabaseColumns.date, date_tv.getText().toString());
-        intent.putExtra(DatabaseColumns.time, time_tv.getText().toString());
-        intent.putExtra(DatabaseColumns.latitude, latitude_tv.getText().toString());
-        intent.putExtra(DatabaseColumns.longitude, longitude_tv.getText().toString());
-        intent.putExtra(DatabaseColumns.accuracy, accuracy_tv.getText().toString().substring(getResources().getInteger(R.integer.accuracy_string_trim_start)));
-
         uniqueIdLayout.setError(null);
         serialNoLayout.setError(null);
         localityLayout.setError(null);
         collectorLayout.setError(null);
 
+        Geofauna geofauna = new Geofauna();
+
+        geofauna.setDate(date_tv.getText().toString());
+        geofauna.setTime(time_tv.getText().toString());
+        geofauna.setLatitude(latitude_tv.getText().toString());
+        geofauna.setLongitude(longitude_tv.getText().toString());
+        geofauna.setAccuracy(accuracy_tv.getText().toString().substring(getResources().getInteger(R.integer.accuracy_string_trim_start)));
+
+
         if (TextUtils.isEmpty(uniqueId.getText())) {
             uniqueIdLayout.setError(getResources().getString(R.string.error_empty));
             error = true;
         } else {
-            intent.putExtra(DatabaseColumns.uniqueSurveyId, Objects.requireNonNull(uniqueId.getText()).toString());
+            geofauna.setUniqueSurveyId(Objects.requireNonNull(uniqueId.getText()).toString());
         }
 
         if (TextUtils.isEmpty(serialNo.getText())) {
             serialNoLayout.setError(getResources().getString(R.string.error_empty));
             error = true;
         } else {
-            intent.putExtra(DatabaseColumns.serialNo, Objects.requireNonNull(serialNo.getText()).toString());
+            geofauna.setSerialNo(Objects.requireNonNull(serialNo.getText()).toString());
         }
 
         if (TextUtils.isEmpty(locality.getText())) {
             localityLayout.setError(getResources().getString(R.string.error_empty));
             error = true;
         } else {
-            intent.putExtra(DatabaseColumns.locality, Objects.requireNonNull(locality.getText()).toString());
+            geofauna.setLocality(Objects.requireNonNull(locality.getText()).toString());
         }
 
         if (TextUtils.isEmpty(collector.getText())) {
             collectorLayout.setError(getResources().getString(R.string.error_empty));
             error = true;
         } else {
-            intent.putExtra(DatabaseColumns.collector, Objects.requireNonNull(collector.getText()).toString());
+            geofauna.setCollector(Objects.requireNonNull(collector.getText()).toString());
         }
 
-        intent.putExtra(DatabaseColumns.state, Objects.requireNonNull(stateSpinner.getSelectedItem().toString()));
-        intent.putExtra(DatabaseColumns.habitat, Objects.requireNonNull(habitatSpinner.getSelectedItem().toString()));
-        intent.putExtra(DatabaseColumns.entomofauna, Objects.requireNonNull(entomofoSpinner.getSelectedItem().toString()));
-        intent.putExtra(DatabaseColumns.otherInvertebrate, Objects.requireNonNull(otherVerSpinner.getSelectedItem().toString()));
-        intent.putExtra(DatabaseColumns.vertebrate, Objects.requireNonNull(vertebrateSpinner.getSelectedItem().toString()));
+        geofauna.setState(Objects.requireNonNull(stateSpinner.getSelectedItem().toString()));
+        geofauna.setHabitat(Objects.requireNonNull(habitatSpinner.getSelectedItem().toString()));
+        geofauna.setEntomofauna(Objects.requireNonNull(entomofoSpinner.getSelectedItem().toString()));
+        geofauna.setOtherInvertebrate(Objects.requireNonNull(otherVerSpinner.getSelectedItem().toString()));
+        geofauna.setVertebrate(Objects.requireNonNull(vertebrateSpinner.getSelectedItem().toString()));
 
-        intent.putExtra(DatabaseColumns.noOfExamples, Objects.requireNonNull(examplesSpinner.getSelectedItem().toString()));
-        intent.putExtra(DatabaseColumns.temperature, Objects.requireNonNull(temperature.getText()).toString());
-        intent.putExtra(DatabaseColumns.humidity, Objects.requireNonNull(humidity.getText()).toString());
+        geofauna.setNoOfExamples(Objects.requireNonNull(examplesSpinner.getSelectedItem().toString()));
+        geofauna.setTemperature(Objects.requireNonNull(temperature.getText()).toString());
+        geofauna.setHumidity(Objects.requireNonNull(humidity.getText()).toString());
 
         /* Images */
-        intent.putExtra(DatabaseColumns.imageAnimal, imageFiles[0]);
-        intent.putExtra(DatabaseColumns.imageHabitat, imageFiles[1]);
-        intent.putExtra(DatabaseColumns.imageHost, imageFiles[2]);
+        geofauna.setImageAnimal(imageFiles[0]);
+        geofauna.setImageHabitat(imageFiles[1]);
+        geofauna.setImageHost(imageFiles[2]);
 
-        intent.putExtra(DatabaseColumns.imageAnimalPath, imageUris[0]);
-        intent.putExtra(DatabaseColumns.imageHabitatPath, imageUris[1]);
-        intent.putExtra(DatabaseColumns.imageHostPath, imageUris[2]);
+        geofauna.setImageAnimalPath(imageUris[0]);
+        geofauna.setImageHabitatPath(imageUris[1]);
+        geofauna.setImageHostPath(imageUris[2]);
 
-        intent.putExtra(DatabaseColumns.timestamp, new Date().getTime());
+        geofauna.setTimestamp(new Date().getTime());
+
+        intent.putExtra(DatabaseColumns.parcelGeofauna, geofauna);
 
         return intent;
     }
@@ -427,6 +519,24 @@ public class SurveyForm extends AppCompatActivity {
             }
             // Do other work with full size photo saved in locationForPhotos
         }
+    }
+
+    /* Array Getters */
+
+    private List<String> getHabitatList(){
+        return new LinkedList<>(Arrays.asList(getResources().getStringArray(R.array.Habitat_items)));
+    }
+
+    private List<String> getNoOfExamplesList(){
+        return new LinkedList<>(Arrays.asList(getResources().getStringArray(R.array.Examples_items)));
+    }
+
+    private List<String> getStateList(){
+        return new LinkedList<>(Arrays.asList(getResources().getStringArray(R.array.indian_states)));
+    }
+
+    private List<String> getBinaryList(){
+        return new LinkedList<>(Arrays.asList( "No", "Yes"));
     }
 
 
