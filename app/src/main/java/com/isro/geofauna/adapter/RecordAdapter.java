@@ -2,6 +2,7 @@ package com.isro.geofauna.adapter;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.FileUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,6 +21,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.isro.geofauna.R;
+import com.isro.geofauna.SurveyForm;
 import com.isro.geofauna.data.Geofauna;
 import com.isro.geofauna.data.GeofaunaViewModel;
 import com.isro.imageslider.ImageSlider;
@@ -109,7 +111,7 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
     }
 
     private void deleteFile(String path){
-        if (!path.isEmpty()){
+        if (path!=null && !path.isEmpty()){
             File file  = new File(path);
             boolean fileWasDeleted = file.delete();
             if (fileWasDeleted) {
@@ -133,7 +135,7 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
         notifyDataSetChanged();
     }
 
-    public class RecordViewHolder extends RecyclerView.ViewHolder {
+    public class RecordViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private final TextView uniqueID;
         private final TextView serialNo;
         private final TextView locality;
@@ -154,6 +156,14 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
             imageSlider = (ImageSlider) itemView.findViewById(R.id.img_slider);
 
             delete_btn = (ImageView) itemView.findViewById(R.id.delete_record);
+
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            Intent viewIntent = new Intent(context, SurveyForm.class);
+
         }
     }
 }

@@ -55,7 +55,8 @@ import java.util.Objects;
 public class MainActivity extends AppCompatActivity {
 
     public static final int REQUEST_NEW_RECORD = 10;
-    public static final int REQUEST_COLLECTOR_DATA = 11;
+    public static final int REQUEST_RECORD_UPDATE = 11;
+    public static final int REQUEST_COLLECTOR_DATA = 12;
     public static final int MY_PERMISSIONS_REQUEST_READ_STORAGE = 1;
 
     private GeofaunaViewModel mGeofaunaViewModel;
@@ -157,6 +158,9 @@ public class MainActivity extends AppCompatActivity {
 
             Snackbar.make((CoordinatorLayout) findViewById(R.id.main_layout), getResources().getString(R.string.saved_successfully), Snackbar.LENGTH_SHORT).show();
         }
+        else if(requestCode == REQUEST_RECORD_UPDATE && resultCode == RESULT_OK) {
+
+        }
         else if(requestCode == REQUEST_COLLECTOR_DATA && resultCode == RESULT_OK){
             PreferenceUtils.setCollector(this.getApplicationContext(), Objects.requireNonNull(
                     data.getStringExtra(DatabaseColumns.collector)));
@@ -166,6 +170,7 @@ public class MainActivity extends AppCompatActivity {
             //Update
             updateCollector();
         }
+
     }
 
     @Override

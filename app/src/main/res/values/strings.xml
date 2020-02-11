@@ -11,7 +11,7 @@
     <string name="record_delete_error_msg">Error!</string>
 
     <string name="no_records_top">No Records</string>
-    <string name="no_records_bottom">Add records using the + icon.</string>
+    <string name="no_records_bottom">Add records using the <b>+</b> icon.</string>
 
     <!--Activitiy-->
     <string name="action_export">Export to csv</string>
