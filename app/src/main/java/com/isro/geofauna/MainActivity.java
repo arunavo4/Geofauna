@@ -203,6 +203,10 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+    
+    public void viewRecordActivity(Intent intent){
+        startActivityForResult(intent, REQUEST_RECORD_UPDATE);
+    }
 
     public class ExportDatabaseCSVTask extends AsyncTask<String, Void, Boolean> {
         private final ProgressDialog dialog ;

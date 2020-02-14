@@ -16,17 +16,17 @@ public interface GeofaunaDao {
     @Query("SELECT * FROM geofauna")
     LiveData<List<Geofauna>> getAll();
 
-    @Query("SELECT * FROM geofauna ORDER BY Date DESC")
+    @Query("SELECT * FROM geofauna ORDER BY Timestamp DESC")
     LiveData<List<Geofauna>> getAllByDate();
 
-    @Query("SELECT * FROM geofauna ORDER BY Date DESC")
+    @Query("SELECT * FROM geofauna ORDER BY Timestamp DESC")
     List<Geofauna> getAllByDateList();
 
     @Insert
     void insertAll(Geofauna... geofaunas);
 
     @Update
-    public void updateGeofauna(Geofauna... geofaunas);
+    void updateGeofauna(Geofauna... geofaunas);
 
     @Query("DELETE FROM geofauna")
     void deleteAll();

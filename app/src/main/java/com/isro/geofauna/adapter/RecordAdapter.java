@@ -170,7 +170,7 @@ public class RecordAdapter extends RecyclerView.Adapter<RecordAdapter.RecordView
                 Intent viewIntent = new Intent(context, SurveyForm.class);
                 viewIntent.putExtra("ACTIVITY_CODE", MainActivity.REQUEST_RECORD_VIEW);
                 viewIntent.putExtra(DatabaseColumns.parcelGeofauna, mGeofauna.get(position));
-                ((Activity) context).startActivityForResult(viewIntent, MainActivity.REQUEST_RECORD_UPDATE);
+                ((MainActivity)context).viewRecordActivity(viewIntent);
             }
         }
     }

@@ -90,15 +90,7 @@ public class SurveyForm extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(v -> onBackPressed());
 
         // Save Fab
-        FloatingActionButton fab = findViewById(R.id.fab);
-
-        fab.setOnClickListener(v -> {
-            Intent replyIntent = saveDataOnRoom(new Intent());
-            if (!error) {
-                setResult(RESULT_OK, replyIntent);
-                finish();
-            }
-        });
+        final FloatingActionButton fab = findViewById(R.id.fab);
 
         /* Link Camera */
         imageViewAnimal = (AppCompatImageView) findViewById(R.id.animal_holder);
@@ -127,9 +119,28 @@ public class SurveyForm extends AppCompatActivity {
         Intent intent = getIntent();
         intent.getIntExtra("ACTIVITY_CODE", -1);
         if (intent.getIntExtra("ACTIVITY_CODE", -1)!=-1){
-            populateViews(Objects.requireNonNull(intent.getParcelableExtra(DatabaseColumns.parcelGeofauna)));
+
+            Geofauna geofauna = Objects.requireNonNull(intent.getParcelableExtra(DatabaseColumns.parcelGeofauna));
+
+            fab.setOnClickListener(v -> {
+                Intent replyIntent = saveDataOnRoom(new Intent(), geofauna);
+                if (!error) {
+                    setResult(RESULT_OK, replyIntent);
+                    finish();
+                }
+            });
+
+            populateViews(geofauna);
         }
         else{
+
+            fab.setOnClickListener(v -> {
+                Intent replyIntent = saveDataOnRoom(new Intent(), new Geofauna());
+                if (!error) {
+                    setResult(RESULT_OK, replyIntent);
+                    finish();
+                }
+            });
 
             /* Set Collector from Prefs */
             String collector = PreferenceUtils.getCollector(this.getApplicationContext());
@@ -275,7 +286,7 @@ public class SurveyForm extends AppCompatActivity {
         }
     }
 
-    private Intent saveDataOnRoom(Intent intent) {
+    private Intent saveDataOnRoom(Intent intent, Geofauna geofauna) {
         error = false;  // Reset flag
 
         /* Geo-Tag */
@@ -313,8 +324,6 @@ public class SurveyForm extends AppCompatActivity {
         serialNoLayout.setError(null);
         localityLayout.setError(null);
         collectorLayout.setError(null);
-
-        Geofauna geofauna = new Geofauna();
 
         geofauna.setDate(date_tv.getText().toString());
         geofauna.setTime(time_tv.getText().toString());
