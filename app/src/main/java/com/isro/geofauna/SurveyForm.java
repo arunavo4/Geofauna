@@ -1,6 +1,7 @@
 package com.isro.geofauna;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
@@ -18,6 +19,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -76,6 +78,7 @@ public class SurveyForm extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_survey_form);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         Drawable bg = VectorDrawableCompat.create(getResources(), R.drawable.ic_arrow_back_white_24dp, null);
@@ -209,6 +212,9 @@ public class SurveyForm extends AppCompatActivity {
                 @Override
                 public void permissionDenied() {
                     Log.i("Location", "permission  denied");
+                    Toast.makeText(getApplicationContext(), getString(R.string.location_permission),Toast.LENGTH_LONG).show();
+                    setResult(RESULT_CANCELED);
+                    finish();
                 }
             });
         }

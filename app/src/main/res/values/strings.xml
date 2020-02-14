@@ -57,6 +57,8 @@
 
     <string name="accuracy">Accurate up to</string>
 
+    <string name="location_permission">Location Permission Mandatory</string>
+
     <!--Image Card-->
     <string name="Title_holder">Title</string>
     <string name="take_photo">Take Photo</string>
