@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -61,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
     public static final int MY_PERMISSIONS_REQUEST_READ_STORAGE = 1;
 
     private GeofaunaViewModel mGeofaunaViewModel;
+    private String folderPath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -203,7 +205,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
-    
+
     public void viewRecordActivity(Intent intent){
         startActivityForResult(intent, REQUEST_RECORD_UPDATE);
     }
@@ -230,6 +232,8 @@ public class MainActivity extends AppCompatActivity {
             if (!exportDir.exists()) { boolean flag = exportDir.mkdir();}
 
             File file = new File(exportDir, getResources().getString(R.string.export_filename_default)+ ".csv");
+
+            folderPath = exportDir.getAbsolutePath();
             try {
                 CSVWriter csvWrite = new CSVWriter(new FileWriter(file));
                 String[] databaseColumns = DatabaseColumns.getDatabaseColumns();
@@ -272,7 +276,13 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(final Boolean success) {
             if (this.dialog.isShowing()) { this.dialog.dismiss(); }
             if (success) {
-                Toast.makeText(context, getResources().getString(R.string.export_successful), Toast.LENGTH_SHORT).show();
+                final Snackbar snackBar = Snackbar.make((CoordinatorLayout) findViewById(R.id.main_layout), getString(R.string.export_successful), Snackbar.LENGTH_LONG);
+                snackBar.setAction(getString(R.string.open), v -> {
+                    Intent intent = new Intent(Intent.ACTION_VIEW);
+                    Uri uri = Uri.parse(folderPath);
+                    intent.setDataAndType(uri, "resource/folder");
+                    startActivity(Intent.createChooser(intent, getString(R.string.open_folder)));
+                }).show();
             } else {
                 Toast.makeText(context, getResources().getString(R.string.export_failed), Toast.LENGTH_SHORT).show();
             }
