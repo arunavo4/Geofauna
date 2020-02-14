@@ -334,30 +334,34 @@ public class SurveyForm extends AppCompatActivity {
 
         if (TextUtils.isEmpty(uniqueId.getText())) {
             uniqueIdLayout.setError(getResources().getString(R.string.error_empty));
+            uniqueIdLayout.requestFocus();
             error = true;
         } else {
             geofauna.setUniqueSurveyId(Objects.requireNonNull(uniqueId.getText()).toString());
-        }
 
-        if (TextUtils.isEmpty(serialNo.getText())) {
-            serialNoLayout.setError(getResources().getString(R.string.error_empty));
-            error = true;
-        } else {
-            geofauna.setSerialNo(Objects.requireNonNull(serialNo.getText()).toString());
-        }
+            if (TextUtils.isEmpty(serialNo.getText())) {
+                serialNoLayout.setError(getResources().getString(R.string.error_empty));
+                serialNoLayout.requestFocus();
+                error = true;
+            } else {
+                geofauna.setSerialNo(Objects.requireNonNull(serialNo.getText()).toString());
 
-        if (TextUtils.isEmpty(locality.getText())) {
-            localityLayout.setError(getResources().getString(R.string.error_empty));
-            error = true;
-        } else {
-            geofauna.setLocality(Objects.requireNonNull(locality.getText()).toString());
-        }
+                if (TextUtils.isEmpty(locality.getText())) {
+                    localityLayout.setError(getResources().getString(R.string.error_empty));
+                    localityLayout.requestFocus();
+                    error = true;
+                } else {
+                    geofauna.setLocality(Objects.requireNonNull(locality.getText()).toString());
 
-        if (TextUtils.isEmpty(collector.getText())) {
-            collectorLayout.setError(getResources().getString(R.string.error_empty));
-            error = true;
-        } else {
-            geofauna.setCollector(Objects.requireNonNull(collector.getText()).toString());
+                    if (TextUtils.isEmpty(collector.getText())) {
+                        collectorLayout.setError(getResources().getString(R.string.error_empty));
+                        collectorLayout.requestFocus();
+                        error = true;
+                    } else {
+                        geofauna.setCollector(Objects.requireNonNull(collector.getText()).toString());
+                    }
+                }
+            }
         }
 
         geofauna.setState(Objects.requireNonNull(stateSpinner.getSelectedItem().toString()));
