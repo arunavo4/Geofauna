@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <integer name="accuracy_string_trim_start">15</integer>
+
+    <integer name="record_view_max_length">18</integer>
+
+    <integer name="unique_id_max_length">24</integer>
+
+    <integer name="collector_view_max_length">32</integer>
+
 </resources>

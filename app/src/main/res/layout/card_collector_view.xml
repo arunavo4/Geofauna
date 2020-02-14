@@ -31,6 +31,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:maxLength="@integer/collector_view_max_length"
+            android:ellipsize="end"
             android:paddingStart="@dimen/spacer_6dp"
             android:paddingEnd="@dimen/spacer_6dp"
             android:textAppearance="@style/HintTextView.Large"/>

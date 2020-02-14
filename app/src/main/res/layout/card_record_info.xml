@@ -28,11 +28,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAllCaps="true"
+                android:maxLength="@integer/unique_id_max_length"
                 android:layout_margin="@dimen/spacer_6dp"
                 android:paddingStart="@dimen/spacer_8dp"
                 android:paddingEnd="@dimen/spacer_8dp"
-                style="@style/FormTextViewBold"
-                android:text="@string/Unique_Survey_Id"/>
+                style="@style/FormTextViewBold"/>
 
             <FrameLayout
                 android:layout_width="wrap_content"
@@ -95,6 +95,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="start"
+                            android:maxLength="@integer/record_view_max_length"
+                            android:ellipsize="end"
                             android:padding="@dimen/spacer_4dp"
                             android:textAppearance="@style/TextView" />
 
@@ -118,9 +120,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="start"
+                            android:maxLength="@integer/record_view_max_length"
+                            android:ellipsize="marquee"
                             android:padding="@dimen/spacer_4dp"
-                            android:textAppearance="@style/TextView"
-                            android:text="@string/empty"/>
+                            android:textAppearance="@style/TextView" />
 
                     </LinearLayout>
 
@@ -142,16 +145,17 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="start"
+                            android:maxLength="@integer/record_view_max_length"
+                            android:ellipsize="end"
                             android:padding="@dimen/spacer_4dp"
-                            android:textAppearance="@style/TextView"
-                            android:text="@string/empty"/>
+                            android:textAppearance="@style/TextView" />
 
                     </LinearLayout>
 
                 </LinearLayout>
 
                 <FrameLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"/>
 
