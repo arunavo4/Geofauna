@@ -2,6 +2,10 @@
 <resources>
 
     <!--Habitat Array-->
+    <string-array name="Habitat_prompt">
+        <item>Select Habitat</item>
+    </string-array>
+
     <string-array name="Habitat_items">
         <item>Aquatic_Marine</item>
         <item>Aquatic_Freshwater</item>

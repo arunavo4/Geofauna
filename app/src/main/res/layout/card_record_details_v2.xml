@@ -160,10 +160,12 @@
 
                     <androidx.appcompat.widget.AppCompatSpinner
                         android:id="@+id/state_spinner"
+                        style="@style/Spinner"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        style="@style/Spinner"
-                        android:entries="@array/indian_states"/>
+                        android:entries="@array/indian_states"
+                        android:prompt="@string/select_state"
+                        android:spinnerMode="dialog" />
 
                 </LinearLayout>
 
@@ -231,7 +233,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         style="@style/Spinner"
-                        android:entries="@array/Habitat_items"/>
+                        android:spinnerMode="dialog"
+                        android:entries="@array/Habitat_items"
+                        android:prompt="@string/select_habitat"/>
 
                 </LinearLayout>
 

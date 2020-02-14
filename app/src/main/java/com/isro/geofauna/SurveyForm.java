@@ -4,6 +4,8 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.DataSetObserver;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
@@ -16,8 +18,10 @@ import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,6 +42,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.isro.geofauna.data.DatabaseColumns;
 import com.isro.geofauna.data.Geofauna;
 import com.isro.geofauna.utils.PreferenceUtils;
+import com.isro.hintspinner.HintSpinnerAdapter;
 import com.isro.stupidlocation.StupidLocation;
 
 import org.jetbrains.annotations.NotNull;
@@ -45,6 +50,7 @@ import org.jetbrains.annotations.NotNull;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.LinkedList;
@@ -144,6 +150,16 @@ public class SurveyForm extends AppCompatActivity {
                     finish();
                 }
             });
+
+            final AppCompatSpinner stateSpinner = (AppCompatSpinner) findViewById(R.id.state_spinner);
+
+//            stateSpinner.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    SpinnerAdapter adapter = stateSpinner.getAdapter();
+//                }
+//            });
+
 
             /* Set Collector from Prefs */
             String collector = PreferenceUtils.getCollector(this.getApplicationContext());
@@ -538,6 +554,18 @@ public class SurveyForm extends AppCompatActivity {
             }
             // Do other work with full size photo saved in locationForPhotos
         }
+    }
+
+    public static Bitmap scaleDown(Bitmap realImage, float maxImageSize,
+                                   boolean filter) {
+        float ratio = Math.min(
+                (float) maxImageSize / realImage.getWidth(),
+                (float) maxImageSize / realImage.getHeight());
+        int width = Math.round((float) ratio * realImage.getWidth());
+        int height = Math.round((float) ratio * realImage.getHeight());
+
+        return Bitmap.createScaledBitmap(realImage, width,
+                height, filter);
     }
 
     /* Array Getters */
