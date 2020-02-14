@@ -51,6 +51,7 @@ public class WelcomeActivity extends AppCompatActivity {
         final TextInputEditText collector = (TextInputEditText) findViewById(R.id.collector);
         final TextInputLayout collectorLayout = (TextInputLayout) findViewById(R.id.collector_layout);
 
+        final TextInputLayout phoneLayout = (TextInputLayout) findViewById(R.id.phone_layout);
         final TextInputEditText phone = (TextInputEditText) findViewById(R.id.phone);
 
         collectorLayout.setError(null);
@@ -61,9 +62,17 @@ public class WelcomeActivity extends AppCompatActivity {
         }else{
             intent.putExtra(DatabaseColumns.collector, collector.getText().toString());
         }
-        intent.putExtra(DatabaseColumns.phone, Objects.requireNonNull(phone.getText()).toString());
+
+        if(phone!=null && !TextUtils.isEmpty(phone.getText())){
+            String ph = phone.getText().toString();
+            if (ph.matches("(?:(?:\\+|0{0,2})91(\\s*[\\- ]\\s*)?|[0 ]?)?[789]\\d{9}|(\\d[ -]?){10}\\d")){
+                intent.putExtra(DatabaseColumns.phone, ph);
+            }else{
+                phoneLayout.setError(getResources().getString(R.string.invalid_phone_no));
+                error = true;
+            }
+        }
 
         return intent;
     }
-
 }

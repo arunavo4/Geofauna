@@ -16,6 +16,8 @@
     <string name="no_records_top">No Records</string>
     <string name="no_records_bottom">Add records using the <b>+</b> icon.</string>
 
+    <string name="invalid_phone_no">Enter Valid Phone Number</string>
+
     <!--Activitiy-->
     <string name="action_export">Export to csv</string>
 
