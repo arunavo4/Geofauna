@@ -71,8 +71,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:padding="@dimen/spacer_4dp"
-                        android:textAppearance="@style/HeadTextViewMedium"
-                        android:text="@string/date_holder"/>
+                        android:textAppearance="@style/HeadTextViewMedium" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
@@ -118,8 +117,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:padding="@dimen/spacer_4dp"
-                        android:textAppearance="@style/HeadTextViewMedium"
-                        android:text="@string/time_holder"/>
+                        android:textAppearance="@style/HeadTextViewMedium"/>
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"

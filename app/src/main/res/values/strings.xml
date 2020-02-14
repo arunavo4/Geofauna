@@ -49,13 +49,11 @@
     <!--Geo-Tagging-->
     <string name="Geo_tagging">GeoTag Details</string>
     <string name="Date">Date</string>
-    <string name="date_holder">18/01/2020</string>
     <string name="Time">Time</string>
-    <string name="time_holder">11 : 44</string>
     <string name="Latitude">Latitude</string>
-    <string name="lat_holder">22° 34\' 21.5220\'\' N</string>
+    <string name="lat_holder">0.000000</string>
     <string name="Longitude">Longitude</string>
-    <string name="lang_holder">88° 21\' 50.0112\'\' E</string>
+    <string name="lang_holder">0.000000</string>
 
     <string name="accuracy">Accurate up to</string>
 

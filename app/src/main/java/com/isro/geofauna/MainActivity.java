@@ -276,7 +276,7 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(final Boolean success) {
             if (this.dialog.isShowing()) { this.dialog.dismiss(); }
             if (success) {
-                final Snackbar snackBar = Snackbar.make((CoordinatorLayout) findViewById(R.id.main_layout), getString(R.string.export_successful), Snackbar.LENGTH_LONG);
+                final Snackbar snackBar = Snackbar.make((CoordinatorLayout) findViewById(R.id.main_layout), getString(R.string.export_successful), Snackbar.LENGTH_INDEFINITE);
                 snackBar.setAction(getString(R.string.open), v -> {
                     Intent intent = new Intent(Intent.ACTION_VIEW);
                     Uri uri = Uri.parse(folderPath);
