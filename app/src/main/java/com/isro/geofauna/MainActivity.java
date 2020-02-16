@@ -1,27 +1,23 @@
 package com.isro.geofauna;
 
 import android.Manifest;
-import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.textfield.TextInputEditText;
-import com.isro.geofauna.adapter.RecordAdapter;
-import com.isro.geofauna.data.DatabaseColumns;
-import com.isro.geofauna.data.Geofauna;
-import com.isro.geofauna.data.GeofaunaRoomDatabase;
-import com.isro.geofauna.data.GeofaunaViewModel;
-import com.isro.geofauna.utils.CSVWriter;
-import com.isro.geofauna.utils.PreferenceUtils;
+import android.os.Environment;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,31 +26,25 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Environment;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.TextUtils;
-import android.text.style.ImageSpan;
-import android.util.Log;
-import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.TextView;
-import android.widget.Toast;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
+import com.isro.geofauna.adapter.RecordAdapter;
+import com.isro.geofauna.data.DatabaseColumns;
+import com.isro.geofauna.data.Geofauna;
+import com.isro.geofauna.data.GeofaunaRoomDatabase;
+import com.isro.geofauna.data.GeofaunaViewModel;
+import com.isro.geofauna.utils.CSVWriter;
+import com.isro.geofauna.utils.CenteredImageSpan;
+import com.isro.geofauna.utils.PreferenceUtils;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.lang.ref.PhantomReference;
 import java.lang.ref.WeakReference;
-import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -79,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
         // Add + icon
         TextView textView = (TextView) findViewById(R.id.no_records_bottom);
 
-        ImageSpan imageSpan = new ImageSpan(this, R.drawable.ic_plus_small);
+        CenteredImageSpan imageSpan = new CenteredImageSpan(getApplicationContext(), R.drawable.ic_plus_small);
         SpannableString spannableString = new SpannableString(textView.getText());
         spannableString.setSpan(imageSpan, 22, 23, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
