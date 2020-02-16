@@ -36,7 +36,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Environment;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.text.TextUtils;
+import android.text.style.ImageSpan;
 import android.util.Log;
 import android.view.View;
 import android.view.Menu;
@@ -72,6 +75,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        // Add + icon
+        TextView textView = (TextView) findViewById(R.id.no_records_bottom);
+
+        ImageSpan imageSpan = new ImageSpan(this, R.drawable.ic_plus_small);
+        SpannableString spannableString = new SpannableString(textView.getText());
+        spannableString.setSpan(imageSpan, 22, 23, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        textView.setText(spannableString);
 
         //Check if collector name is there
         if(PreferenceUtils.getCollector(this.getApplicationContext()).isEmpty()){
@@ -296,7 +308,8 @@ public class MainActivity extends AppCompatActivity {
                     Uri uri = Uri.parse(activity.folderPath);
                     intent.setDataAndType(uri, "resource/folder");
                     activity.startActivity(Intent.createChooser(intent, activity.getString(R.string.open_folder)));
-                }).show();
+                });
+                snackBar.show();
             } else {
                 Toast.makeText(activity, activity.getResources().getString(R.string.export_failed), Toast.LENGTH_SHORT).show();
             }
