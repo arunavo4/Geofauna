@@ -14,6 +14,8 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.FileUtils;
+import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import android.text.InputType;
 import android.text.TextUtils;
@@ -37,6 +39,7 @@ import androidx.core.content.FileProvider;
 import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -48,8 +51,11 @@ import com.isro.stupidlocation.StupidLocation;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.lang.ref.WeakReference;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -305,7 +311,11 @@ public class SurveyForm extends AppCompatActivity {
 
     private void setImageView(ImageView imageView, String path){
         if (path!=null && !path.isEmpty()){
-            imageView.setImageBitmap(BitmapFactory.decodeFile(path));
+            Glide.with(this)
+                    .load(Uri.fromFile(new File(path)))
+                    .override(getResources().getDimensionPixelSize(R.dimen.preview_w_h),
+                            getResources().getDimensionPixelSize(R.dimen.preview_w_h))
+                    .into(imageView);
         }
     }
 
@@ -548,22 +558,60 @@ public class SurveyForm extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            File storageDir = new File(Environment.getExternalStorageDirectory(), "/geofauna/");
 
             if (photoUri.getPath() != null) {
                 AppCompatImageView imageView = getImageView();
-                imageView.setImageBitmap(BitmapFactory.decodeFile(currentPhotoPath));
-                Log.i("Path", currentPhotoPath);
+
+                Glide.with(this)
+                        .load(Uri.fromFile(new File(currentPhotoPath)))
+                        .override(getResources().getDimensionPixelSize(R.dimen.preview_w_h),
+                                getResources().getDimensionPixelSize(R.dimen.preview_w_h))
+                        .into(imageView);
+
                 AppCompatImageView imageBtn = getCancelBtn();
                 imageBtn.setVisibility(View.VISIBLE);
+
+                // Resize the photo on a separate thread
+                new ResizeImageTask(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
-            // Do other work with full size photo saved in locationForPhotos
         }
     }
 
-    public static Bitmap scaleDown(Bitmap realImage, float maxImageSize,
-                                   boolean filter) {
-        float ratio = Math.min(
+
+    public static class ResizeImageTask extends AsyncTask<String, Void, Boolean>{
+
+        private WeakReference<SurveyForm> activityReference;
+
+        ResizeImageTask(SurveyForm context) {
+            activityReference = new WeakReference<>(context);
+        }
+
+        @Override
+        protected Boolean doInBackground(String... strings) {
+            SurveyForm activity = activityReference.get();
+            if (activity == null || activity.isFinishing()) return false;
+
+            try {
+                savebitmap(scaleDown(BitmapFactory.decodeFile(activity.currentPhotoPath), 2000, false), activity.currentPhotoPath);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return true;
+        }
+    }
+
+    public static void savebitmap(Bitmap bmp, String path) throws IOException {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        bmp.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
+        File f = new File(path);
+        f.createNewFile();
+        FileOutputStream fo = new FileOutputStream(f);
+        fo.write(bytes.toByteArray());
+        fo.close();
+    }
+
+    public static Bitmap scaleDown(Bitmap realImage, float maxImageSize, boolean filter) {
+        float ratio = Math.max(
                 (float) maxImageSize / realImage.getWidth(),
                 (float) maxImageSize / realImage.getHeight());
         int width = Math.round((float) ratio * realImage.getWidth());

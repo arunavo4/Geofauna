@@ -50,6 +50,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.ref.PhantomReference;
+import java.lang.ref.WeakReference;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -215,30 +216,35 @@ public class MainActivity extends AppCompatActivity {
         startActivityForResult(intent, REQUEST_RECORD_UPDATE);
     }
 
-    public class ExportDatabaseCSVTask extends AsyncTask<String, Void, Boolean> {
+    private static class ExportDatabaseCSVTask extends AsyncTask<String, Void, Boolean> {
         private final ProgressDialog dialog ;
         private GeofaunaRoomDatabase userDatabase;
-        Context context;
+        private WeakReference<MainActivity> activityReference;
 
-        ExportDatabaseCSVTask(Context context) {
+        ExportDatabaseCSVTask(MainActivity context) {
             this.dialog = new ProgressDialog(context);
-            this.context = context;
+            activityReference = new WeakReference<>(context);
         }
 
         @Override
         protected void onPreExecute() {
             this.dialog.setMessage("Exporting database...");
             this.dialog.show();
-            userDatabase = GeofaunaRoomDatabase.getDatabase(context);
+            MainActivity activity = activityReference.get();
+            if (activity == null || activity.isFinishing()) return;
+            userDatabase = GeofaunaRoomDatabase.getDatabase(activity);
         }
 
         protected Boolean doInBackground(final String... args) {
-            File exportDir = getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS);
+            MainActivity activity = activityReference.get();
+            if (activity == null || activity.isFinishing()) return false;
+
+            File exportDir = activity.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS);
             if (!exportDir.exists()) { boolean flag = exportDir.mkdir();}
 
-            File file = new File(exportDir, getResources().getString(R.string.export_filename_default)+ ".csv");
+            File file = new File(exportDir, activity.getResources().getString(R.string.export_filename_default)+ ".csv");
 
-            folderPath = exportDir.getAbsolutePath();
+            activity.folderPath = exportDir.getAbsolutePath();
             try {
                 CSVWriter csvWrite = new CSVWriter(new FileWriter(file));
                 String[] databaseColumns = DatabaseColumns.getDatabaseColumns();
@@ -279,17 +285,20 @@ public class MainActivity extends AppCompatActivity {
         }
 
         protected void onPostExecute(final Boolean success) {
+            MainActivity activity = activityReference.get();
+            if (activity == null || activity.isFinishing()) return;
+
             if (this.dialog.isShowing()) { this.dialog.dismiss(); }
             if (success) {
-                final Snackbar snackBar = Snackbar.make((CoordinatorLayout) findViewById(R.id.main_layout), getString(R.string.export_successful), Snackbar.LENGTH_INDEFINITE);
-                snackBar.setAction(getString(R.string.open), v -> {
+                final Snackbar snackBar = Snackbar.make((CoordinatorLayout) activity.findViewById(R.id.main_layout), activity.getString(R.string.export_successful), Snackbar.LENGTH_INDEFINITE);
+                snackBar.setAction(activity.getString(R.string.open), v -> {
                     Intent intent = new Intent(Intent.ACTION_VIEW);
-                    Uri uri = Uri.parse(folderPath);
+                    Uri uri = Uri.parse(activity.folderPath);
                     intent.setDataAndType(uri, "resource/folder");
-                    startActivity(Intent.createChooser(intent, getString(R.string.open_folder)));
+                    activity.startActivity(Intent.createChooser(intent, activity.getString(R.string.open_folder)));
                 }).show();
             } else {
-                Toast.makeText(context, getResources().getString(R.string.export_failed), Toast.LENGTH_SHORT).show();
+                Toast.makeText(activity, activity.getResources().getString(R.string.export_failed), Toast.LENGTH_SHORT).show();
             }
         }
     }
