@@ -555,6 +555,29 @@ public class SurveyForm extends AppCompatActivity {
     }
 
     @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        
+        // Delete the photos it saved
+        for (String image: imageUris) {
+            if (image!=null) {
+                File file = new File(image);
+                if(file.exists()){
+                    file.delete();
+                    try {
+                        file.getCanonicalFile().delete();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    if(file.exists()){
+                        getApplicationContext().deleteFile(file.getName());
+                    }
+                }
+            }
+        }
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
