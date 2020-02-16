@@ -170,7 +170,7 @@
                         android:layout_width="@dimen/preview_w_h"
                         android:layout_height="@dimen/preview_w_h"
                         android:layout_margin="@dimen/spacer_4dp"
-                        app:placeholder="@drawable/placeholder_image"
+                        app:placeholder="@drawable/ic_sloth"
                         app:auto_cycle="false"
                         app:corner_radius="5"
                         app:period="1000"
