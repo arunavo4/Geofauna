@@ -23,6 +23,7 @@
 
     <!--Activitiy-->
     <string name="action_export">Export to csv</string>
+    <string name="action_open_file_location">Open File Location</string>
 
     <!--Welcome Activity-->
     <string name="Next">Next</string>

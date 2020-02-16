@@ -198,8 +198,18 @@ public class MainActivity extends AppCompatActivity {
             }
             return false;
         }
+        else if (id == R.id.action_open){
+            openFolderLoaction();
+        }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void openFolderLoaction(){
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        Uri uri = Uri.parse(folderPath);
+        intent.setDataAndType(uri, "resource/folder");
+        startActivity(Intent.createChooser(intent, getString(R.string.open_folder)));
     }
 
     @Override
@@ -292,12 +302,9 @@ public class MainActivity extends AppCompatActivity {
 
             if (this.dialog.isShowing()) { this.dialog.dismiss(); }
             if (success) {
-                final Snackbar snackBar = Snackbar.make((CoordinatorLayout) activity.findViewById(R.id.main_layout), activity.getString(R.string.export_successful), Snackbar.LENGTH_INDEFINITE);
+                final Snackbar snackBar = Snackbar.make((CoordinatorLayout) activity.findViewById(R.id.main_layout), activity.getString(R.string.export_successful), Snackbar.LENGTH_LONG);
                 snackBar.setAction(activity.getString(R.string.open), v -> {
-                    Intent intent = new Intent(Intent.ACTION_VIEW);
-                    Uri uri = Uri.parse(activity.folderPath);
-                    intent.setDataAndType(uri, "resource/folder");
-                    activity.startActivity(Intent.createChooser(intent, activity.getString(R.string.open_folder)));
+                    activity.openFolderLoaction();
                 });
                 snackBar.show();
             } else {
