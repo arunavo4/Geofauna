@@ -5,6 +5,7 @@
     <string name="updated_successfully">Updated Successfully!</string>
     <string name="export_successful">Export Successful!</string>
     <string name="export_failed">Export Failed!</string>
+    <string name="file_does_not_exist">File Doesn\'t Exist!</string>
     <string name="open">Open</string>
     <string name="open_folder">Open Folder</string>
 
