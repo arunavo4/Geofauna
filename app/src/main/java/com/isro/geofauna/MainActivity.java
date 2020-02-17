@@ -212,7 +212,7 @@ public class MainActivity extends AppCompatActivity {
             intent.setDataAndType(uri, "resource/folder");
             startActivity(Intent.createChooser(intent, getString(R.string.open_folder)));
         }else{
-            Snackbar.make((CoordinatorLayout) findViewById(R.id.main_layout), getResources().getString(R.string.file_does_not_exist), Snackbar.LENGTH_LONG).show();
+            Snackbar.make((CoordinatorLayout) findViewById(R.id.main_layout), getResources().getString(R.string.file_does_not_exist), Snackbar.LENGTH_SHORT).show();
         }
     }
 
