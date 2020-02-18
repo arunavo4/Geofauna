@@ -80,10 +80,10 @@ public class Geofauna implements Parcelable {
     private String time;
 
     @ColumnInfo(name = DatabaseColumns.latitude)
-    private String latitude;
+    private Double latitude;
 
     @ColumnInfo(name = DatabaseColumns.longitude)
-    private String longitude;
+    private Double longitude;
 
     @ColumnInfo(name = DatabaseColumns.accuracy)
     private String accuracy;
@@ -115,13 +115,15 @@ public class Geofauna implements Parcelable {
         imageHostPath = in.readString();
         date = in.readString();
         time = in.readString();
-        latitude = in.readString();
-        longitude = in.readString();
         accuracy = in.readString();
         if (in.readByte() == 0) {
             timestamp = null;
+            longitude = null;
+            latitude = null;
         } else {
             timestamp = in.readLong();
+            longitude = in.readDouble();
+            latitude = in.readDouble();
         }
     }
 
@@ -279,19 +281,19 @@ public class Geofauna implements Parcelable {
         this.time = time;
     }
 
-    public String getLatitude() {
+    public Double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(String latitude) {
+    public void setLatitude(Double latitude) {
         this.latitude = latitude;
     }
 
-    public String getLongitude() {
+    public Double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(String longitude) {
+    public void setLongitude(Double longitude) {
         this.longitude = longitude;
     }
 
@@ -366,8 +368,8 @@ public class Geofauna implements Parcelable {
         dest.writeString(imageHostPath);
         dest.writeString(date);
         dest.writeString(time);
-        dest.writeString(latitude);
-        dest.writeString(longitude);
+        dest.writeDouble(latitude);
+        dest.writeDouble(longitude);
         dest.writeString(accuracy);
         if (timestamp == null) {
             dest.writeByte((byte) 0);

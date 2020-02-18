@@ -216,6 +216,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public static void something(){
+
+    }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -286,8 +290,8 @@ public class MainActivity extends AppCompatActivity {
                             record.get(i).getImageHost(),
                             record.get(i).getDate(),
                             record.get(i).getTime(),
-                            record.get(i).getLatitude(),
-                            record.get(i).getLongitude(),
+                            String.valueOf(record.get(i).getLatitude()),
+                            String.valueOf(record.get(i).getLongitude()),
                             record.get(i).getAccuracy()
                     };
                     csvWrite.writeNext(StringArray);
