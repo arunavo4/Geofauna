@@ -283,8 +283,8 @@ public class SurveyForm extends AppCompatActivity {
 
         date_tv.setText(geofauna.getDate());
         time_tv.setText(geofauna.getTime());
-        latitude_tv.setText(geofauna.getLatitude());
-        longitude_tv.setText(geofauna.getLongitude());
+        latitude_tv.setText(String.valueOf(geofauna.getLatitude()));
+        longitude_tv.setText(String.valueOf(geofauna.getLongitude()));
         accuracy_tv.setText(String.format(Locale.ENGLISH, "Accurate up to %s", geofauna.getAccuracy()));
 
         uniqueId.setText(geofauna.getUniqueSurveyId());
@@ -360,8 +360,8 @@ public class SurveyForm extends AppCompatActivity {
 
         geofauna.setDate(date_tv.getText().toString());
         geofauna.setTime(time_tv.getText().toString());
-        geofauna.setLatitude(latitude_tv.getText().toString());
-        geofauna.setLongitude(longitude_tv.getText().toString());
+        geofauna.setLatitude(Double.valueOf(latitude_tv.getText().toString()));
+        geofauna.setLongitude(Double.valueOf(longitude_tv.getText().toString()));
         geofauna.setAccuracy(accuracy_tv.getText().toString().substring(getResources().getInteger(R.integer.accuracy_string_trim_start)));
 
 
