@@ -71,6 +71,9 @@ public class WelcomeActivity extends AppCompatActivity {
                 phoneLayout.setError(getResources().getString(R.string.invalid_phone_no));
                 error = true;
             }
+        }else{
+            assert phone != null;
+            intent.putExtra(DatabaseColumns.phone, phone.getText().toString());
         }
 
         return intent;
