@@ -11,7 +11,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {Geofauna.class}, version = 8, exportSchema = false)
+@Database(entities = {Geofauna.class}, version = 9, exportSchema = false)
 public abstract class GeofaunaRoomDatabase extends RoomDatabase {
 
     public abstract GeofaunaDao geofaunaDao();
