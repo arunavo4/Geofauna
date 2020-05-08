@@ -1,10 +1,8 @@
 package com.isro.geofauna;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.DataSetObserver;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
@@ -14,21 +12,17 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.FileUtils;
-import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatSpinner;
@@ -46,7 +40,6 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.isro.geofauna.data.DatabaseColumns;
 import com.isro.geofauna.data.Geofauna;
 import com.isro.geofauna.utils.PreferenceUtils;
-import com.isro.hintspinner.HintSpinnerAdapter;
 import com.isro.stupidlocation.StupidLocation;
 
 import org.jetbrains.annotations.NotNull;
@@ -57,7 +50,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.LinkedList;
@@ -84,8 +76,8 @@ public class SurveyForm extends AppCompatActivity {
 
     private Uri photoUri;
 
-    private String[] imageFiles = new String[3];
-    private String[] imageUris = new String[3];
+    public String[] imageFiles = new String[3];
+    public String[] imageUris = new String[3];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,7 +126,7 @@ public class SurveyForm extends AppCompatActivity {
         // Check if Intent Request is to view
         Intent intent = getIntent();
         intent.getIntExtra("ACTIVITY_CODE", -1);
-        if (intent.getIntExtra("ACTIVITY_CODE", -1)!=-1){
+        if (intent.getIntExtra("ACTIVITY_CODE", -1) != -1) {
 
             Geofauna geofauna = Objects.requireNonNull(intent.getParcelableExtra(DatabaseColumns.parcelGeofauna));
 
@@ -147,8 +139,7 @@ public class SurveyForm extends AppCompatActivity {
             });
 
             populateViews(geofauna);
-        }
-        else{
+        } else {
 
             fab.setOnClickListener(v -> {
                 Intent replyIntent = saveDataOnRoom(new Intent(), new Geofauna());
@@ -235,7 +226,7 @@ public class SurveyForm extends AppCompatActivity {
                 @Override
                 public void permissionDenied() {
                     Log.i("Location", "permission  denied");
-                    Toast.makeText(getApplicationContext(), getString(R.string.location_permission),Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), getString(R.string.location_permission), Toast.LENGTH_LONG).show();
                     setResult(RESULT_CANCELED);
                     finish();
                 }
@@ -309,8 +300,8 @@ public class SurveyForm extends AppCompatActivity {
         setImageView(imageViewHost, geofauna.getImageHostPath());
     }
 
-    private void setImageView(ImageView imageView, String path){
-        if (path!=null && !path.isEmpty()){
+    private void setImageView(ImageView imageView, String path) {
+        if (path != null && !path.isEmpty()) {
             Glide.with(this)
                     .load(Uri.fromFile(new File(path)))
                     .override(getResources().getDimensionPixelSize(R.dimen.preview_w_h),
@@ -436,7 +427,7 @@ public class SurveyForm extends AppCompatActivity {
         }
     }
 
-    private String getImagePrefix(){
+    private String getImagePrefix() {
         switch (flag) {
             case 0:
                 return "ImgAnimal";
@@ -449,11 +440,15 @@ public class SurveyForm extends AppCompatActivity {
         }
     }
 
-    private void setImageFileName(String fileName){
+    public void setImageFileName(String fileName) {
         imageFiles[flag] = fileName;
     }
 
-    private void setImageFilePath(String filePath){
+    public String getImageFileName() {
+        return imageFiles[flag];
+    }
+
+    public void setImageFilePath(String filePath) {
         imageUris[flag] = filePath;
     }
 
@@ -491,7 +486,7 @@ public class SurveyForm extends AppCompatActivity {
                 return true;
             }
             return false;
-        }else {
+        } else {
             return true;
         }
     }
@@ -501,8 +496,8 @@ public class SurveyForm extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         // After We Got the Required Permissions
-        if (requestCode == MY_PERMISSIONS_REQUEST_READ_STORAGE){
-            if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+        if (requestCode == MY_PERMISSIONS_REQUEST_READ_STORAGE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 // Permission has been granted
                 capturePhoto();
             }
@@ -512,7 +507,7 @@ public class SurveyForm extends AppCompatActivity {
     private File createImageFile() throws IOException {
         // Create an image file name
         String timeStamp = new SimpleDateFormat("ddMMyyyy_HHmmss", Locale.ENGLISH).format(new Date());
-        String imageFileName = getImagePrefix() + "_" + timeStamp ;
+        String imageFileName = getImagePrefix() + "_" + timeStamp;
         File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File image = File.createTempFile(
                 imageFileName,  /* prefix */
@@ -522,8 +517,12 @@ public class SurveyForm extends AppCompatActivity {
 
         // Save a file: path for use with ACTION_VIEW intents
         currentPhotoPath = image.getAbsolutePath();
+
         setImageFileName(imageFileName + ".jpg");
-        setImageFilePath(currentPhotoPath);
+        String[] splitPath = currentPhotoPath.split("/", -1);
+        splitPath[splitPath.length - 1] = getImageFileName();
+        setImageFilePath(TextUtils.join("/", splitPath));
+
         return image;
     }
 
@@ -557,19 +556,19 @@ public class SurveyForm extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        
+
         // Delete the photos it saved
-        for (String image: imageUris) {
-            if (image!=null) {
+        for (String image : imageUris) {
+            if (image != null) {
                 File file = new File(image);
-                if(file.exists()){
+                if (file.exists()) {
                     file.delete();
                     try {
                         file.getCanonicalFile().delete();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    if(file.exists()){
+                    if (file.exists()) {
                         getApplicationContext().deleteFile(file.getName());
                     }
                 }
@@ -601,7 +600,7 @@ public class SurveyForm extends AppCompatActivity {
     }
 
 
-    public static class ResizeImageTask extends AsyncTask<String, Void, Boolean>{
+    public static class ResizeImageTask extends AsyncTask<String, Void, Boolean> {
 
         private WeakReference<SurveyForm> activityReference;
 
@@ -609,13 +608,17 @@ public class SurveyForm extends AppCompatActivity {
             activityReference = new WeakReference<>(context);
         }
 
+        @RequiresApi(api = Build.VERSION_CODES.O)
         @Override
         protected Boolean doInBackground(String... strings) {
             SurveyForm activity = activityReference.get();
             if (activity == null || activity.isFinishing()) return false;
 
             try {
-                savebitmap(scaleDown(BitmapFactory.decodeFile(activity.currentPhotoPath), 2000, false), activity.currentPhotoPath);
+                String[] splitPath = activity.currentPhotoPath.split("/", -1);
+                splitPath[splitPath.length - 1] = activity.getImageFileName();
+                savebitmap(scaleDown(BitmapFactory.decodeFile(activity.currentPhotoPath),
+                        2000, false), activity.currentPhotoPath, String.join("/", splitPath));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -623,14 +626,18 @@ public class SurveyForm extends AppCompatActivity {
         }
     }
 
-    public static void savebitmap(Bitmap bmp, String path) throws IOException {
+    public static void savebitmap(Bitmap bmp, String path, String rename_path) throws IOException {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         bmp.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
         File f = new File(path);
-        f.createNewFile();
+//        f.createNewFile();
         FileOutputStream fo = new FileOutputStream(f);
         fo.write(bytes.toByteArray());
         fo.close();
+
+        // Rename file
+        File new_f = new File(rename_path);
+        f.renameTo(new_f);
     }
 
     public static Bitmap scaleDown(Bitmap realImage, float maxImageSize, boolean filter) {
@@ -646,20 +653,20 @@ public class SurveyForm extends AppCompatActivity {
 
     /* Array Getters */
 
-    private List<String> getHabitatList(){
+    private List<String> getHabitatList() {
         return new LinkedList<>(Arrays.asList(getResources().getStringArray(R.array.Habitat_items)));
     }
 
-    private List<String> getNoOfExamplesList(){
+    private List<String> getNoOfExamplesList() {
         return new LinkedList<>(Arrays.asList(getResources().getStringArray(R.array.Examples_items)));
     }
 
-    private List<String> getStateList(){
+    private List<String> getStateList() {
         return new LinkedList<>(Arrays.asList(getResources().getStringArray(R.array.indian_states)));
     }
 
-    private List<String> getBinaryList(){
-        return new LinkedList<>(Arrays.asList( "No", "Yes"));
+    private List<String> getBinaryList() {
+        return new LinkedList<>(Arrays.asList("No", "Yes"));
     }
 
 
