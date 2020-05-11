@@ -26,6 +26,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -199,18 +200,55 @@ public class MainActivity extends AppCompatActivity {
             return false;
         }
         else if (id == R.id.action_open){
-            openFolderLocation();
+//            openFolderLocation();
+            openFileLocation();
         }
 
         return super.onOptionsItemSelected(item);
     }
 
+    private void openFileLocation(){
+        if (folderPath!=null) {
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            File file = new File(folderPath+ "/Records.csv");
+
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
+                Uri uri = FileProvider.getUriForFile(
+                        MainActivity.this,
+                        "com.isro.geofauna.fileprovider", file);
+                intent.setDataAndType(uri, "text/csv");
+                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            }else{
+                Uri uri = Uri.parse("file://" + file.getAbsolutePath());
+                intent.setDataAndType(uri, "text/csv");
+            }
+
+            startActivity(Intent.createChooser(intent, getString(R.string.open_folder)));
+        }else{
+            Snackbar.make((CoordinatorLayout) findViewById(R.id.main_layout), getResources().getString(R.string.file_does_not_exist), Snackbar.LENGTH_SHORT).show();
+        }
+    }
+
+
+
     private void openFolderLocation(){
         if (folderPath!=null) {
             Intent intent = new Intent(Intent.ACTION_VIEW);
-            Uri uri = Uri.parse("file://" + folderPath);
-            intent.setDataAndType(uri, "resource/folder");
-            intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+
+            File file = new File(folderPath+ "/Records.csv");
+            Log.d("", String.format("Filepath: %s", file.getAbsolutePath()));
+
+            Uri uri = FileProvider.getUriForFile(
+                    MainActivity.this,
+                    "com.isro.geofauna.fileprovider", file);
+            intent.setDataAndType(uri, "text/csv");
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+//            Uri uri = Uri.parse("file://" + folderPath);
+//            intent.setDataAndType(uri, "resource/folder");
+//            intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             startActivity(Intent.createChooser(intent, getString(R.string.open_folder)));
         }else{
             Snackbar.make((CoordinatorLayout) findViewById(R.id.main_layout), getResources().getString(R.string.file_does_not_exist), Snackbar.LENGTH_SHORT).show();
