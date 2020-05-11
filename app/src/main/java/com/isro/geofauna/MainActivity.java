@@ -208,8 +208,9 @@ public class MainActivity extends AppCompatActivity {
     private void openFolderLocation(){
         if (folderPath!=null) {
             Intent intent = new Intent(Intent.ACTION_VIEW);
-            Uri uri = Uri.parse(folderPath);
+            Uri uri = Uri.parse("file://" + folderPath);
             intent.setDataAndType(uri, "resource/folder");
+            intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             startActivity(Intent.createChooser(intent, getString(R.string.open_folder)));
         }else{
             Snackbar.make((CoordinatorLayout) findViewById(R.id.main_layout), getResources().getString(R.string.file_does_not_exist), Snackbar.LENGTH_SHORT).show();
