@@ -200,8 +200,7 @@ public class MainActivity extends AppCompatActivity {
             return false;
         }
         else if (id == R.id.action_open){
-//            openFolderLocation();
-            openFileLocation();
+            openFolderLocation();
         }
 
         return super.onOptionsItemSelected(item);
@@ -211,12 +210,13 @@ public class MainActivity extends AppCompatActivity {
         if (folderPath!=null) {
             Intent intent = new Intent(Intent.ACTION_VIEW);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-            File file = new File(folderPath+ "/Records.csv");
+            File file = new File(folderPath + "/Records.csv");
 
             if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
                 Uri uri = FileProvider.getUriForFile(
                         MainActivity.this,
                         "com.isro.geofauna.fileprovider", file);
+                Log.d("URI PATH", uri.toString());
                 intent.setDataAndType(uri, "text/csv");
                 intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             }else{
@@ -224,31 +224,27 @@ public class MainActivity extends AppCompatActivity {
                 intent.setDataAndType(uri, "text/csv");
             }
 
-            startActivity(Intent.createChooser(intent, getString(R.string.open_folder)));
+            startActivity(Intent.createChooser(intent, getString(R.string.open_file)));
         }else{
             Snackbar.make((CoordinatorLayout) findViewById(R.id.main_layout), getResources().getString(R.string.file_does_not_exist), Snackbar.LENGTH_SHORT).show();
         }
     }
 
-
-
     private void openFolderLocation(){
         if (folderPath!=null) {
             Intent intent = new Intent(Intent.ACTION_VIEW);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-
-            File file = new File(folderPath+ "/Records.csv");
-            Log.d("", String.format("Filepath: %s", file.getAbsolutePath()));
-
-            Uri uri = FileProvider.getUriForFile(
-                    MainActivity.this,
-                    "com.isro.geofauna.fileprovider", file);
-            intent.setDataAndType(uri, "text/csv");
-            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-//            Uri uri = Uri.parse("file://" + folderPath);
-//            intent.setDataAndType(uri, "resource/folder");
-//            intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK); // Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)
+//            Uri uri = FileProvider.getUriForFile(
+//                    this,
+//                    "com.isro.geofauna.fileprovider",
+//                    Objects.requireNonNull(this.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS)));
+//            Log.d("URI PATH", uri.toString());
+//            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+//            intent.setDataAndType(uri, "*/*");
+            // Only works if you have ES file Explorer
+            Uri uri = Uri.parse(folderPath);
+            intent.setDataAndType(uri, "resource/folder");
+            intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             startActivity(Intent.createChooser(intent, getString(R.string.open_folder)));
         }else{
             Snackbar.make((CoordinatorLayout) findViewById(R.id.main_layout), getResources().getString(R.string.file_does_not_exist), Snackbar.LENGTH_SHORT).show();
@@ -351,7 +347,7 @@ public class MainActivity extends AppCompatActivity {
             if (success) {
                 final Snackbar snackBar = Snackbar.make((CoordinatorLayout) activity.findViewById(R.id.main_layout), activity.getString(R.string.export_successful), Snackbar.LENGTH_LONG);
                 snackBar.setAction(activity.getString(R.string.open), v -> {
-                    activity.openFolderLocation();
+                    activity.openFileLocation();
                 });
                 snackBar.show();
             } else {

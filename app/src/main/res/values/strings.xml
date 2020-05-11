@@ -8,6 +8,7 @@
     <string name="file_does_not_exist">File Doesn\'t Exist!</string>
     <string name="open">Open</string>
     <string name="open_folder">Open Folder</string>
+    <string name="open_file">Open CSV File</string>
 
     <string name="export_filename_default">Records</string>
 
