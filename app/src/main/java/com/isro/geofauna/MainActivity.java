@@ -199,9 +199,9 @@ public class MainActivity extends AppCompatActivity {
             }
             return false;
         }
-        else if (id == R.id.action_open){
-            openFolderLocation();
-        }
+//        else if (id == R.id.action_open){
+//            openFolderLocation();
+//        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -217,6 +217,7 @@ public class MainActivity extends AppCompatActivity {
                         MainActivity.this,
                         "com.isro.geofauna.fileprovider", file);
                 Log.d("URI PATH", uri.toString());
+                Log.d("FILE PATH", folderPath);
                 intent.setDataAndType(uri, "text/csv");
                 intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             }else{

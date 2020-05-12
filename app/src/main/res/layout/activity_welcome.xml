@@ -22,7 +22,7 @@
             android:layout_gravity="center_horizontal"
             android:scaleType="fitCenter"
             android:layout_margin="@dimen/spacer_6dp"
-            app:srcCompat="@drawable/ic_geofauna_splash"/>
+            app:srcCompat="@drawable/geofauna_welcome_logo"/>
 
         <LinearLayout
             android:layout_width="match_parent"
