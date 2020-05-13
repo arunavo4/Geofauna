@@ -43,15 +43,15 @@
 
     <activity android:name=".utils.Permissions" android:theme="@style/Theme.AppCompat.Translucent" />
 
-    <provider
-        android:name="androidx.core.content.FileProvider"
-        android:authorities="@string/filebrowser_provider"
-        android:exported="false"
-        android:grantUriPermissions="true">
-        <meta-data
-            android:name="android.support.FILE_PROVIDER_PATHS"
-            android:resource="@xml/provider_paths"/>
-    </provider>
+<!--    <provider-->
+<!--        android:name="androidx.core.content.FileProvider"-->
+<!--        android:authorities="@string/filebrowser_provider"-->
+<!--        android:exported="false"-->
+<!--        android:grantUriPermissions="true">-->
+<!--        <meta-data-->
+<!--            android:name="android.support.FILE_PROVIDER_PATHS"-->
+<!--            android:resource="@xml/provider_paths"/>-->
+<!--    </provider>-->
 
 </application>
 </manifest>
