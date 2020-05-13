@@ -31,6 +31,8 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.isro.filebrowser.Constants;
+import com.isro.filebrowser.FileBrowser;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.isro.geofauna.adapter.RecordAdapter;
@@ -199,11 +201,20 @@ public class MainActivity extends AppCompatActivity {
             }
             return false;
         }
-//        else if (id == R.id.action_open){
+        else if (id == R.id.action_open){
+            openFileBrowser();
 //            openFolderLocation();
-//        }
+        }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void openFileBrowser() {
+        if (folderPath!=null) {
+            Intent fileBrowser  = new Intent(getApplicationContext(), FileBrowser.class);
+            fileBrowser.putExtra(Constants.INITIAL_DIRECTORY, new File(folderPath).getAbsolutePath());
+            startActivity(fileBrowser);
+        }
     }
 
     private void openFileLocation(){

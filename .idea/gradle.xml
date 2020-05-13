@@ -9,6 +9,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/filebrowser" />
             <option value="$PROJECT_DIR$/hintspinner" />
             <option value="$PROJECT_DIR$/imageslider" />
             <option value="$PROJECT_DIR$/stupidlocation" />

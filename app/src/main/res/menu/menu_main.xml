@@ -7,9 +7,9 @@
         android:orderInCategory="99"
         android:title="@string/action_export"
         app:showAsAction="never" />
-<!--    <item-->
-<!--        android:id="@+id/action_open"-->
-<!--        android:orderInCategory="100"-->
-<!--        android:title="@string/action_open_file_location"-->
-<!--        app:showAsAction="never" />-->
+    <item
+        android:id="@+id/action_open"
+        android:orderInCategory="100"
+        android:title="@string/action_open_file_location"
+        app:showAsAction="never" />
 </menu>
