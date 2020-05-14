@@ -214,6 +214,8 @@ public class MainActivity extends AppCompatActivity {
             Intent fileBrowser  = new Intent(getApplicationContext(), FileBrowser.class);
             fileBrowser.putExtra(Constants.INITIAL_DIRECTORY, new File(folderPath).getAbsolutePath());
             startActivity(fileBrowser);
+        }else{
+            Snackbar.make((CoordinatorLayout) findViewById(R.id.main_layout), getResources().getString(R.string.file_does_not_exist), Snackbar.LENGTH_SHORT).show();
         }
     }
 
