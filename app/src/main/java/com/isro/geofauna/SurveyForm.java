@@ -266,6 +266,7 @@ public class SurveyForm extends AppCompatActivity {
         final AppCompatSpinner examplesSpinner = (AppCompatSpinner) findViewById(R.id.examples_spinner);
         final TextInputEditText temperature = (TextInputEditText) findViewById(R.id.temperature);
         final TextInputEditText humidity = (TextInputEditText) findViewById(R.id.humidity);
+        final TextInputEditText fieldNotes = (TextInputEditText) findViewById(R.id.field_notes);
 
         uniqueIdLayout.setError(null);
         serialNoLayout.setError(null);
@@ -293,6 +294,7 @@ public class SurveyForm extends AppCompatActivity {
         examplesSpinner.setSelection(getNoOfExamplesList().indexOf(geofauna.getNoOfExamples()));
         temperature.setText(geofauna.getTemperature());
         humidity.setText(geofauna.getHumidity());
+        fieldNotes.setText(geofauna.getFieldNotes());
 
         // Set images if available
         setImageView(imageViewAnimal, geofauna.getImageAnimalPath());
@@ -343,6 +345,7 @@ public class SurveyForm extends AppCompatActivity {
         final AppCompatSpinner examplesSpinner = (AppCompatSpinner) findViewById(R.id.examples_spinner);
         final TextInputEditText temperature = (TextInputEditText) findViewById(R.id.temperature);
         final TextInputEditText humidity = (TextInputEditText) findViewById(R.id.humidity);
+        final TextInputEditText fieldNotes = (TextInputEditText) findViewById(R.id.field_notes);
 
         uniqueIdLayout.setError(null);
         serialNoLayout.setError(null);
@@ -397,6 +400,7 @@ public class SurveyForm extends AppCompatActivity {
         geofauna.setNoOfExamples(Objects.requireNonNull(examplesSpinner.getSelectedItem().toString()));
         geofauna.setTemperature(Objects.requireNonNull(temperature.getText()).toString());
         geofauna.setHumidity(Objects.requireNonNull(humidity.getText()).toString());
+        geofauna.setFieldNotes(Objects.requireNonNull(fieldNotes.getText()).toString());
 
         /* Images */
         geofauna.setImageAnimal(imageFiles[0]);

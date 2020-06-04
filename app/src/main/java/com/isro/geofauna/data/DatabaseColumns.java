@@ -32,6 +32,8 @@ public class DatabaseColumns {
 
     public static final String humidity = "Humidity";
 
+    public static final String fieldNotes = "Field_Notes";
+
     public static final String imageAnimal = "ImageAnimal";
 
     public static final String imageAnimalPath = "ImageAnimalPath";
@@ -71,6 +73,7 @@ public class DatabaseColumns {
                 noOfExamples,
                 temperature,
                 humidity,
+                fieldNotes,
                 imageAnimal,
                 imageHabitat,
                 imageHost,

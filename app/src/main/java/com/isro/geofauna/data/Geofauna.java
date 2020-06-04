@@ -54,6 +54,9 @@ public class Geofauna implements Parcelable {
     @ColumnInfo(name = DatabaseColumns.humidity)
     private String humidity;
 
+    @ColumnInfo(name = DatabaseColumns.fieldNotes)
+    private String fieldNotes;
+
     @ColumnInfo(name = DatabaseColumns.imageAnimal)
     private String imageAnimal;
 
@@ -107,6 +110,7 @@ public class Geofauna implements Parcelable {
         noOfExamples = in.readString();
         temperature = in.readString();
         humidity = in.readString();
+        fieldNotes = in.readString();
         imageAnimal = in.readString();
         imageAnimalPath = in.readString();
         imageHabitat = in.readString();
@@ -241,6 +245,14 @@ public class Geofauna implements Parcelable {
         this.humidity = humidity;
     }
 
+    public String getFieldNotes() {
+        return fieldNotes;
+    }
+
+    public void setFieldNotes(String fieldNotes) {
+        this.fieldNotes = fieldNotes;
+    }
+
     public String getImageAnimal() {
         return imageAnimal;
     }
@@ -360,6 +372,7 @@ public class Geofauna implements Parcelable {
         dest.writeString(noOfExamples);
         dest.writeString(temperature);
         dest.writeString(humidity);
+        dest.writeString(fieldNotes);
         dest.writeString(imageAnimal);
         dest.writeString(imageAnimalPath);
         dest.writeString(imageHabitat);
@@ -378,4 +391,5 @@ public class Geofauna implements Parcelable {
             dest.writeLong(timestamp);
         }
     }
+
 }

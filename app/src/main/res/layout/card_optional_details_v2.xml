@@ -141,6 +141,35 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="@dimen/spacer_16dp"
+                    app:srcCompat="@drawable/ic_clipboard"/>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/TextView.Hint">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/field_notes"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="@style/TextView"
+                        android:inputType="text|textCapSentences|textNoSuggestions|textMultiLine"
+                        android:hint="@string/Field_Notes" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:paddingTop="@dimen/spacer_12dp"
                 android:paddingBottom="@dimen/spacer_12dp"
                 android:orientation="vertical">

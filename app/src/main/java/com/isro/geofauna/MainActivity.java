@@ -334,6 +334,7 @@ public class MainActivity extends AppCompatActivity {
                             record.get(i).getNoOfExamples(),
                             record.get(i).getTemperature(),
                             record.get(i).getHumidity(),
+                            record.get(i).getFieldNotes(),
                             record.get(i).getImageAnimal(),
                             record.get(i).getImageHabitat(),
                             record.get(i).getImageHost(),

@@ -1,79 +1,80 @@
 <resources>
-    <string name="app_name">Geofauna</string>
-    <string name="empty"> </string>
-    <string name="saved_successfully">Saved Successfully!</string>
-    <string name="updated_successfully">Updated Successfully!</string>
-    <string name="export_successful">Export Successful!</string>
-    <string name="export_failed">Export Failed!</string>
-    <string name="file_does_not_exist">File Doesn\'t Exist!</string>
-    <string name="open">Open</string>
-    <string name="open_folder">Open Folder</string>
-    <string name="open_file">Open CSV File</string>
+    <string name="app_name" translatable="false">Geofauna</string>
+    <string name="empty" translatable="false"> </string>
+    <string name="saved_successfully" translatable="false">Saved Successfully!</string>
+    <string name="updated_successfully" translatable="false">Updated Successfully!</string>
+    <string name="export_successful" translatable="false">Export Successful!</string>
+    <string name="export_failed" translatable="false">Export Failed!</string>
+    <string name="file_does_not_exist" translatable="false">File Doesn\'t Exist!</string>
+    <string name="open" translatable="false">Open</string>
+    <string name="open_folder" translatable="false">Open Folder</string>
+    <string name="open_file" translatable="false">Open CSV File</string>
 
-    <string name="export_filename_default">Records</string>
+    <string name="export_filename_default" translatable="false">Records</string>
 
-    <string name="record_delete_msg">Record Deleted!</string>
-    <string name="record_delete_error_msg">Error!</string>
+    <string name="record_delete_msg" translatable="false">Record Deleted!</string>
+    <string name="record_delete_error_msg" translatable="false">Error!</string>
 
-    <string name="no_records_top">No Records</string>
-    <string name="no_records_bottom">Add records using the <b>+</b> icon.</string>
+    <string name="no_records_top" translatable="false">No Records</string>
+    <string name="no_records_bottom" translatable="false">Add records using the <b>+</b> icon.</string>
 
-    <string name="invalid_phone_no">Enter Valid Phone Number</string>
+    <string name="invalid_phone_no" translatable="false">Enter Valid Phone Number</string>
 
-    <string name="select_habitat">Select Habitat</string>
-    <string name="select_state">Select State</string>
+    <string name="select_habitat" translatable="false">Select Habitat</string>
+    <string name="select_state" translatable="false">Select State</string>
 
     <!--Activitiy-->
-    <string name="action_export">Export to csv</string>
-    <string name="action_open_file_location">Open File Location</string>
+    <string name="action_export" translatable="false">Export to csv</string>
+    <string name="action_open_file_location" translatable="false">Open File Location</string>
 
     <!--Welcome Activity-->
-    <string name="Next">Next</string>
+    <string name="Next" translatable="false">Next</string>
 
     <!--Survey Fields-->
-    <string name="record_details">Record Details</string>
-    <string name="Survey_Form">Survey Form</string>
-    <string name="Unique_Survey_Id">Unique Survey ID</string>
-    <string name="Serial_no">Serial No</string>
-    <string name="Locality">Locality</string>
-    <string name="State">State</string>
-    <string name="Collector">Collector</string>
-    <string name="phone">Phone</string>
-    <string name="Habitat">Habitat</string>
-    <string name="Entomofauna">Entomofauna</string>
-    <string name="Other_Invertebrate">Other Invertebrate</string>
-    <string name="Vertebrate">Vertebrate</string>
+    <string name="record_details" translatable="false">Record Details</string>
+    <string name="Survey_Form" translatable="false">Survey Form</string>
+    <string name="Unique_Survey_Id" translatable="false">Unique Survey ID</string>
+    <string name="Serial_no" translatable="false">Serial No</string>
+    <string name="Locality" translatable="false">Locality</string>
+    <string name="State" translatable="false">State</string>
+    <string name="Collector" translatable="false">Collector</string>
+    <string name="phone" translatable="false">Phone</string>
+    <string name="Habitat" translatable="false">Habitat</string>
+    <string name="Field_Notes" translatable="false">Field Notes</string>
+    <string name="Entomofauna" translatable="false">Entomofauna</string>
+    <string name="Other_Invertebrate" translatable="false">Other Invertebrate</string>
+    <string name="Vertebrate" translatable="false">Vertebrate</string>
 
-    <string name="optional_details">Optional Details</string>
-    <string name="NoOfExamples">No Of Examples</string>
-    <string name="Temperature">Temperature</string>
-    <string name="Humidity">Humidity</string>
-    <string name="ImageAnimal">Image Animal</string>
-    <string name="ImageHabitat">Image Habitat</string>
-    <string name="ImageHost">Image Host</string>
+    <string name="optional_details" translatable="false">Optional Details</string>
+    <string name="NoOfExamples" translatable="false">No Of Examples</string>
+    <string name="Temperature" translatable="false">Temperature</string>
+    <string name="Humidity" translatable="false">Humidity</string>
+    <string name="ImageAnimal" translatable="false">Image Animal</string>
+    <string name="ImageHabitat" translatable="false">Image Habitat</string>
+    <string name="ImageHost" translatable="false">Image Host</string>
 
-    <string name="error_empty">This field cannot be Empty</string>
+    <string name="error_empty" translatable="false">This field cannot be Empty</string>
 
     <!--Geo-Tagging-->
-    <string name="Geo_tagging">GeoTag Details</string>
-    <string name="Date">Date</string>
-    <string name="Time">Time</string>
-    <string name="Latitude">Latitude</string>
-    <string name="lat_holder">0.000000</string>
-    <string name="Longitude">Longitude</string>
-    <string name="lang_holder">0.000000</string>
+    <string name="Geo_tagging" translatable="false">GeoTag Details</string>
+    <string name="Date" translatable="false">Date</string>
+    <string name="Time" translatable="false">Time</string>
+    <string name="Latitude" translatable="false">Latitude</string>
+    <string name="lat_holder" translatable="false">0.000000</string>
+    <string name="Longitude" translatable="false">Longitude</string>
+    <string name="lang_holder" translatable="false">0.000000</string>
 
-    <string name="accuracy">Accurate up to</string>
+    <string name="accuracy" translatable="false">Accurate up to</string>
 
-    <string name="location_permission">Location Permission Mandatory</string>
+    <string name="location_permission" translatable="false">Location Permission Mandatory</string>
 
     <!--Image Card-->
-    <string name="Title_holder">Title</string>
-    <string name="take_photo">Take Photo</string>
+    <string name="Title_holder" translatable="false">Title</string>
+    <string name="take_photo" translatable="false">Take Photo</string>
 
     <!--Save Btn-->
-    <string name="save_btn">Save</string>
+    <string name="save_btn" translatable="false">Save</string>
 
-    <string name="title_activity_welcome">WelcomeActivity</string>
+    <string name="title_activity_welcome" translatable="false">WelcomeActivity</string>
 
 </resources>
