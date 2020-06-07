@@ -13,6 +13,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
@@ -39,6 +40,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.isro.geofauna.data.DatabaseColumns;
 import com.isro.geofauna.data.Geofauna;
+import com.isro.geofauna.utils.InputFilterMinMax;
 import com.isro.geofauna.utils.PreferenceUtils;
 import com.isro.stupidlocation.StupidLocation;
 
@@ -122,6 +124,12 @@ public class SurveyForm extends AppCompatActivity {
             imageViewHost.setImageDrawable(getResources().getDrawable(R.drawable.placeholder_image));
             host_cancel_btn.setVisibility(View.INVISIBLE);
         });
+
+        // Add Field Validators to Humidity
+        final TextInputEditText temperature = (TextInputEditText) findViewById(R.id.temperature);
+        final TextInputEditText humidity = (TextInputEditText) findViewById(R.id.humidity);
+        temperature.setFilters(new InputFilter[]{ new InputFilterMinMax("-100", "100")});
+        humidity.setFilters(new InputFilter[]{ new InputFilterMinMax("1", "100")});
 
         // Check if Intent Request is to view
         Intent intent = getIntent();
@@ -358,7 +366,7 @@ public class SurveyForm extends AppCompatActivity {
         geofauna.setLongitude(Double.valueOf(longitude_tv.getText().toString()));
         geofauna.setAccuracy(accuracy_tv.getText().toString().substring(getResources().getInteger(R.integer.accuracy_string_trim_start)));
 
-
+        /* Field Validators */
         if (TextUtils.isEmpty(uniqueId.getText())) {
             uniqueIdLayout.setError(getResources().getString(R.string.error_empty));
             uniqueIdLayout.requestFocus();
