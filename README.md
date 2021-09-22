@@ -1,5 +1,5 @@
 # Geofauna
-Fauna Survey Android App
+Fauna Survey Android App for using with GeoVis Tool
 
 ## Welcome Screen
 
@@ -62,9 +62,11 @@ Home Screen with added Records
 
 - Export as csv: This Option lets you export the internal Database as a csv file.
 
-- CSV File Location : `/storage/emulated/0/Android/data/com.isro.geofauna/files/Documents/Records.csv`
+- CSV File Location : `/storage/emulated/0/Android/data/
+  com.isro.geofauna/files/Documents/Records.csv`
 
-- Pictures Location: `/storage/emulated/0/Android/data/com.isro.geofauna/files/Pictures/`
+- Pictures Location: `/storage/emulated/0/Android/data/
+  com.isro.geofauna/files/Pictures/`
 
 </td></tr></table>  
 
